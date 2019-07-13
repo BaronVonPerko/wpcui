@@ -52,3 +52,15 @@ function wpcui_register_control($wp_customize, $control, $section) {
         'settings'   => $control->settings,
     ) ) );
 }
+
+
+function wpcui_admin_init() {
+    echo '<div class="wrap"><h1>WPCUI Options</h1>';
+
+    echo '</div>';
+}
+
+function wpcui_register_menu_page(){
+    add_menu_page( 'WPCUI', 'WPCUI', 'manage_options', 'wpcui', 'wpcui_admin_init' );
+}
+add_action('admin_menu', 'wpcui_register_menu_page');
