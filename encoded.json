@@ -1,0 +1,40 @@
+{
+  "settings": [
+    {
+      "id": "first_name",
+      "default": "Chris"
+    },
+    {
+      "id": "last_name",
+      "default": "Perko"
+    },
+    {
+      "id": "nickname",
+      "default": "CJ"
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "mytheme_personal_info",
+      "title": "Personal Info (dev)",
+      "priority": "35",
+      "controls": [
+        {
+          "id": "first_name",
+          "label": "First Name",
+          "settings": "first_name"
+        },
+        {
+          "id": "last_name",
+          "label": "Last Name",
+          "settings": "last_name"
+        },
+        {
+          "id": "nickname",
+          "label": "Nickname",
+          "settings": "nickname"
+        }
+      ]
+    }
+  ]
+}
