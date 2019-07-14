@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Wpcui
+Plugin Name: WPCUI
 Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
 Description: A brief description of the Plugin.
 Version: 1.0
@@ -11,56 +11,29 @@ License: A "Slug" license name e.g. GPL2
 */
 
 
+defined('ABSPATH') or die("You have no power here!");
 
-function wpcui_customize_register($wp_customize) {
-    $contents = file_get_contents("encoded.json", true);
-    $data = json_decode($contents);
-
-    foreach($data->settings as $setting) {
-        wpcui_register_setting($wp_customize, $setting);
-    }
-
-    foreach($data->sections as $section) {
-        wpcui_register_section($wp_customize, $section);
-
-        foreach($section->controls as $control) {
-            wpcui_register_control($wp_customize, $control, $section);
-        }
-    }
-}
-add_action( 'customize_register', 'wpcui_customize_register' );
-
-
-function wpcui_register_setting($wp_customize, $setting) {
-    $wp_customize->add_setting( $setting->id , array(
-        'default'   => $setting->default,
-        'transport' => 'refresh',
-    ) );
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-function wpcui_register_section($wp_customize, $section) {
-    $wp_customize->add_section( $section->id , array(
-        'title'      => __( $section->title ),
-        'priority'   => $section->priority,
-    ) );
+if (class_exists('Inc\\Init')) {
+    Inc\Init::register_services();
 }
 
-function wpcui_register_control($wp_customize, $control, $section) {
-    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, $control->id, array(
-        'label'      => __( $control->label ),
-        'section'    => $section->id,
-        'settings'   => $control->settings,
-    ) ) );
+/**
+ * The code that runs during plugin activation
+ */
+function activate_wpcui_plugin() {
+    Inc\Base\Activate::activate();
 }
+register_activation_hook( __FILE__, 'activate_wpcui_plugin' );
 
 
-function wpcui_admin_init() {
-    echo '<div class="wrap"><h1>WPCUI Options</h1>';
-
-    echo '</div>';
+/**
+ * The code that runs during plugin deactivation
+ */
+function deactivate_wpcui_plugin() {
+    \Inc\Base\Deactivate::deactivate();
 }
-
-function wpcui_register_menu_page(){
-    add_menu_page( 'WPCUI', 'WPCUI', 'manage_options', 'wpcui', 'wpcui_admin_init' );
-}
-add_action('admin_menu', 'wpcui_register_menu_page');
+register_deactivation_hook( __FILE__, 'deactivate_wpcui_plugin' );

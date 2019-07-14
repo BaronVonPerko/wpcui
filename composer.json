@@ -1,0 +1,17 @@
+{
+    "name": "baronvonperko/wpcui",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Chris Perko",
+            "email": "chris@chrisperko.net"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "./inc"
+        }
+    }
+}
