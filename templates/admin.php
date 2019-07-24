@@ -14,4 +14,27 @@
 		    ?>
         </form>
     </form>
+
+
+
+    <table class="wp-list-table widefat">
+        <?php $sections = get_option( 'wpcui_sections' ); ?>
+
+        <thead>
+            <tr>
+                <th class="manage-column">Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach($sections as $key => $section) : ?>
+                <tr class="<?= array_search($key, array_keys($sections)) % 2 == 0 ? 'alternate' : '' ?>">
+                    <td><?= $section['section_title'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+
+
 </div>
