@@ -65,6 +65,11 @@ class Admin extends BaseController {
 	public function sanitize( $input ) {
 		$output = get_option( 'wpcui_sections' );
 
+		if ( isset( $_POST['remove'] ) ) {
+			unset($output[$_POST['remove']]);
+			return $output;
+		}
+
 		$new_input = [ $input['section_title'] => $input ];
 
 		if ( count( $output ) == 0 ) {
