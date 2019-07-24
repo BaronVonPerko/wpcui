@@ -34,7 +34,9 @@
                     <form action="options.php" method="post">
                         <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
 						<?php settings_fields( 'wpcui' ); ?>
-						<?php submit_button( 'Delete', 'delete small', 'submit', false ); ?>
+						<?php submit_button( 'Delete', 'delete small', 'submit', false, [
+						        'onclick' => 'return confirm("Are you sure you want to delete this section?")'
+                        ] ); ?>
                     </form>
                 </td>
             </tr>
