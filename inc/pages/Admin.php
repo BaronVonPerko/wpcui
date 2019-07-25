@@ -60,13 +60,74 @@ class Admin extends BaseController {
 				'label_for'   => 'section_title',
 				'placeholder' => 'eg. Personal Info',
 			] );
+
+
+		register_setting( 'wpcui-control', 'wpcui_controls', [ $this, 'sanitizeControl' ] );
+
+		add_settings_section( 'wpcui_section_control', 'Add Control', [ $this, 'controlOutput' ], 'wpcui-control' );
+
+		add_settings_field( 'control_id',
+			'Control ID',
+			[ $this, 'textField' ],
+			'wpcui-control',
+			'wpcui_section_control',
+			[
+				'option_name' => 'wpcui_controls',
+				'label_for'   => 'control_id',
+				'placeholder' => 'eg. location_info'
+			] );
+
+		add_settings_field( 'control_label',
+			'Control Label',
+			[ $this, 'textField' ],
+			'wpcui-control',
+			'wpcui_section_control',
+			[
+				'option_name' => 'wpcui_controls',
+				'label_for'   => 'control_label',
+				'placeholder' => 'eg. Location Info'
+			] );
+	}
+
+	public function sanitizeControl( $input ) {
+		$input['section'] = $_POST['section'];
+		$output = get_option('wpcui_controls');
+
+		if ( isset( $_POST['remove'] ) ) {
+			unset( $output[ $_POST['remove'] ] );
+
+			return $output;
+		}
+
+		$new_input = [ $input['control_id'] => $input ];
+
+		if ( count( $output ) == 0 ) {
+			$output = $new_input;
+
+			return $output;
+		}
+
+		foreach ( $output as $key => $value ) {
+			if ( $input['control_id'] === $key ) {
+				$output[ $key ] = $input;
+			} else {
+				$output[ $input['control_id'] ] = $input;
+			}
+		}
+
+		return $output;
 	}
 
 	public function sanitize( $input ) {
 		$output = get_option( 'wpcui_sections' );
 
 		if ( isset( $_POST['remove'] ) ) {
-			unset($output[$_POST['remove']]);
+			unset( $output[ $_POST['remove'] ] );
+
+			return $output;
+		}
+
+		if ( isset( $_POST['edit'] ) ) {
 			return $output;
 		}
 
@@ -91,6 +152,10 @@ class Admin extends BaseController {
 
 	public function sectionOutput() {
 		echo '<p>Use this form to create a new Customizer section</p>';
+	}
+
+	public function controlOutput() {
+		echo '<p>Create a new control</p>';
 	}
 
 	public function textField( $args ) {
