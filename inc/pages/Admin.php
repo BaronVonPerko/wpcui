@@ -39,10 +39,28 @@ class Admin extends BaseController {
 	}
 
 	public function getSavedData() {
-		$this->customizer_fields[]   = new CustomizerSetting( 'name', 'Chris Perko' );
-		$controls                    = [];
-		$controls[]                  = new CustomizerControl( 'name', 'Your Name', 'name' );
-		$this->customizer_sections[] = new CustomizerSection( 'personal_info', 'Personal Info', '99', $controls );
+		$saved_sections = get_option( 'wpcui_sections' );
+		$saved_controls = get_option( 'wpcui_controls' );
+
+		foreach ( $saved_controls as $saved_control ) {
+			$this->customizer_fields[] = new CustomizerControl( $saved_control['control_id'], $saved_control['control_label'], $saved_control['control_id'] );
+		}
+
+		foreach ( $saved_sections as $key => $saved_section ) {
+
+			$section_controls = array_filter( $saved_controls, function ( $control ) use ( $key ) {
+				return $control['section'] == $key;
+			} );
+
+			$controls = [];
+			foreach ( $section_controls as $section_control ) {
+				$controls[] = new CustomizerControl( $section_control['control_id'], $section_control['control_label'], $section_control['control_id'] );
+			}
+
+			$id                          = strtolower( $saved_section['section_title'] );
+			$id                          = str_replace( ' ', '_', $id );
+			$this->customizer_sections[] = new CustomizerSection( $id, $saved_section['section_title'], 99, $controls );
+		}
 	}
 
 	public function setSettings() {
@@ -91,7 +109,7 @@ class Admin extends BaseController {
 
 	public function sanitizeControl( $input ) {
 		$input['section'] = $_POST['section'];
-		$output = get_option('wpcui_controls');
+		$output           = get_option( 'wpcui_controls' );
 
 		if ( isset( $_POST['remove'] ) ) {
 			unset( $output[ $_POST['remove'] ] );
