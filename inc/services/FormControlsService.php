@@ -12,8 +12,8 @@ class FormControlsService {
     }
 
     public function dropDown( $args ) {
-        $name = $args['name'];
-        $label = $args['label'];
+        $name = $args['option_name'];
+        $label = $args['label_for'];
 
         $eleName = $name . "[$label]";
         echo "<select name=\"$eleName\">";

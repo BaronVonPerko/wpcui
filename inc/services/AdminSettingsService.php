@@ -67,11 +67,11 @@ class AdminSettingsService
             'wpcui-control',
             'wpcui_section_control',
             [
-                'name' => 'wpcui_controls',
-                'label' => 'control_type',
+                'option_name' => 'wpcui_controls',
+                'label_for' => 'control_type',
                 'options' => [
                     'Text',
-                    'Text Block',
+                    'Text Area',
                     'Color Picker',
                     'Image'
                 ]

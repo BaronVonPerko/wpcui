@@ -13,15 +13,15 @@ class Customizer{
     public $customizer_sections = [];
 
     public function register() {
-        $this->loadData();
-
-        if ( ! empty( $this->customizer_fields ) && ! empty( $this->customizer_sections ) ) {
-            add_action( 'customize_register', [ $this, 'registerCustomizerFields' ] );
-        }
+        add_action( 'customize_register', [ $this, 'registerCustomizerFields' ] );
     }
 
     function registerCustomizerFields( $wp_customize ) {
-        CustomizerGenerator::Generate( $wp_customize, $this->customizer_fields, $this->customizer_sections );
+        $this->loadData();
+
+        if ( ! empty( $this->customizer_fields ) && ! empty( $this->customizer_sections ) ) {
+            CustomizerGenerator::Generate($wp_customize, $this->customizer_fields, $this->customizer_sections);
+        }
     }
 
     private function loadData() {

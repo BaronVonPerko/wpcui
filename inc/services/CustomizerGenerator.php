@@ -44,7 +44,7 @@ class CustomizerGenerator
             case "Text":
                 self::registerTextControl($wp_customize, $control, $section, 'text');
                 break;
-            case "Text_Block":
+            case "Text_Area":
                 self::registerTextControl($wp_customize, $control, $section, 'textarea');
                 break;
         }
