@@ -152,13 +152,31 @@ class Admin extends BaseController {
 		return $output;
 	}
 
+	public function deleteSection($section_name) {
+        $sections = get_option( 'wpcui_sections' );
+        $controls = get_option('wpcui_controls');
+
+	    unset( $sections[$section_name] );
+
+	    $controls_for_section = array_filter($controls, function($control) use ($section_name) {
+	        return $control['section'] == $section_name;
+        });
+
+	    foreach($controls_for_section as $key => $control) {
+	        unset($controls[$key]);
+        }
+
+	    // todo: need to remove the unused controls from the database.
+        // for some reason, update_option is not working here...
+
+	    return $sections;
+    }
+
 	public function sanitize( $input ) {
 		$output = get_option( 'wpcui_sections' );
 
 		if ( isset( $_POST['remove'] ) ) {
-			unset( $output[ $_POST['remove'] ] );
-
-			return $output;
+			return $this->deleteSection($_POST['remove']);
 		}
 
 		if ( isset( $_POST['edit'] ) ) {
