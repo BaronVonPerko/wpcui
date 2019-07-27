@@ -1,9 +1,9 @@
 <div class="wrap">
     <h1>WPCUI Options</h1>
 
-	<?php settings_errors(); ?>
+	<?php use Inc\Services\DataService;
 
-	<?php $options = get_option( 'wpcui_options' ) ?: array(); ?>
+    settings_errors(); ?>
 
     <form method="post" action="options.php">
 		<?php
@@ -14,8 +14,8 @@
     </form>
 
 	<?php
-	$sections = get_option( 'wpcui_sections' );
-	$controls = get_option( 'wpcui_controls' );
+	$sections = DataService::getSections();
+	$controls = DataService::getControls();
 	?>
 
 	<?php if ( count( $sections ) > 0 ): ?>

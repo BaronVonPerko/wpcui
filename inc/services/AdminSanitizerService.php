@@ -34,8 +34,8 @@ class AdminSanitizerService{
     }
 
     public function deleteSection($section_name) {
-        $sections = get_option( 'wpcui_sections' );
-        $controls = get_option('wpcui_controls');
+        $sections = DataService::getSections();
+        $controls = DataService::getControls();
 
         unset( $sections[$section_name] );
 
@@ -55,7 +55,7 @@ class AdminSanitizerService{
 
     public function sanitizeControl( $input ) {
         $input['section'] = $_POST['section'];
-        $output           = get_option( 'wpcui_controls' );
+        $output           = DataService::getControls();
 
         if ( isset( $_POST['remove'] ) ) {
             unset( $output[ $_POST['remove'] ] );

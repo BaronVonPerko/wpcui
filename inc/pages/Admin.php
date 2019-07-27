@@ -9,6 +9,7 @@ use Inc\Classes\CustomizerSetting;
 use Inc\Services\AdminSanitizerService;
 use Inc\Services\AdminSettingsService;
 use Inc\Services\CustomizerGenerator;
+use Inc\Services\DataService;
 
 class Admin extends BaseController {
 
@@ -43,8 +44,8 @@ class Admin extends BaseController {
 
 	public function getSavedData()
     {
-        $saved_sections = get_option('wpcui_sections');
-        $saved_controls = get_option('wpcui_controls');
+        $saved_sections = DataService::getSections();
+        $saved_controls = DataService::getControls();
 
         foreach ($saved_controls as $saved_control) {
             $this->customizer_fields[] = new CustomizerControl($saved_control['control_id'],
