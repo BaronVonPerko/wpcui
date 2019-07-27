@@ -17,10 +17,6 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-if (class_exists('Inc\\Init')) {
-    Inc\Init::registerServices();
-}
-
 /**
  * The code that runs during plugin activation
  */
@@ -37,3 +33,9 @@ function deactivateWpcuiPlugin() {
     Inc\Base\Deactivate::deactivate();
 }
 register_deactivation_hook( __FILE__, 'deactivateWpcuiPlugin' );
+
+
+
+if (class_exists('Inc\\Init')) {
+    Inc\Init::registerServices();
+}

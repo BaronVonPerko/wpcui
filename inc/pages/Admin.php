@@ -105,6 +105,22 @@ class Admin extends BaseController {
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info'
 			] );
+
+		add_settings_field( 'control_type',
+            'Control Type',
+            [ $this, 'dropDown'],
+            'wpcui-control',
+            'wpcui_section_control',
+            [
+                'name' => 'wpcui_controls',
+                'label' => 'control_type',
+                'options' => [
+                    'Text',
+                    'Text Block',
+                    'Color Picker',
+                    'Image'
+                ]
+            ]);
 	}
 
 	public function sanitizeControl( $input ) {
@@ -183,4 +199,19 @@ class Admin extends BaseController {
 
 		echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" required>';
 	}
+
+	public function dropDown( $args ) {
+	    $name = $args['name'];
+	    $label = $args['label'];
+
+	    $eleName = $name . "[$label]";
+	    echo "<select name=\"$eleName\">";
+
+	    foreach($args['options'] as $option) {
+	        $option_id = str_replace(' ', '_', $option);
+	        echo "<option value=$option_id>$option</option>";
+        }
+
+	    echo '</select>';
+    }
 }

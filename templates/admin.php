@@ -34,8 +34,8 @@
                 <!-- Row for the section and section buttons -->
                 <tr class="<?= array_search( $key, array_keys( $sections ) ) % 2 == 0 ? 'alternate' : '' ?>">
                     <td><?= $section['section_title'] ?></td>
-                    <td>
-                        <form action="options.php" method="post">
+                    <td style="display: flex;">
+                        <form action="options.php" method="post" style="margin-right: 5px;">
                             <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
 							<?php settings_fields( 'wpcui' ); ?>
 							<?php submit_button( 'Delete', 'delete small', 'submit', false, [
@@ -46,7 +46,7 @@
                         <form action="options.php" method="post">
                             <input type="hidden" name="edit" value="<?= $section['section_title'] ?>">
 							<?php settings_fields( 'wpcui' ); ?>
-							<?php submit_button( 'Edit', 'small', 'edit' ); ?>
+							<?php submit_button( 'Edit', 'small', 'edit', false ); ?>
                         </form>
                     </td>
                 </tr>
@@ -74,6 +74,7 @@
                                 <tr>
                                     <th class="manage-column">Control ID</th>
                                     <th class="manage-column">Control Label</th>
+                                    <th class="manage-column">Control Type</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -81,6 +82,7 @@
                                 <tr>
                                     <td><?= $control['control_id'] ?></td>
                                     <td><?= $control['control_label'] ?></td>
+                                    <td><?= str_replace('_', ' ', $control['control_type']) ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                                 </tbody>
