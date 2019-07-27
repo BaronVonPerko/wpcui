@@ -43,7 +43,7 @@ class Admin extends BaseController {
 		$saved_controls = get_option( 'wpcui_controls' );
 
 		foreach ( $saved_controls as $saved_control ) {
-			$this->customizer_fields[] = new CustomizerControl( $saved_control['control_id'], $saved_control['control_label'], $saved_control['control_id'] );
+			$this->customizer_fields[] = new CustomizerControl( $saved_control['control_id'], $saved_control['control_label'], $saved_control['control_id'], $saved_control['control_type'] );
 		}
 
 		foreach ( $saved_sections as $key => $saved_section ) {
@@ -54,7 +54,7 @@ class Admin extends BaseController {
 
 			$controls = [];
 			foreach ( $section_controls as $section_control ) {
-				$controls[] = new CustomizerControl( $section_control['control_id'], $section_control['control_label'], $section_control['control_id'] );
+				$controls[] = new CustomizerControl( $section_control['control_id'], $section_control['control_label'], $section_control['control_id'], $section_control['control_type'] );
 			}
 
 			$id                          = strtolower( $saved_section['section_title'] );
