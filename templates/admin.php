@@ -75,6 +75,7 @@
                                     <th class="manage-column">Control ID</th>
                                     <th class="manage-column">Control Label</th>
                                     <th class="manage-column">Control Type</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,6 +84,15 @@
                                     <td><?= $control['control_id'] ?></td>
                                     <td><?= $control['control_label'] ?></td>
                                     <td><?= str_replace('_', ' ', $control['control_type']) ?></td>
+                                    <td>
+                                        <form action="options.php" method="post" style="margin-right: 5px;">
+                                            <input type="hidden" name="remove" value="<?= $control['control_id'] ?>">
+                                            <?php settings_fields( 'wpcui-control' ); ?>
+                                            <?php submit_button( 'Delete', 'delete small', 'submit', false, [
+                                                'onclick' => 'return confirm("Are you sure you want to delete this control?")'
+                                            ] ); ?>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                                 </tbody>
