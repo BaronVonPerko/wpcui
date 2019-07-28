@@ -47,6 +47,8 @@ class CustomizerGenerator
             case "Text_Area":
                 self::registerTextControl($wp_customize, $control, $section, 'textarea');
                 break;
+            case "Select":
+                self::registerChoicesControl($wp_customize, $control, $section, 'select');
         }
     }
 
@@ -57,6 +59,17 @@ class CustomizerGenerator
             'section' => $section->id,
             'settings' => $control->settings,
             'type' => $type,
+        )));
+    }
+
+    private function registerChoicesControl($wp_customize, $control, $section, $type)
+    {
+        $wp_customize->add_control(new WP_Customize_Control($wp_customize, $control->id, array(
+            'label' => __($control->label),
+            'section' => $section->id,
+            'settings' => $control->settings,
+            'type' => $type,
+            'choices' => $control->choices
         )));
     }
 }

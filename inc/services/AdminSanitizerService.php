@@ -71,10 +71,23 @@ class AdminSanitizerService{
             return $output;
         }
 
+        // format the choices if there are any
+        if(array_key_exists('control_choices', $input)) {
+            $choices = explode(',', $input['control_choices']);
+            $new_choices = [];
+            foreach ($choices as $choice) {
+                $new_choices[$choice] = $choice;
+            }
+            $input['control_choices'] = $new_choices;
+        }
+
         foreach ( $output as $key => $value ) {
+            // update existing value
             if ( $input['control_id'] === $key ) {
                 $output[ $key ] = $input;
-            } else {
+            }
+            // create new entry
+            else {
                 $output[ $input['control_id'] ] = $input;
             }
         }

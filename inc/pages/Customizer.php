@@ -42,7 +42,7 @@ class Customizer{
             $controls = [];
             foreach ($section_controls as $section_control) {
                 $controls[] = new CustomizerControl($section_control['control_id'], $section_control['control_label'],
-                    $section_control['control_id'], $section_control['control_type']);
+                    $section_control['control_id'], $section_control['control_type'], $section_control['control_choices']);
             }
 
             $id = strtolower($saved_section['section_title']);

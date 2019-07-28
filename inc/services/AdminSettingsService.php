@@ -84,16 +84,16 @@ class AdminSettingsService
                 ]
             ]);
 
-        add_settings_field('control_options',
-            'Control Options',
+        add_settings_field('control_choices',
+            'Control Choices',
             [$this->form_control_service, 'textArea'],
             'wpcui-control',
             'wpcui_section_control',
             [
                 'option_name' => 'wpcui_controls',
-                'label_for' => 'control_options',
+                'label_for' => 'control_choices',
                 'placeholder' => 'Comma separated values',
-                'class' => 'hidden control-options',
+                'class' => 'hidden control-choices',
             ]);
     }
 
