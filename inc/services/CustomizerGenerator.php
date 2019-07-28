@@ -49,6 +49,10 @@ class CustomizerGenerator
                 break;
             case "Select":
                 self::registerChoicesControl($wp_customize, $control, $section, 'select');
+                break;
+            case "Radio":
+                self::registerChoicesControl($wp_customize, $control, $section, 'radio');
+                break;
         }
     }
 
