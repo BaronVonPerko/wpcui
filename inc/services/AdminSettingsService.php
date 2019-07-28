@@ -63,17 +63,19 @@ class AdminSettingsService
 
         add_settings_field( 'control_type',
             'Control Type',
-            [ $this->form_control_service, 'dropDown'],
+            [ $this->form_control_service, 'groupedDropDown'],
             'wpcui-control',
             'wpcui_section_control',
             [
                 'option_name' => 'wpcui_controls',
                 'label_for' => 'control_type',
                 'options' => [
-                    'Text',
-                    'Text Area',
-                    'Color Picker',
-                    'Image'
+                    'Standard' => [
+                        'Text', 'Text Area', 'Color Picker'
+                    ],
+                    'Media' => [
+                        'Upload', 'Media Library'
+                    ]
                 ]
             ]);
     }
