@@ -42,10 +42,25 @@ class CustomizerGenerator
     {
         switch ($control->type) {
             case "Text":
-                self::registerTextControl($wp_customize, $control, $section, 'text');
+                self::registerStandardControl($wp_customize, $control, $section, 'text');
                 break;
             case "Text_Area":
-                self::registerTextControl($wp_customize, $control, $section, 'textarea');
+                self::registerStandardControl($wp_customize, $control, $section, 'textarea');
+                break;
+            case "Dropdown_Pages":
+                self::registerStandardControl($wp_customize, $control, $section, 'dropdown-pages');
+                break;
+            case 'Email':
+                self::registerStandardControl($wp_customize, $control, $section, 'email');
+                break;
+            case 'URL':
+                self::registerStandardControl($wp_customize, $control, $section, 'url');
+                break;
+            case 'Number':
+                self::registerStandardControl($wp_customize, $control, $section, 'number');
+                break;
+            case 'Date':
+                self::registerStandardControl($wp_customize, $control, $section, 'date');
                 break;
             case "Select":
                 self::registerChoicesControl($wp_customize, $control, $section, 'select');
@@ -56,7 +71,7 @@ class CustomizerGenerator
         }
     }
 
-    private function registerTextControl($wp_customize, $control, $section, $type)
+    private function registerStandardControl($wp_customize, $control, $section, $type)
     {
         $wp_customize->add_control(new WP_Customize_Control($wp_customize, $control->id, array(
             'label' => __($control->label),

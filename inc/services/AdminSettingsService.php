@@ -76,7 +76,12 @@ class AdminSettingsService
                         ['name' => 'Text'],
                         ['name' => 'Text Area'],
                         ['name' => 'Select', 'has_options' => true],
-                        ['name' => 'Radio', 'has_options' => true]
+                        ['name' => 'Radio', 'has_options' => true],
+                        ['name' => 'Dropdown Pages'],
+                        ['name' => 'Email'],
+                        ['name' => 'URL'],
+                        ['name' => 'Number'],
+                        ['name' => 'Date'],
                     ],
                     'Media' => [
                         ['name' => 'Upload'],
