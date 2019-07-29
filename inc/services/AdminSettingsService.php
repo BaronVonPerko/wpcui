@@ -83,9 +83,10 @@ class AdminSettingsService
                         ['name' => 'Number'],
                         ['name' => 'Date'],
                     ],
-                    'Media' => [
+                    'Media / Color' => [
                         ['name' => 'Upload'],
-                        ['name' => 'Media Library']
+                        ['name' => 'Image'],
+	                    ['name' => 'Color Picker'],
                     ]
                 ]
             ]);

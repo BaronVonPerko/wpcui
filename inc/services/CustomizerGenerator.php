@@ -3,7 +3,10 @@
 namespace Inc\Services;
 
 
+use WP_Customize_Color_Control;
 use WP_Customize_Control;
+use WP_Customize_Image_Control;
+use WP_Customize_Upload_Control;
 
 class CustomizerGenerator
 {
@@ -68,27 +71,80 @@ class CustomizerGenerator
             case "Radio":
                 self::registerChoicesControl($wp_customize, $control, $section, 'radio');
                 break;
+	        case "Color_Picker":
+	        	self::registerColorControl($wp_customize, $control, $section);
+	        	break;
+	        case "Upload":
+		        self::registerUploadControl($wp_customize, $control, $section);
+		        break;
+	        case "Image":
+		        self::registerImageControl($wp_customize, $control, $section);
+		        break;
         }
     }
 
     private function registerStandardControl($wp_customize, $control, $section, $type)
     {
-        $wp_customize->add_control(new WP_Customize_Control($wp_customize, $control->id, array(
-            'label' => __($control->label),
-            'section' => $section->id,
-            'settings' => $control->settings,
-            'type' => $type,
-        )));
+        $wp_customize->add_control(new WP_Customize_Control(
+        	$wp_customize,
+	        $control->id,
+	        [
+	            'label' => __($control->label),
+	            'section' => $section->id,
+	            'settings' => $control->settings,
+	            'type' => $type,
+	        ]
+        ));
     }
 
     private function registerChoicesControl($wp_customize, $control, $section, $type)
     {
-        $wp_customize->add_control(new WP_Customize_Control($wp_customize, $control->id, array(
-            'label' => __($control->label),
-            'section' => $section->id,
-            'settings' => $control->settings,
-            'type' => $type,
-            'choices' => $control->choices
-        )));
+        $wp_customize->add_control(new WP_Customize_Control(
+        	$wp_customize,
+	        $control->id,
+	        [
+	            'label' => __($control->label),
+	            'section' => $section->id,
+	            'settings' => $control->settings,
+	            'type' => $type,
+	            'choices' => $control->choices
+	        ]
+        ));
     }
+
+    private function registerColorControl($wp_customize, $control, $section) {
+    	$wp_customize->add_control(new WP_Customize_Color_Control(
+            $wp_customize,
+		    $control->id,
+		    [
+			    'label' => __($control->label),
+			    'section' => $section->id,
+			    'settings' => $control->settings,
+		    ]
+	    ));
+    }
+
+	private function registerUploadControl($wp_customize, $control, $section) {
+		$wp_customize->add_control(new WP_Customize_Upload_Control(
+			$wp_customize,
+			$control->id,
+			[
+				'label' => __($control->label),
+				'section' => $section->id,
+				'settings' => $control->settings,
+			]
+		));
+	}
+
+	private function registerImageControl($wp_customize, $control, $section) {
+		$wp_customize->add_control(new WP_Customize_Image_Control(
+			$wp_customize,
+			$control->id,
+			[
+				'label' => __($control->label),
+				'section' => $section->id,
+				'settings' => $control->settings,
+			]
+		));
+	}
 }
