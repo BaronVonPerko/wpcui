@@ -2,19 +2,17 @@
 
 namespace Inc\Services;
 
-class DataService
-{
-    public static function getSections()
-    {
-        return get_option('wpcui_sections');
-    }
+class DataService {
+	public static function getSections() {
+		return get_option( 'wpcui_sections' );
+	}
 
-    public static function getControls() {
-        return get_option('wpcui_controls');
-    }
+	public static function getControls() {
+		return get_option( 'wpcui_controls' );
+	}
 
-	public static function setControls($controls) {
-		update_option('wpcui_controls', $controls);
+	public static function setControls( $controls ) {
+		update_option( 'wpcui_controls', $controls );
 	}
 
 	/**
@@ -29,22 +27,48 @@ class DataService
 
 		// find the valid controls
 		$validControls = [];
-		foreach($controls as $key=>$control) {
-			if(array_key_exists($control['section'], $sections)) {
-				$validControls[$key] = $control;
+		foreach ( $controls as $key => $control ) {
+			if ( array_key_exists( $control['section'], $sections ) ) {
+				$validControls[ $key ] = $control;
 			}
 		}
 
 		// update the database
-		self::setControls($validControls);
+		self::setControls( $validControls );
 	}
 
-    public static function setDefaults() {
-        $options = ['wpcui_sections', 'wpcui_controls'];
-        foreach($options as $option) {
-            if ( ! get_option( $option ) ) {
-                update_option( $option, [] );
-            }
-        }
-    }
+	/**
+	 * Change the name of a section.
+	 *
+	 * @param $oldName
+	 * @param $newName
+	 * @param $data
+	 *
+	 * @return array
+	 */
+	public static function updateSectionName( $oldName, $newName, $data ) {
+		$output = [];
+		foreach($data as $key=>$datum) {
+			if($key == $oldName) {
+				$datum['section_title'] = $newName;
+				$output[$newName] = $datum;
+			} else {
+				$output[$key] = $datum;
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Set default options in the database
+	 */
+	public static function setDefaults() {
+		$options = [ 'wpcui_sections', 'wpcui_controls' ];
+		foreach ( $options as $option ) {
+			if ( ! get_option( $option ) ) {
+				update_option( $option, [] );
+			}
+		}
+	}
 }

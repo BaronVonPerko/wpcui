@@ -18,8 +18,8 @@ class AdminSanitizerService{
             return $this->deleteSection($_POST['remove']);
         }
 
-        if ( isset( $_POST['edit'] ) ) {
-            return $output;
+        if ( isset( $_POST['edit_section'] ) ) {
+            return DataService::updateSectionName($_POST['old_title'], $_POST['new_title'], $output);
         }
 
         $new_input = [ $input['section_title'] => $input ];
