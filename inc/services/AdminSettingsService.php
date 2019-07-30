@@ -19,7 +19,7 @@ class AdminSettingsService
     {
 
         /** Section Settings */
-        register_setting('wpcui', 'wpcui_sections', [$this->sanitizer, 'sanitize']);
+        register_setting('wpcui', 'wpcui_sections', [$this->sanitizer, 'sanitizeSection']);
 
         add_settings_section('wpcui_section_index', 'Add Section', [$this, 'sectionOutput'], 'wpcui');
 

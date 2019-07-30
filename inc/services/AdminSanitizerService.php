@@ -3,7 +3,15 @@
 namespace Inc\Services;
 
 class AdminSanitizerService{
-    public function sanitize( $input ) {
+
+	/**
+	 * Sanitization handler for saving the sections form
+	 *
+	 * @param $input
+	 *
+	 * @return array|mixed|void
+	 */
+    public function sanitizeSection( $input ) {
         $output = get_option( 'wpcui_sections' );
 
         if ( isset( $_POST['remove'] ) ) {
@@ -33,6 +41,63 @@ class AdminSanitizerService{
         return $output;
     }
 
+	/**
+	 * Sanitization handler for saving the control form
+	 *
+	 * @param $input
+	 *
+	 * @return array|mixed|void
+	 */
+	public function sanitizeControl( $input ) {
+		$input['section'] = $_POST['section'];
+		$output           = DataService::getControls();
+
+		if ( isset( $_POST['remove'] ) ) {
+			unset( $output[ $_POST['remove'] ] );
+
+			return $output;
+		}
+
+		$new_input = [ $input['control_id'] => $input ];
+
+		if ( count( $output ) == 0 ) {
+			$output = $new_input;
+
+			return $output;
+		}
+
+		// format the choices if there are any
+		if(array_key_exists('control_choices', $input)) {
+			$choices = explode(',', $input['control_choices']);
+			$new_choices = [];
+			foreach ($choices as $choice) {
+				$new_choices[$choice] = $choice;
+			}
+			$input['control_choices'] = $new_choices;
+		}
+
+		foreach ( $output as $key => $value ) {
+			// update existing value
+			if ( $input['control_id'] === $key ) {
+				$output[ $key ] = $input;
+			}
+			// create new entry
+			else {
+				$output[ $input['control_id'] ] = $input;
+			}
+		}
+
+		return $output;
+	}
+
+
+	/**
+	 * Delete a section
+	 *
+	 * @param $section_name
+	 *
+	 * @return mixed|void
+	 */
     public function deleteSection($section_name) {
         $sections = DataService::getSections();
         $controls = DataService::getControls();
@@ -47,51 +112,25 @@ class AdminSanitizerService{
             unset($controls[$key]);
         }
 
-        // todo: need to remove the unused controls from the database.
-        // for some reason, update_option is not working here...
+        self::deleteControls($section_name);
 
         return $sections;
     }
 
-    public function sanitizeControl( $input ) {
-        $input['section'] = $_POST['section'];
-        $output           = DataService::getControls();
 
-        if ( isset( $_POST['remove'] ) ) {
-            unset( $output[ $_POST['remove'] ] );
+	/**
+	 * Delete all of the controls for a given section name
+	 *
+	 * @param $section_name
+	 */
+    public function deleteControls($section_name) {
+		// filter out the controls associated with this section
+		$controls = array_filter(DataService::getControls(), function($control) use ($section_name) {
+			return $control['section'] != $section_name;
+		});
 
-            return $output;
-        }
-
-        $new_input = [ $input['control_id'] => $input ];
-
-        if ( count( $output ) == 0 ) {
-            $output = $new_input;
-
-            return $output;
-        }
-
-        // format the choices if there are any
-        if(array_key_exists('control_choices', $input)) {
-            $choices = explode(',', $input['control_choices']);
-            $new_choices = [];
-            foreach ($choices as $choice) {
-                $new_choices[$choice] = $choice;
-            }
-            $input['control_choices'] = $new_choices;
-        }
-
-        foreach ( $output as $key => $value ) {
-            // update existing value
-            if ( $input['control_id'] === $key ) {
-                $output[ $key ] = $input;
-            }
-            // create new entry
-            else {
-                $output[ $input['control_id'] ] = $input;
-            }
-        }
-
-        return $output;
+		DataService::setControls($controls);
     }
+
+
 }

@@ -4,11 +4,12 @@ namespace Inc\Pages;
 
 use Inc\Base\BaseController;
 use Inc\Services\AdminSettingsService;
+use Inc\Services\DataService;
 
 class Admin extends BaseController {
 
-
 	public function register() {
+		DataService::cleanDatabase();
         add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
 
 		$settings_service = new AdminSettingsService();
