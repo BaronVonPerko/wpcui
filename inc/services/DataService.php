@@ -33,6 +33,21 @@ class DataService {
 			}
 		}
 
+		$updatedSections = array_filter($sections, function($section) {
+			return array_key_exists('old_name', $section);
+		});
+
+		foreach($updatedSections as $sectionKey => $updatedSection) {
+			$controlsToUpdate = array_filter($controls, function($control) use ($updatedSection) {
+				return $control['section'] == $updatedSection['old_name'];
+			});
+
+			foreach ($controlsToUpdate as $key => $controlToUpdate) {
+				$controlToUpdate['section'] = $sectionKey;
+				$validControls[$key] = $controlToUpdate;
+			}
+		}
+
 		// update the database
 		self::setControls( $validControls );
 	}
@@ -51,6 +66,7 @@ class DataService {
 		foreach($data as $key=>$datum) {
 			if($key == $oldName) {
 				$datum['section_title'] = $newName;
+				$datum['old_name'] = $oldName;
 				$output[$newName] = $datum;
 			} else {
 				$output[$key] = $datum;
