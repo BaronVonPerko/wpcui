@@ -8,6 +8,6 @@ class Enqueue extends BaseController {
     }
 
     public function enqueue() {
-        wp_enqueue_script( 'wpcui_script', $this->plugin_url . 'inc/assets/wpcui.js' );
+        wp_enqueue_script( 'wpcui_script', $this->plugin_url . 'inc/Assets/wpcui.js' );
     }
 }
