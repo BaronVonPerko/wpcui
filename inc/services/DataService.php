@@ -7,6 +7,10 @@ class DataService {
 		return get_option( 'wpcui_sections' );
 	}
 
+	public static function setSections($sections) {
+		update_option('wpcui_sections', $sections);
+	}
+
 	public static function getControls() {
 		return get_option( 'wpcui_controls' );
 	}
@@ -19,7 +23,8 @@ class DataService {
 	 * Since we cannot update the options during the sanitize step,
 	 * this function will run on admin_init.  It will go through the
 	 * existing sections, and delete any controls that are no longer
-	 * associated with a section.
+	 * associated with a section.  If a section changed names, it will
+	 * update the associated controls as well.
 	 */
 	public static function cleanDatabase() {
 		$sections = self::getSections();
@@ -50,6 +55,7 @@ class DataService {
 
 		// update the database
 		self::setControls( $validControls );
+		self::clearOldNamesOnSections();
 	}
 
 	/**
@@ -74,6 +80,18 @@ class DataService {
 		}
 
 		return $output;
+	}
+
+	public static function clearOldNamesOnSections() {
+		$sections = self::getSections();
+
+		foreach($sections as &$section) {
+			if(array_key_exists('old_name', $section)) {
+				unset($section['old_name']);
+			}
+		}
+
+		DataService::setSections($sections);
 	}
 
 	/**
