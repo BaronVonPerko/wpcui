@@ -3,6 +3,8 @@
 namespace Inc;
 
 
+use Inc\Services\DataService;
+
 final class Init
 {
 
