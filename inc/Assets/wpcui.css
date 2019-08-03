@@ -1,0 +1,49 @@
+.wpcui-panel {
+    margin: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.wpcui-control-table, .wpcui-panel, .wpcui-control-form {
+    border: 1px solid rgb(229,229,229);
+}
+
+.wpcui-panel-title {
+    padding: 8px 4px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wpcui-panel h3, .wpcui-panel h2 {
+    margin: 0;
+}
+
+.wpcui-panel-body {
+    padding: 8px 4px;
+}
+
+.wpcui-panel-title-buttons {
+    display: flex;
+}
+
+.wpcui-panel-title-buttons form {
+    margin-left: 10px;
+}
+
+.wpcui-control-table {
+    background-color: #fff;
+}
+
+.wpcui-control-table th {
+    text-align: left;
+}
+
+.wpcui-control-table td, .wpcui-control-table th {
+    padding: 5px 10px;
+}
+
+.wpcui-control-form {
+    margin: 15px 0 5px;
+    background-color: #fff;
+    padding: 10px;
+}
