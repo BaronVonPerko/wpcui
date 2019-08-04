@@ -24,46 +24,53 @@
 	<?php if ( count( $sections ) > 0 ): ?>
 
 		<?php foreach ( $sections as $key => $section ): ?>
-            <?php $editSectionId = "edit_section_$key"; ?>
+			<?php $editSectionId = "edit_section_$key"; ?>
             <div class="wpcui-panel">
                 <div class="wpcui-panel-title">
-					<?php if ( $_POST[$editSectionId] ): ?>
+
+                    <div class="wpcui-collapsible-title">
+                        <?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'inc/Assets/chevron.svg' ) ?>
+
+						<?php if ( $_POST[ $editSectionId ] ): ?>
+                            <div class="wpcui-panel-title-buttons">
+                                <form action="options.php" method="post">
+                                    <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
+                                    <input type="hidden" name="old_title" value="<?= $section['section_title'] ?>">
+                                    <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
+                                    <input type="text" name="new_title" value="<?= $section['section_title'] ?>"/>
+									<?php settings_fields( 'wpcui' ); ?>
+									<?php submit_button( 'Save Changes', 'small', 'edit', false ); ?>
+                                </form>
+                                <form action="" method="post">
+                                    <input type="hidden" name="edit_section" value="">
+									<?php settings_fields( 'wpcui' ); ?>
+									<?php submit_button( 'Cancel', 'small', 'edit', false ); ?>
+                                </form>
+                            </div>
+						<?php else: ?>
+                            <h3><?= $section['section_title'] ?></h3>
+						<?php endif; ?>
+
+                    </div>
+
+					<?php if ( ! $_POST[ $editSectionId ] ): ?>
                         <div class="wpcui-panel-title-buttons">
-                            <form action="options.php" method="post">
-                                <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
-                                <input type="hidden" name="old_title" value="<?= $section['section_title'] ?>">
-                                <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
-                                <input type="text" name="new_title" value="<?= $section['section_title'] ?>"/>
-								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Save Changes', 'small', 'edit', false ); ?>
-                            </form>
                             <form action="" method="post">
-                                <input type="hidden" name="edit_section" value="">
+                                <input type="hidden" name="<?= $editSectionId ?>"
+                                       value="<?= $section['section_title'] ?>">
 								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Cancel', 'small', 'edit', false ); ?>
+								<?php submit_button( 'Edit', 'small', 'edit', false ); ?>
+                            </form>
+
+                            <form action="options.php" method="post" style="margin-right: 5px;">
+                                <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
+								<?php settings_fields( 'wpcui' ); ?>
+								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
+									'onclick' => 'return confirm("Are you sure you want to delete this section?")'
+								] ); ?>
                             </form>
                         </div>
-					<?php else: ?>
-                        <h3><?= $section['section_title'] ?></h3>
 					<?php endif; ?>
-
-	                <?php if ( ! $_POST[$editSectionId] ): ?>
-                    <div class="wpcui-panel-title-buttons">
-                        <form action="" method="post">
-                            <input type="hidden" name="<?= $editSectionId ?>" value="<?= $section['section_title'] ?>">
-							<?php settings_fields( 'wpcui' ); ?>
-							<?php submit_button( 'Edit', 'small', 'edit', false ); ?>
-                        </form>
-
-                        <form action="options.php" method="post" style="margin-right: 5px;">
-                            <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
-							<?php settings_fields( 'wpcui' ); ?>
-							<?php submit_button( 'Delete', 'delete small', 'submit', false, [
-								'onclick' => 'return confirm("Are you sure you want to delete this section?")'
-							] ); ?>
-                        </form>
-                    </div>
-                    <?php endif; ?>
                 </div> <!-- end .wpcui-panel-title -->
 
                 <div class="wpcui-panel-body">

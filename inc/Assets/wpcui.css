@@ -47,3 +47,15 @@
     background-color: #fff;
     padding: 10px;
 }
+
+.wpcui-chevron {
+    width: 25px;
+    color: black;
+    margin-right: 3px;
+}
+
+.wpcui-collapsible-title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
