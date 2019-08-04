@@ -25,9 +25,8 @@
 
 		<?php foreach ( $sections as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
-            <div class="wpcui-panel">
+            <div class="wpcui-panel" data-wpcui-collapsed="true">
                 <div class="wpcui-panel-title">
-
                     <div class="wpcui-collapsible-title">
                         <?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'inc/Assets/chevron.svg' ) ?>
 
@@ -50,8 +49,7 @@
 						<?php else: ?>
                             <h3><?= $section['section_title'] ?></h3>
 						<?php endif; ?>
-
-                    </div>
+                    </div> <!-- end of .wpcui-collapsible-title -->
 
 					<?php if ( ! $_POST[ $editSectionId ] ): ?>
                         <div class="wpcui-panel-title-buttons">

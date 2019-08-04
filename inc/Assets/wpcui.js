@@ -7,12 +7,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let hasOptions = selectedOption.dataset.hasOptions;
 
-        if(hasOptions) {
+        if (hasOptions) {
             controlChoices.classList.remove('hidden');
         } else {
-            if(!controlChoices.classList.contains('hidden')) {
+            if (!controlChoices.classList.contains('hidden')) {
                 controlChoices.classList.add('hidden');
             }
         }
     };
+
+
+    let sectionTitles = document.getElementsByClassName('wpcui-collapsible-title');
+
+    [...sectionTitles].forEach(title => {
+        title.onclick = () => {
+            let panel = title.parentElement.parentElement;
+
+            let isCollapsed = panel.getAttribute('data-wpcui-collapsed');
+
+            panel.setAttribute('data-wpcui-collapsed', isCollapsed ? "" : "true");
+        };
+    });
 });

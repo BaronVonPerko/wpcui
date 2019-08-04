@@ -22,6 +22,21 @@
     padding: 8px 4px;
 }
 
+.wpcui-panel[data-wpcui-collapsed="true"] .wpcui-panel-body {
+    display: none;
+}
+
+.wpcui-collapsible-title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.wpcui-panel[data-wpcui-collapsed=""] .wpcui-chevron {
+    transform: rotate(180deg);
+}
+
 .wpcui-panel-title-buttons {
     display: flex;
 }
@@ -52,10 +67,5 @@
     width: 25px;
     color: black;
     margin-right: 3px;
-}
-
-.wpcui-collapsible-title {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+    transition: transform 250ms ease-in-out;
 }
