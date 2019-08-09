@@ -1,22 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let dropdownControl = document.getElementById('dropdown_control_type');
-    let controlChoices = document.getElementsByClassName('control-choices')[0];
 
-    dropdownControl.onchange = (e) => {
-        let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
+    /**
+     * Show/Hide the control choices text box for specific control types
+     */
+    let dropdownControls = document.getElementsByClassName('dropdown_control_type');
 
-        let hasOptions = selectedOption.dataset.hasOptions;
+    [...dropdownControls].forEach(dropdownControl => {
+        dropdownControl.onchange = () => {
+            let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
+            let hasOptions = selectedOption.dataset.hasOptions;
+            let controlChoices = document.getElementsByClassName('control-choices');
 
-        if (hasOptions) {
-            controlChoices.classList.remove('hidden');
-        } else {
-            if (!controlChoices.classList.contains('hidden')) {
-                controlChoices.classList.add('hidden');
+            if (hasOptions) {
+                [...controlChoices].forEach(controlChoice => controlChoice.classList.remove('hidden'));
+            } else {
+                [...controlChoices].forEach(controlChoice => {
+                    if (!controlChoice.classList.contains('hidden')) {
+                        controlChoice.classList.add('hidden');
+                    }
+                });
             }
-        }
-    };
+        };
+    });
 
 
+    /**
+     * Collapsible sections
+     */
     let sectionTitles = document.getElementsByClassName('wpcui-collapsible-title');
 
     [...sectionTitles].forEach(title => {
@@ -25,7 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let isCollapsed = panel.getAttribute('data-wpcui-collapsed');
 
-            panel.setAttribute('data-wpcui-collapsed', isCollapsed ? "" : "true");
+            if(isCollapsed) {
+                // set all panels to be collapsed
+                [...document.getElementsByClassName('wpcui-panel')]
+                    .forEach(panel => panel.setAttribute('data-wpcui-collapsed', true));
+
+                // open this specific panel
+                panel.setAttribute('data-wpcui-collapsed', "");
+            }
         };
     });
 });

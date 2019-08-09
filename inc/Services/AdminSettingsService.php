@@ -77,6 +77,7 @@ class AdminSettingsService
                 'option_name' => 'wpcui_controls',
                 'label_for' => 'control_type',
                 'html_id' => 'dropdown_control_type',
+                'html_class' => 'dropdown_control_type',
                 'options' => [
                     'Standard' => [
                         ['name' => 'Text'],
@@ -105,7 +106,7 @@ class AdminSettingsService
             [
                 'option_name' => 'wpcui_controls',
                 'label_for' => 'control_choices',
-                'placeholder' => 'Comma separated values',
+                'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
                 'class' => 'hidden control-choices',
             ]);
     }

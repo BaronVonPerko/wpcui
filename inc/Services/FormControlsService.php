@@ -44,9 +44,10 @@ class FormControlsService
         $label = $args['label_for'];
         $groups = $args['options'];
         $eleName = $name . "[$label]";
-        $html_id = $args['html_id'] ? ' id="' . $args['html_id'] . '"' : '';
+        $className = ' class="' . $args['html_class'] . '"';
+        $htmlId = $args['html_id'] ? ' id="' . $args['html_id'] . '"' : '';
 
-        echo "<select $html_id name=\"$eleName\">";
+        echo "<select $htmlId $className name=\"$eleName\">";
 
         foreach($groups as $group => $options) {
             echo "<optgroup label=\"$group\">";
