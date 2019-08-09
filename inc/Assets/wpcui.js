@@ -35,14 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let isCollapsed = panel.getAttribute('data-wpcui-collapsed');
 
-            if(isCollapsed) {
-                // set all panels to be collapsed
-                [...document.getElementsByClassName('wpcui-panel')]
-                    .forEach(panel => panel.setAttribute('data-wpcui-collapsed', true));
-
-                // open this specific panel
-                panel.setAttribute('data-wpcui-collapsed', "");
-            }
+            panel.setAttribute('data-wpcui-collapsed', isCollapsed ? "" : "true");
         };
     });
 });

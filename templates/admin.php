@@ -25,7 +25,7 @@
 
 		<?php foreach ( $sections as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
-            <div class="wpcui-panel" data-wpcui-collapsed="true">
+            <div class="wpcui-panel" data-wpcui-collapsed="">
                 <div class="wpcui-panel-title">
 					<?php if ( $_POST[ $editSectionId ] ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
