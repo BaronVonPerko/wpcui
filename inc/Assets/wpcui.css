@@ -20,6 +20,14 @@
 
 .wpcui-panel-body {
     padding: 8px 4px;
+    display: flex;
+    flex-direction: row;
+}
+
+@media(max-width: 1030px) {
+    .wpcui-panel-body {
+        flex-direction: column;
+    }
 }
 
 .wpcui-panel[data-wpcui-collapsed="true"] .wpcui-panel-body {
@@ -47,6 +55,7 @@
 
 .wpcui-control-table {
     background-color: #fff;
+    flex: 1;
 }
 
 .wpcui-control-table th {
@@ -58,9 +67,16 @@
 }
 
 .wpcui-control-form {
-    margin: 15px 0 5px;
+    margin: 0 0 5px 10px;
     background-color: #fff;
     padding: 10px;
+    flex: 1;
+}
+
+@media(max-width: 1030px) {
+    .wpcui-control-form {
+        margin: 10px 0 5px;
+    }
 }
 
 .wpcui-chevron {
