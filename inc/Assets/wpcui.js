@@ -9,16 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdownControl.onchange = () => {
             let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
             let hasOptions = selectedOption.dataset.hasOptions;
-            let controlChoices = document.getElementsByClassName('control-choices');
+            let controlChoices = dropdownControl.parentElement.parentElement.nextSibling;
 
             if (hasOptions) {
-                [...controlChoices].forEach(controlChoice => controlChoice.classList.remove('hidden'));
+                controlChoices.classList.remove('hidden');
             } else {
-                [...controlChoices].forEach(controlChoice => {
-                    if (!controlChoice.classList.contains('hidden')) {
-                        controlChoice.classList.add('hidden');
-                    }
-                });
+                if (!controlChoices.classList.contains('hidden')) {
+                    controlChoices.classList.add('hidden');
+                }
             }
         };
     });
