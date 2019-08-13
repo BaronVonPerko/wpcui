@@ -25,9 +25,10 @@
 
 		<?php foreach ( $sections as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
+
             <div class="wpcui-panel" data-wpcui-collapsed="">
                 <div class="wpcui-panel-title">
-					<?php if ( $_POST[ $editSectionId ] ): ?> <!-- edit section title -->
+					<?php if ( array_key_exists($editSectionId, $_POST) ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
                             <form action="options.php" method="post">
                                 <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
@@ -50,7 +51,7 @@
                         </div> <!-- end of .wpcui-collapsible-title -->
 					<?php endif; ?>
 
-					<?php if ( ! $_POST[ $editSectionId ] ): ?>
+					<?php if ( ! array_key_exists($editSectionId, $_POST) ): ?>
                         <div class="wpcui-panel-title-buttons">
                             <form action="" method="post">
                                 <input type="hidden" name="<?= $editSectionId ?>"
