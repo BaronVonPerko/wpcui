@@ -127,6 +127,10 @@ class AdminSanitizerService {
 			return 'Control ID must not contain spaces.';
 		}
 
+		if ( strpos( $id, '-' ) ) {
+		    return 'Control ID must not contain hyphens.  Use underscores instead.';
+        }
+
 		foreach ( DataService::getControls() as $key => $control ) {
 			if ( $key == $id ) {
 				return "Control ID $id already exists.";
