@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Base;
+namespace PerkoCustomizerUI\Base;
 
 class Enqueue extends BaseController {
     public function register() {

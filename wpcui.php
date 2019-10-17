@@ -21,7 +21,7 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
  * The code that runs during plugin activation
  */
 function activateWpcuiPlugin() {
-    Inc\Base\Activate::activate();
+    PerkoCustomizerUI\Base\Activate::activate();
 }
 register_activation_hook( __FILE__, 'activateWpcuiPlugin' );
 
@@ -30,12 +30,12 @@ register_activation_hook( __FILE__, 'activateWpcuiPlugin' );
  * The code that runs during plugin deactivation
  */
 function deactivateWpcuiPlugin() {
-    Inc\Base\Deactivate::deactivate();
+    PerkoCustomizerUI\Base\Deactivate::deactivate();
 }
 register_deactivation_hook( __FILE__, 'deactivateWpcuiPlugin' );
 
 
 
-if (class_exists('Inc\\Init')) {
-    Inc\Init::registerServices();
+if (class_exists('PerkoCustomizerUI\\Init')) {
+    PerkoCustomizerUI\Init::registerServices();
 }

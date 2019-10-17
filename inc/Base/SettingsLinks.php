@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Base;
+namespace PerkoCustomizerUI\Base;
 
 class SettingsLinks extends BaseController
 {

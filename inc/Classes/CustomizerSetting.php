@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Classes;
+namespace PerkoCustomizerUI\Classes;
 
 class CustomizerSetting{
 	public $id;
