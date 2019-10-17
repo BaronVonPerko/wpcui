@@ -1,7 +1,7 @@
 <div class="wrap">
     <h1>WPCUI Options</h1>
 
-	<?php use Inc\Services\DataService; ?>
+	<?php use PerkoCustomizerUI\Services\DataService; ?>
 
 	<?php settings_errors(); ?>
 

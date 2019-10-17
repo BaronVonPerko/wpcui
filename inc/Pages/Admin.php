@@ -1,10 +1,10 @@
 <?php
 
-namespace Inc\Pages;
+namespace PerkoCustomizerUI\Pages;
 
-use Inc\Base\BaseController;
-use Inc\Services\AdminSettingsService;
-use Inc\Services\DataService;
+use PerkoCustomizerUI\Base\BaseController;
+use PerkoCustomizerUI\Services\AdminSettingsService;
+use PerkoCustomizerUI\Services\DataService;
 
 class Admin extends BaseController {
 

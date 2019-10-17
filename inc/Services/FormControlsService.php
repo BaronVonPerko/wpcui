@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Services;
+namespace PerkoCustomizerUI\Services;
 
 class FormControlsService
 {

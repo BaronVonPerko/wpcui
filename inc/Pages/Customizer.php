@@ -1,11 +1,11 @@
 <?php
 
-namespace Inc\Pages;
+namespace PerkoCustomizerUI\Pages;
 
-use Inc\Classes\CustomizerControl;
-use Inc\Classes\CustomizerSection;
-use Inc\Services\CustomizerGenerator;
-use Inc\Services\DataService;
+use PerkoCustomizerUI\Classes\CustomizerControl;
+use PerkoCustomizerUI\Classes\CustomizerSection;
+use PerkoCustomizerUI\Services\CustomizerGenerator;
+use PerkoCustomizerUI\Services\DataService;
 
 class Customizer{
 

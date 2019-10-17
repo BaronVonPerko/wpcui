@@ -1,8 +1,8 @@
 <?php
 
-namespace Inc\Base;
+namespace PerkoCustomizerUI\Base;
 
-use Inc\Services\DataService;
+use PerkoCustomizerUI\Services\DataService;
 
 class Activate extends BaseController {
 	public static function activate() {

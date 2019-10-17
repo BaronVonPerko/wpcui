@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Services;
+namespace PerkoCustomizerUI\Services;
 
 
 use WP_Customize_Color_Control;
