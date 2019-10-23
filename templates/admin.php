@@ -46,7 +46,7 @@
                         </div>
 					<?php else: ?> <!-- end edit section title, begin collapsible title -->
                         <div class="wpcui-collapsible-title">
-							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'inc/Assets/chevron.svg' ) ?>
+							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
                             <h3><?= $section['section_title'] ?></h3>
                         </div> <!-- end of .wpcui-collapsible-title -->
 					<?php endif; ?>
