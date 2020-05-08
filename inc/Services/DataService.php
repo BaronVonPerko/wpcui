@@ -19,18 +19,31 @@ class DataService {
 	}
 
 	public static function getNextSectionId() {
-		return get_option('wpcui_section_index') + 1;
+		return get_option( 'wpcui_section_index' ) + 1;
 	}
 
 	public static function updateNextSectionId() {
-		update_option('wpcui_section_index', self::getNextSectionId());
+		update_option( 'wpcui_section_index', self::getNextSectionId() );
 	}
 
 	public static function getSectionIdByName( $sectionName ) {
-		foreach(self::getSections() as $key => $section) {
-			if($section['section_title'] == $sectionName) return $key;
+		foreach ( self::getSections() as $key => $section ) {
+			if ( $section['section_title'] == $sectionName ) {
+				return $key;
+			}
 		}
-		return -1;
+
+		return - 1;
+	}
+
+	public static function deleteSection( $sectionName ) {
+		$id = DataService::getSectionIdByName( $sectionName );
+
+		$sections = self::getSections();
+
+		unset( $sections[ $id ] );
+
+		return $sections;
 	}
 
 	public static function getControls() {

@@ -18,17 +18,12 @@ class AdminSanitizerService {
 	 * @return array|mixed|void
 	 */
 	public function sanitizeSection( $input ) {
-		$output = DataService::getSections();
 
 		// delete a section
 		if ( isset( $_POST['remove'] ) ) {
 			$sectionName = $_POST['remove'];
 
-			$id = DataService::getSectionIdByName( $sectionName );
-
-			unset( $output[ $id ] );
-
-			return $output;
+			return DataService::deleteSection( $sectionName );
 		}
 
 		// edit a section name
@@ -38,25 +33,29 @@ class AdminSanitizerService {
 			$error = self::validateSectionName( $_POST['new_title'] );
 			if ( $error ) {
 				add_settings_error( 'wpcui_sections', null, $error );
-				return $output;
-			}
 
-			$output[ $id ]['section_title'] = $_POST['new_title'];
-			return $output;
+				return DataService::getSections();
+			}
+			$sections                         = DataService::getSections();
+			$sections[ $id ]['section_title'] = $_POST['new_title'];
+
+			return $sections;
 		}
 
 		$error = self::validateSectionName( $input['section_title'] );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
-			return $output;
+
+			return DataService::getSections();
 		}
 
 		// create a new section
-		$id            = DataService::getNextSectionId();
-		$output[ $id ] = $input;
+		$sections        = DataService::getSections();
+		$id              = DataService::getNextSectionId();
+		$sections[ $id ] = $input;
 		DataService::updateNextSectionId();
 
-		return $output;
+		return $sections;
 	}
 
 	/**
@@ -134,8 +133,8 @@ class AdminSanitizerService {
 		}
 
 		if ( strpos( $id, '-' ) ) {
-		    return 'Control ID must not contain hyphens.  Use underscores instead.';
-        }
+			return 'Control ID must not contain hyphens.  Use underscores instead.';
+		}
 
 		foreach ( DataService::getControls() as $key => $control ) {
 			if ( $key == $id ) {
@@ -148,8 +147,8 @@ class AdminSanitizerService {
 
 
 	public function validateSectionName( $sectionName ) {
-		foreach (DataService::getSections() as $section) {
-			if($section['section_title'] == $sectionName) {
+		foreach ( DataService::getSections() as $section ) {
+			if ( $section['section_title'] == $sectionName ) {
 				return "A section with this name already exists.";
 			}
 		}
