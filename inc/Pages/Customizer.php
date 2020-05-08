@@ -33,8 +33,10 @@ class Customizer {
 				$saved_control['control_id'],
 				$saved_control['control_label'],
 				$saved_control['control_id'],
+				$saved_control['section'],
 				$saved_control['control_type'],
-				$saved_control['control_default']
+				$saved_control['control_default'],
+				$saved_control['control_choices']
 			);
 		}
 
@@ -46,8 +48,13 @@ class Customizer {
 
 			$controls = [];
 			foreach ( $section_controls as $section_control ) {
-				$controls[] = new CustomizerControl( $section_control['control_id'], $section_control['control_label'],
-					$section_control['control_id'], $section_control['control_type'], $section_control['control_choices'] );
+				$controls[] = new CustomizerControl(
+					$section_control['control_id'],
+					$section_control['control_label'],
+					$section_control['control_id'],
+					$section_control['section'],
+					$section_control['control_type'],
+					$section_control['control_choices'] );
 			}
 
 			$id                          = strtolower( $saved_section['section_title'] );
