@@ -25,7 +25,7 @@ class CustomizerGenerator
         }
     }
 
-    private function registerSetting($wp_customize, $setting)
+    private static function registerSetting($wp_customize, $setting)
     {
         $wp_customize->add_setting($setting->id, array(
             'default' => $setting->default,
@@ -33,7 +33,7 @@ class CustomizerGenerator
         ));
     }
 
-    private function registerSection($wp_customize, $section)
+    private static function registerSection($wp_customize, $section)
     {
         $wp_customize->add_section($section->id, array(
             'title' => __($section->title),
@@ -41,7 +41,7 @@ class CustomizerGenerator
         ));
     }
 
-    private function registerControl($wp_customize, $control, $section)
+    private static function registerControl($wp_customize, $control, $section)
     {
         switch ($control->type) {
             case "Text":
@@ -83,7 +83,7 @@ class CustomizerGenerator
         }
     }
 
-    private function registerStandardControl($wp_customize, $control, $section, $type)
+    private static function registerStandardControl($wp_customize, $control, $section, $type)
     {
         $wp_customize->add_control(new WP_Customize_Control(
         	$wp_customize,
@@ -91,13 +91,13 @@ class CustomizerGenerator
 	        [
 	            'label' => __($control->label),
 	            'section' => $section->id,
-	            'settings' => $control->settings,
+	            'settings' => $control->id,
 	            'type' => $type,
 	        ]
         ));
     }
 
-    private function registerChoicesControl($wp_customize, $control, $section, $type)
+    private static function registerChoicesControl($wp_customize, $control, $section, $type)
     {
         $wp_customize->add_control(new WP_Customize_Control(
         	$wp_customize,
@@ -112,7 +112,7 @@ class CustomizerGenerator
         ));
     }
 
-    private function registerColorControl($wp_customize, $control, $section) {
+    private static function registerColorControl($wp_customize, $control, $section) {
     	$wp_customize->add_control(new WP_Customize_Color_Control(
             $wp_customize,
 		    $control->id,
@@ -124,7 +124,7 @@ class CustomizerGenerator
 	    ));
     }
 
-	private function registerUploadControl($wp_customize, $control, $section) {
+	private static function registerUploadControl($wp_customize, $control, $section) {
 		$wp_customize->add_control(new WP_Customize_Upload_Control(
 			$wp_customize,
 			$control->id,
@@ -136,7 +136,7 @@ class CustomizerGenerator
 		));
 	}
 
-	private function registerImageControl($wp_customize, $control, $section) {
+	private static function registerImageControl($wp_customize, $control, $section) {
 		$wp_customize->add_control(new WP_Customize_Image_Control(
 			$wp_customize,
 			$control->id,
