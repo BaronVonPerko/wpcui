@@ -54,6 +54,7 @@ class Customizer {
 					$section_control['control_id'],
 					$section_control['section'],
 					$section_control['control_type'],
+					$section_control['control_default'],
 					$section_control['control_choices'] );
 			}
 

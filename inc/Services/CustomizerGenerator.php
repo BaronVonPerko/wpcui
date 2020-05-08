@@ -92,6 +92,11 @@ class CustomizerGenerator {
 	}
 
 	private static function registerChoicesControl( $wp_customize, $control, $section, $type ) {
+		$choices = [];
+		foreach(explode(',', $control->choices) as $choice) {
+			$choices[$choice] = $choice;
+		}
+
 		$wp_customize->add_control( new WP_Customize_Control(
 			$wp_customize,
 			$control->id,
@@ -100,7 +105,7 @@ class CustomizerGenerator {
 				'section'  => $section->id,
 				'settings' => $control->setting_id,
 				'type'     => $type,
-				'choices'  => $control->choices
+				'choices'  => $choices
 			]
 		) );
 	}
