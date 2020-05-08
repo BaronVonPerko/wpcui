@@ -8,6 +8,13 @@ use WP_Customize_Control;
 use WP_Customize_Image_Control;
 use WP_Customize_Upload_Control;
 
+/**
+ * Class CustomizerGenerator
+ * @package PerkoCustomizerUI\Services
+ *
+ * This service is used to do the actual registration of settings,
+ * sections, and fields for use within the WordPress customizer.
+ */
 class CustomizerGenerator {
 	public static function Generate( $wp_customize, $settings, $sections ) {
 		foreach ( $settings as $setting ) {

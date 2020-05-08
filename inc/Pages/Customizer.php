@@ -7,6 +7,15 @@ use PerkoCustomizerUI\Classes\CustomizerSection;
 use PerkoCustomizerUI\Services\CustomizerGenerator;
 use PerkoCustomizerUI\Services\DataService;
 
+/**
+ * Class Customizer
+ * @package PerkoCustomizerUI\Pages
+ *
+ * This file is used by the customizer page.  It will load all
+ * of the data for the fields and sections, and pass it off to
+ * the CustomizerGenerator to register the customizer settings,
+ * sections, and controls.
+ */
 class Customizer {
 
 	public $customizer_fields = [];

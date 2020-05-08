@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Classes;
 
+/**
+ * Class CustomizerSetting
+ * @package PerkoCustomizerUI\Classes
+ */
 class CustomizerSetting{
 	public $id;
 	public $default;

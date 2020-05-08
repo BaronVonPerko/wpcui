@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Classes;
 
+/**
+ * Class CustomizerControl
+ * @package PerkoCustomizerUI\Classes
+ */
 class CustomizerControl{
 	public $id;
 	public $label;

@@ -2,7 +2,10 @@
 
 namespace PerkoCustomizerUI;
 
-
+/**
+ * Class Init
+ * @package PerkoCustomizerUI
+ */
 final class Init
 {
 

@@ -1,3 +1,8 @@
+<?php
+/**
+* Template file for the admin backend page.
+ */
+?>
 <div class="wrap">
     <h1>WPCUI Options</h1>
 

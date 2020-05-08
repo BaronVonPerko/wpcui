@@ -2,6 +2,12 @@
 
 namespace PerkoCustomizerUI\Services;
 
+/**
+ * Class AdminSanitizerService
+ * @package PerkoCustomizerUI\Services
+ *
+ * Service for sanitizing form requests from the Admin page
+ */
 class AdminSanitizerService {
 
 	/**

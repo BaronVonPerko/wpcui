@@ -2,6 +2,13 @@
 
 namespace PerkoCustomizerUI\Services;
 
+/**
+ * Class FormControlsService
+ * @package PerkoCustomizerUI\Services
+ *
+ * This service can be used to dynamically create form controls
+ * to be used within the backend pages and forms.
+ */
 class FormControlsService {
 	public function textField( $args ) {
 		$required = '';

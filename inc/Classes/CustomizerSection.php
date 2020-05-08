@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Classes;
 
+/**
+ * Class CustomizerSection
+ * @package PerkoCustomizerUI\Classes
+ */
 class CustomizerSection{
 	public $id;
 	public $title;

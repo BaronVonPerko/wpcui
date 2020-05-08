@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Base;
 
+/**
+ * Class Enqueue
+ * @package PerkoCustomizerUI\Base
+ */
 class Enqueue extends BaseController {
     public function register() {
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );

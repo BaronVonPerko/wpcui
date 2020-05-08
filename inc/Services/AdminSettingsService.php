@@ -2,7 +2,13 @@
 
 namespace PerkoCustomizerUI\Services;
 
-
+/**
+ * Class AdminSettingsService
+ * @package PerkoCustomizerUI\Services
+ *
+ * This service is used to register all of the settings,
+ * sections, and fields used by forms within the Admin page.
+ */
 class AdminSettingsService {
 
 	private $formControlService;

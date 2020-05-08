@@ -2,6 +2,13 @@
 
 namespace PerkoCustomizerUI\Services;
 
+/**
+ * Class DataService
+ * @package PerkoCustomizerUI\Services
+ *
+ * The purpose of this service is to retrieve and update
+ * data in the database.
+ */
 class DataService {
 	public static function getSections() {
 		return get_option( 'wpcui_sections' );

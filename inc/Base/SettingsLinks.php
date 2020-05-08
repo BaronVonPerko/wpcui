@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Base;
 
+/**
+ * Class SettingsLinks
+ * @package PerkoCustomizerUI\Base
+ */
 class SettingsLinks extends BaseController
 {
     public function register()
