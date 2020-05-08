@@ -85,13 +85,13 @@ class CustomizerGenerator
 
     private static function registerStandardControl($wp_customize, $control, $section, $type)
     {
-        $wp_customize->add_control(new WP_Customize_Control(
+	    $wp_customize->add_control(new WP_Customize_Control(
         	$wp_customize,
 	        $control->id,
 	        [
 	            'label' => __($control->label),
 	            'section' => $section->id,
-	            'settings' => $control->id,
+	            'settings' => $control->setting_id,
 	            'type' => $type,
 	        ]
         ));
@@ -105,7 +105,7 @@ class CustomizerGenerator
 	        [
 	            'label' => __($control->label),
 	            'section' => $section->id,
-	            'settings' => $control->settings,
+	            'settings' => $control->setting_id,
 	            'type' => $type,
 	            'choices' => $control->choices
 	        ]
@@ -119,7 +119,7 @@ class CustomizerGenerator
 		    [
 			    'label' => __($control->label),
 			    'section' => $section->id,
-			    'settings' => $control->settings,
+			    'settings' => $control->setting_id,
 		    ]
 	    ));
     }
@@ -131,7 +131,7 @@ class CustomizerGenerator
 			[
 				'label' => __($control->label),
 				'section' => $section->id,
-				'settings' => $control->settings,
+				'settings' => $control->setting_id,
 			]
 		));
 	}
@@ -143,7 +143,7 @@ class CustomizerGenerator
 			[
 				'label' => __($control->label),
 				'section' => $section->id,
-				'settings' => $control->settings,
+				'settings' => $control->setting_id,
 			]
 		));
 	}
