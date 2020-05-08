@@ -4,11 +4,16 @@ namespace PerkoCustomizerUI\Services;
 
 class FormControlsService {
 	public function textField( $args ) {
+		$required = '';
+		if ( array_key_exists( 'required', $args ) ) {
+			$required = $args['required'];
+		}
+
 		$name        = $args['label_for'];
 		$option_name = $args['option_name'];
 		$value       = '';
 
-		echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" required>';
+		echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '" ' . $required . '>';
 	}
 
 	public function textArea( $args ) {

@@ -51,7 +51,8 @@ class AdminSettingsService {
 			[
 				'option_name' => 'wpcui_controls',
 				'label_for'   => 'control_id',
-				'placeholder' => 'eg. location_info'
+				'placeholder' => 'eg. location_info',
+				'required'    => 'required'
 			] );
 
 		add_settings_field( 'control_label',
@@ -62,7 +63,8 @@ class AdminSettingsService {
 			[
 				'option_name' => 'wpcui_controls',
 				'label_for'   => 'control_label',
-				'placeholder' => 'eg. Location Info'
+				'placeholder' => 'eg. Location Info',
+				'required'    => 'required'
 			] );
 
 		add_settings_field( 'control_type',
