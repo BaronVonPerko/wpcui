@@ -82,12 +82,8 @@ class DataService {
 	 * Set default options in the database
 	 */
 	public static function setDefaults() {
-		$arrays = [ 'wpcui_sections', 'wpcui_controls' ];
-		foreach ( $arrays as $option ) {
-			if ( ! get_option( $option ) ) {
-				update_option( $option, [] );
-			}
-		}
+		self::setControls( [] );
+		self::setSections( [] );
 
 		update_option( 'wpcui_section_index', 0 );
 	}
