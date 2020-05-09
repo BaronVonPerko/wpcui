@@ -21,14 +21,13 @@
     <hr>
 
 	<?php
-	$sections = DataService::getSections();
-	$controls = DataService::getControls();
+	$settings = DataService::getSettings();
 	?>
 
 
-	<?php if ( count( $sections ) > 0 ): ?>
+	<?php if ( count( $settings ) > 0 ): ?>
 
-		<?php foreach ( $sections as $key => $section ): ?>
+		<?php foreach ( $settings as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
 
             <div class="wpcui-panel" data-wpcui-collapsed="">

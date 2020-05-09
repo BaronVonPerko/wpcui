@@ -24,11 +24,24 @@ class AdminSettingsService {
 	public function setSettings() {
 
 		/**
-		 * Section Settings
+		 * Register Plugin Settings
 		 */
-		register_setting( 'wpcui', 'wpcui_settings', [ $this->sanitizer, 'sanitizeSection' ] );
+		register_setting(
+			'wpcui',
+			'wpcui_settings',
+			[ $this->sanitizer, 'sanitizeSection' ]
+		);
 
-		add_settings_section( 'wpcui_section_index', 'Add Section', [ $this, 'sectionOutput' ], 'wpcui' );
+
+		/**
+		 * Section Settings Section
+		 */
+		add_settings_section(
+			'wpcui_section_index',
+			'Add Section',
+			[ $this, 'sectionOutput' ],
+			'wpcui'
+		);
 
 		add_settings_field( 'section_title',
 			'Section Title',
@@ -43,11 +56,14 @@ class AdminSettingsService {
 
 
 		/**
-		 * Control Settings
+		 * Control Settings Section
 		 */
-//		register_setting( 'wpcui-control', 'wpcui_controls', [ $this->sanitizer, 'sanitizeControl' ] );
-
-		add_settings_section( 'wpcui_section_control', 'Add Control', [ $this, 'controlOutput' ], 'wpcui-control' );
+		add_settings_section(
+			'wpcui_section_control',
+			'Add Control',
+			[ $this, 'controlOutput' ],
+			'wpcui-control'
+		);
 
 		add_settings_field( 'control_id',
 			'Control ID',

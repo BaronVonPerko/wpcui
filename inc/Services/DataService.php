@@ -10,11 +10,11 @@ namespace PerkoCustomizerUI\Services;
  * data in the database.
  */
 class DataService {
-	public static function getSections() {
+	public static function getSettings() {
 		return get_option( 'wpcui_settings' );
 	}
 
-	public static function setSections( $sections ) {
+	public static function setSettings( $sections ) {
 		update_option( 'wpcui_settings', $sections );
 	}
 
@@ -46,14 +46,6 @@ class DataService {
 		return $sections;
 	}
 
-	public static function getControls() {
-		return get_option( 'wpcui_controls' );
-	}
-
-	public static function setControls( $controls ) {
-		update_option( 'wpcui_controls', $controls );
-	}
-
 	/**
 	 * Change the name of a section.
 	 *
@@ -82,8 +74,7 @@ class DataService {
 	 * Set default options in the database
 	 */
 	public static function setDefaults() {
-		self::setControls( [] );
-		self::setSections( [] );
+		self::setSettings( [] );
 
 		update_option( 'wpcui_section_index', 0 );
 	}
