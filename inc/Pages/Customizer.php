@@ -34,25 +34,28 @@ class Customizer {
 	}
 
 	private function loadData() {
-		$saved_sections = DataService::getSections();
-		$saved_controls = DataService::getControls();
+		$settings = DataService::getSettings();
+		$controls = [];
 
-		foreach ( $saved_controls as $saved_control ) {
-			$this->customizer_fields[] = new CustomizerControl(
-				$saved_control['control_id'],
-				$saved_control['control_label'],
-				$saved_control['control_id'],
-				$saved_control['section'],
-				$saved_control['control_type'],
-				$saved_control['control_default'],
-				$saved_control['control_choices']
-			);
+		foreach ( $settings as $sectionKey => $section ) {
+			foreach($section['controls'] as $control) {
+				$this->customizer_fields[] = new CustomizerControl(
+					$control['control_id'],
+					$control['control_label'],
+					$control['control_id'],
+					$sectionKey,
+					$control['control_type'],
+					$control['control_default'],
+					$control['control_choices']
+				);
+				$controls[] = $control;
+			}
 		}
 
-		foreach ( $saved_sections as $key => $saved_section ) {
+		foreach ( $settings as $sectionKey => $section ) {
 
-			$section_controls = array_filter( $saved_controls, function ( $control ) use ( $key ) {
-				return $control['section'] == $key;
+			$section_controls = array_filter( $controls, function ( $control ) use ( $sectionKey ) {
+				return $control['section'] == $sectionKey;
 			} );
 
 			$controls = [];
@@ -67,9 +70,9 @@ class Customizer {
 					$section_control['control_choices'] );
 			}
 
-			$id                          = strtolower( $saved_section['section_title'] );
+			$id                          = strtolower( $section['section_title'] );
 			$id                          = str_replace( ' ', '_', $id );
-			$this->customizer_sections[] = new CustomizerSection( $id, $saved_section['section_title'], 99, $controls );
+			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99, $controls );
 		}
 	}
 }

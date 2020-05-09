@@ -69,7 +69,7 @@ use PerkoCustomizerUI\Services\DataService;
                             </form>
 
                             <form action="options.php" method="post" style="margin-right: 5px;">
-                                <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
+                                <input type="hidden" name="section_title" value="<?= $section['section_title'] ?>">
                                 <input type="hidden" name="wpcui_action" value="delete_section">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Delete', 'delete small', 'submit', false, [

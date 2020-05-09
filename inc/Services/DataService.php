@@ -36,14 +36,6 @@ class DataService {
 		return - 1;
 	}
 
-	public static function deleteSection( $settings, $sectionName ) {
-		$id = DataService::getSectionIdByName( $sectionName );
-
-		unset( $settings[ $id ] );
-
-		return $settings;
-	}
-
 	/**
 	 * Check if a given control id is already being used.
 	 *
@@ -62,30 +54,6 @@ class DataService {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Change the name of a section.
-	 *
-	 * @param $oldName
-	 * @param $newName
-	 * @param $data
-	 *
-	 * @return array
-	 */
-	public static function updateSectionName( $oldName, $newName, $data ) {
-		$output = [];
-
-		foreach ( $data as $key => $datum ) {
-			if ( $key == $oldName ) {
-				$datum['section_title'] = $newName;
-				$output[ $newName ]     = $datum;
-			} else {
-				$output[ $key ] = $datum;
-			}
-		}
-
-		return $output;
 	}
 
 	/**

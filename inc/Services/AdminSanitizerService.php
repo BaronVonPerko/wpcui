@@ -11,7 +11,7 @@ namespace PerkoCustomizerUI\Services;
 class AdminSanitizerService {
 
 	/**
-	 * Sanitization handler for saving the sections form
+	 * Sanitization handler for saving the sections form.
 	 *
 	 * @param $input
 	 *
@@ -43,6 +43,12 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
 	private function sanitizeNewSection( $input, $settings ) {
 		$error = self::validateSectionName( $input['section_title'] );
 		if ( $error ) {
@@ -60,6 +66,11 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
 	private function sanitizeUpdateSectionName( $settings ) {
 		if ( isset( $_POST['edit_section'] ) ) {
 			$id = DataService::getSectionIdByName( $_POST['old_title'] );
@@ -76,16 +87,29 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
 	private function sanitizeDeleteSection( $settings ) {
-		if ( isset( $_POST['remove'] ) ) {
-			$sectionName = $_POST['remove'];
+		if ( isset( $_POST['section_title'] ) ) {
+			$sectionName = $_POST['section_title'];
 
-			$settings = DataService::deleteSection( $settings, $sectionName );
+			$id = DataService::getSectionIdByName( $sectionName );
+
+			unset( $settings[ $id ] );
 		}
 
 		return $settings;
 	}
 
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
 	private function sanitizeNewControl( $input, $settings ) {
 		$controlId           = strtolower( $input['control_id'] );
 		$sectionId           = $_POST['section'];
@@ -104,6 +128,11 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
 	private function sanitizeDeleteControl( $settings ) {
 		if ( isset( $_POST['control_id'] ) ) {
 			$controlId = $_POST['control_id'];
@@ -120,40 +149,13 @@ class AdminSanitizerService {
 	}
 
 	/**
-	 * Sanitization handler for saving the control form
+	 * Validate to make sure that the control ID meets the requirements
+	 * of the WP Customizer.
 	 *
-	 * @param $input
+	 * @param $id
 	 *
-	 * @return array|mixed|void
+	 * @return bool|string
 	 */
-	public function sanitizeControl( $input ) {
-
-
-		// format the choices if there are any
-		if ( array_key_exists( 'control_choices', $input ) ) {
-			$choices     = explode( ',', $input['control_choices'] );
-			$new_choices = [];
-			foreach ( $choices as $choice ) {
-				$new_choices[ $choice ] = $choice;
-			}
-			$input['control_choices'] = $new_choices;
-		}
-
-		foreach ( $output as $key => $value ) {
-
-			// update existing value
-			if ( $input['control_id'] === $key ) {
-				$output[ $key ] = $input;
-			} // create new entry
-			else {
-				$output[ $input['control_id'] ] = $input;
-			}
-		}
-
-		return $output;
-	}
-
-
 	public function validateControlId( $id ) {
 		if ( strpos( $id, ' ' ) ) {
 			return 'Control ID must not contain spaces.';
@@ -171,6 +173,13 @@ class AdminSanitizerService {
 	}
 
 
+	/**
+	 * Validate to make sure that the section name is unique.
+	 *
+	 * @param $sectionName
+	 *
+	 * @return bool|string
+	 */
 	public function validateSectionName( $sectionName ) {
 		foreach ( DataService::getSettings() as $section ) {
 			if ( $section['section_title'] == $sectionName ) {
