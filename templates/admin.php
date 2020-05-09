@@ -107,9 +107,9 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= str_replace( '_', ' ', $control['control_type'] ) ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="remove_control"
-                                                   value="<?= $control['control_id'] ?>">
-											<?php settings_fields( 'wpcui-control' ); ?>
+                                            <input type="hidden" name="control_id" value="<?= $control['control_id'] ?>">
+                                            <input type="hidden" name="wpcui_action" value="delete_control">
+											<?php settings_fields( 'wpcui' ); ?>
 											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 												'onclick' => 'return confirm("Are you sure you want to delete this control?")'
 											] ); ?>

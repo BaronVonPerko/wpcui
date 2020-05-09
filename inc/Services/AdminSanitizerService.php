@@ -34,6 +34,9 @@ class AdminSanitizerService {
 				case 'create_new_control':
 					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
+				case 'delete_control':
+					$settings = $this->sanitizeDeleteControl( $settings );
+					break;
 			}
 		}
 
@@ -101,6 +104,21 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	private function sanitizeDeleteControl( $settings ) {
+		if ( isset( $_POST['control_id'] ) ) {
+			$controlId = $_POST['control_id'];
+			foreach ( $settings as $sectionKey => $section ) {
+				foreach ( $section['controls'] as $controlKey => $controlData ) {
+					if ( $controlKey == $controlId ) {
+						unset( $settings[ $sectionKey ]['controls'][ $controlId ] );
+					}
+				}
+			}
+		}
+
+		return $settings;
+	}
+
 	/**
 	 * Sanitization handler for saving the control form
 	 *
@@ -109,11 +127,6 @@ class AdminSanitizerService {
 	 * @return array|mixed|void
 	 */
 	public function sanitizeControl( $input ) {
-		if ( isset( $_POST['remove'] ) ) {
-			unset( $output[ $_POST['remove'] ] );
-
-			return $output;
-		}
 
 
 		// format the choices if there are any
