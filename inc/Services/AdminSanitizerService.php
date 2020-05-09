@@ -20,28 +20,25 @@ class AdminSanitizerService {
 	public function sanitizeSettings( $input ) {
 		$settings = DataService::getSettings();
 
-		// delete a section
-		if ( isset( $_POST['remove'] ) ) {
-			$sectionName = $_POST['remove'];
-
-			return DataService::deleteSection( $settings, $sectionName );
+		if ( array_key_exists( 'section_title', $input ) ) {
+			$settings = $this->sanitizeNewSection( $input, $settings );
 		}
 
-		// edit a section name
-		if ( isset( $_POST['edit_section'] ) ) {
-			$id = DataService::getSectionIdByName( $_POST['old_title'] );
-
-			$error = self::validateSectionName( $_POST['new_title'] );
-			if ( $error ) {
-				add_settings_error( 'wpcui_sections', null, $error );
-
-				return $settings;
+		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
+			switch ( $_POST['wpcui_action'] ) {
+				case 'update_section_title':
+					$settings = $this->sanitizeUpdateSectionName( $settings );
+					break;
+				case 'delete_section':
+					$settings = $this->sanitizeDeleteSection( $settings );
+					break;
 			}
-			$settings[ $id ]['section_title'] = $_POST['new_title'];
-
-			return $settings;
 		}
 
+		return $settings;
+	}
+
+	private function sanitizeNewSection( $input, $settings ) {
 		$error = self::validateSectionName( $input['section_title'] );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
@@ -54,6 +51,32 @@ class AdminSanitizerService {
 		$settings[ $id ]             = $input;
 		$settings[ $id ]['controls'] = [];
 		DataService::updateNextSectionId();
+
+		return $settings;
+	}
+
+	private function sanitizeUpdateSectionName( $settings ) {
+		if ( isset( $_POST['edit_section'] ) ) {
+			$id = DataService::getSectionIdByName( $_POST['old_title'] );
+
+			$error = self::validateSectionName( $_POST['new_title'] );
+			if ( $error ) {
+				add_settings_error( 'wpcui_sections', null, $error );
+
+				return $settings;
+			}
+			$settings[ $id ]['section_title'] = $_POST['new_title'];
+		}
+
+		return $settings;
+	}
+
+	private function sanitizeDeleteSection( $settings ) {
+		if ( isset( $_POST['remove'] ) ) {
+			$sectionName = $_POST['remove'];
+
+			$settings = DataService::deleteSection( $settings, $sectionName );
+		}
 
 		return $settings;
 	}

@@ -35,6 +35,7 @@
 					<?php if ( array_key_exists($editSectionId, $_POST) ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
                             <form action="options.php" method="post">
+                                <input type="hidden" name="wpcui_action" value="update_section_title">
                                 <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
                                 <input type="hidden" name="old_title" value="<?= $section['section_title'] ?>">
                                 <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
@@ -66,6 +67,7 @@
 
                             <form action="options.php" method="post" style="margin-right: 5px;">
                                 <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
+                                <input type="hidden" name="wpcui_action" value="delete_section">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 									'onclick' => 'return confirm("Are you sure you want to delete this section?")'
@@ -102,7 +104,7 @@
                                     <td><?= str_replace( '_', ' ', $control['control_type'] ) ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="remove"
+                                            <input type="hidden" name="remove_control"
                                                    value="<?= $control['control_id'] ?>">
 											<?php settings_fields( 'wpcui-control' ); ?>
 											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
