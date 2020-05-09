@@ -1,16 +1,19 @@
 <?php
+
+use PerkoCustomizerUI\Services\DataService;
+
 /**
-* Template file for the admin backend page.
+ * Template file for the admin backend page.
  */
 ?>
 <div class="wrap">
     <h1>WPCUI Options</h1>
 
-	<?php use PerkoCustomizerUI\Services\DataService; ?>
 
 	<?php settings_errors(); ?>
 
     <form method="post" action="options.php">
+        <input type="hidden" name="wpcui_action" value="create_new_section">
 		<?php
 		settings_fields( 'wpcui' );
 		do_settings_sections( 'wpcui' );
@@ -21,14 +24,13 @@
     <hr>
 
 	<?php
-	$sections = DataService::getSections();
-	$controls = DataService::getControls();
+	$settings = DataService::getSettings();
 	?>
 
 
-	<?php if ( count( $sections ) > 0 ): ?>
+	<?php if ( count( $settings ) > 0 ): ?>
 
-		<?php foreach ( $sections as $key => $section ): ?>
+		<?php foreach ( $settings as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
 
             <div class="wpcui-panel" data-wpcui-collapsed="">
@@ -36,6 +38,7 @@
 					<?php if ( array_key_exists($editSectionId, $_POST) ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
                             <form action="options.php" method="post">
+                                <input type="hidden" name="wpcui_action" value="update_section_title">
                                 <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
                                 <input type="hidden" name="old_title" value="<?= $section['section_title'] ?>">
                                 <input type="hidden" name="edit_section" value="<?= $section['section_title'] ?>">
@@ -66,7 +69,8 @@
                             </form>
 
                             <form action="options.php" method="post" style="margin-right: 5px;">
-                                <input type="hidden" name="remove" value="<?= $section['section_title'] ?>">
+                                <input type="hidden" name="section_title" value="<?= $section['section_title'] ?>">
+                                <input type="hidden" name="wpcui_action" value="delete_section">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 									'onclick' => 'return confirm("Are you sure you want to delete this section?")'
@@ -78,7 +82,7 @@
 
                 <div class="wpcui-panel-body">
 					<?php
-					$sectionControls = array_filter( $controls, function ( $control ) use ( $key ) {
+					$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
 						return $control["section"] == $key;
 					} );
 					?>
@@ -103,9 +107,9 @@
                                     <td><?= str_replace( '_', ' ', $control['control_type'] ) ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="remove"
-                                                   value="<?= $control['control_id'] ?>">
-											<?php settings_fields( 'wpcui-control' ); ?>
+                                            <input type="hidden" name="control_id" value="<?= $control['control_id'] ?>">
+                                            <input type="hidden" name="wpcui_action" value="delete_control">
+											<?php settings_fields( 'wpcui' ); ?>
 											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 												'onclick' => 'return confirm("Are you sure you want to delete this control?")'
 											] ); ?>
@@ -119,8 +123,9 @@
 
                     <form method="post" action="options.php" class="wpcui-control-form">
                         <input type="hidden" name="section" value="<?= $key ?>">
+                        <input type="hidden" name="wpcui_action" value="create_new_control">
 						<?php
-						settings_fields( 'wpcui-control' );
+						settings_fields( 'wpcui' );
 						do_settings_sections( 'wpcui-control' );
 						submit_button( 'Create New Control' );
 						?>
