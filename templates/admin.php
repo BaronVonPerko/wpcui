@@ -1,16 +1,19 @@
 <?php
+
+use PerkoCustomizerUI\Services\DataService;
+
 /**
-* Template file for the admin backend page.
+ * Template file for the admin backend page.
  */
 ?>
 <div class="wrap">
     <h1>WPCUI Options</h1>
 
-	<?php use PerkoCustomizerUI\Services\DataService; ?>
 
 	<?php settings_errors(); ?>
 
     <form method="post" action="options.php">
+        <input type="hidden" name="wpcui_action" value="create_new_section">
 		<?php
 		settings_fields( 'wpcui' );
 		do_settings_sections( 'wpcui' );
@@ -120,6 +123,7 @@
 
                     <form method="post" action="options.php" class="wpcui-control-form">
                         <input type="hidden" name="section" value="<?= $key ?>">
+                        <input type="hidden" name="wpcui_action" value="create_new_control">
 						<?php
 						settings_fields( 'wpcui' );
 						do_settings_sections( 'wpcui-control' );

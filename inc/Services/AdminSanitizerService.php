@@ -20,17 +20,19 @@ class AdminSanitizerService {
 	public function sanitizeSettings( $input ) {
 		$settings = DataService::getSettings();
 
-		if ( array_key_exists( 'section_title', $input ) ) {
-			$settings = $this->sanitizeNewSection( $input, $settings );
-		}
-
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
 			switch ( $_POST['wpcui_action'] ) {
+				case 'create_new_section':
+					$settings = $this->sanitizeNewSection( $input, $settings );
+					break;
 				case 'update_section_title':
 					$settings = $this->sanitizeUpdateSectionName( $settings );
 					break;
 				case 'delete_section':
 					$settings = $this->sanitizeDeleteSection( $settings );
+					break;
+				case 'create_new_control':
+					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
 			}
 		}
@@ -81,6 +83,23 @@ class AdminSanitizerService {
 		return $settings;
 	}
 
+	private function sanitizeNewControl( $input, $settings ) {
+		$sectionId           = $_POST['section'];
+		$input['section']    = $sectionId;
+		$input['control_id'] = strtolower( $input['control_id'] );
+		$error               = self::validateControlId( $input['control_id'] );
+		if ( $error ) {
+			add_settings_error( 'control_id', null, $error );
+
+			return $settings;
+		}
+
+		$new_input = [ $input['control_id'] => $input ];
+		$settings[$sectionId]['controls'][] = $new_input;
+
+		return $settings;
+	}
+
 	/**
 	 * Sanitization handler for saving the control form
 	 *
@@ -89,33 +108,13 @@ class AdminSanitizerService {
 	 * @return array|mixed|void
 	 */
 	public function sanitizeControl( $input ) {
-		$sectionId        = $_POST['section'];
-		$input['section'] = $sectionId;
-		$output           = DataService::getControls();
-
-		// lowercase the id
-		$input['control_id'] = strtolower( $input['control_id'] );
-
-		$error = self::validateControlId( $input['control_id'] );
-		if ( $error ) {
-			add_settings_error( 'control_id', null, $error );
-
-			return $output;
-		}
-
 		if ( isset( $_POST['remove'] ) ) {
 			unset( $output[ $_POST['remove'] ] );
 
 			return $output;
 		}
 
-		$new_input = [ $input['control_id'] => $input ];
 
-		if ( count( $output ) == 0 ) {
-			$output = $new_input;
-
-			return $output;
-		}
 
 		// format the choices if there are any
 		if ( array_key_exists( 'control_choices', $input ) ) {
@@ -128,14 +127,6 @@ class AdminSanitizerService {
 		}
 
 		foreach ( $output as $key => $value ) {
-
-			/*
-			 * Clean up the database.  if the control's section no longer exists,
-			 * delete it.
-			 */
-			if ( ! array_key_exists( $value['section'], DataService::getSections() ) ) {
-				unset( $output[ $key ] );
-			}
 
 			// update existing value
 			if ( $input['control_id'] === $key ) {
@@ -159,10 +150,8 @@ class AdminSanitizerService {
 			return 'Control ID must not contain hyphens.  Use underscores instead.';
 		}
 
-		foreach ( DataService::getControls() as $key => $control ) {
-			if ( $key == $id ) {
-				return "Control ID $id already exists.";
-			}
+		if ( DataService::checkControlIdExists( $id ) ) {
+			return "Control ID $id already exists.";
 		}
 
 		return false;

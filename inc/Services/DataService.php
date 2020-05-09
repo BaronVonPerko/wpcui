@@ -45,6 +45,26 @@ class DataService {
 	}
 
 	/**
+	 * Check if a given control id is already being used.
+	 *
+	 * @param $controlId
+	 *
+	 * @return bool
+	 */
+	public static function checkControlIdExists( $controlId ) {
+		$settings = self::getSettings();
+		foreach ( $settings as $setting ) {
+			foreach ( $setting['controls'] as $control ) {
+				if ( $control['id'] == $controlId ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Change the name of a section.
 	 *
 	 * @param $oldName
