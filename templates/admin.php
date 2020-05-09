@@ -77,7 +77,7 @@
 
                 <div class="wpcui-panel-body">
 					<?php
-					$sectionControls = array_filter( $controls, function ( $control ) use ( $key ) {
+					$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
 						return $control["section"] == $key;
 					} );
 					?>

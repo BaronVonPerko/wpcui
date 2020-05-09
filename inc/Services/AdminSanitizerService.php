@@ -50,8 +50,9 @@ class AdminSanitizerService {
 		}
 
 		// create a new section
-		$id              = DataService::getNextSectionId();
-		$settings[ $id ] = $input;
+		$id                          = DataService::getNextSectionId();
+		$settings[ $id ]             = $input;
+		$settings[ $id ]['controls'] = [];
 		DataService::updateNextSectionId();
 
 		return $settings;
