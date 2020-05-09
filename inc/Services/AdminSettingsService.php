@@ -26,7 +26,7 @@ class AdminSettingsService {
 		/**
 		 * Section Settings
 		 */
-		register_setting( 'wpcui', 'wpcui_sections', [ $this->sanitizer, 'sanitizeSection' ] );
+		register_setting( 'wpcui', 'wpcui_settings', [ $this->sanitizer, 'sanitizeSection' ] );
 
 		add_settings_section( 'wpcui_section_index', 'Add Section', [ $this, 'sectionOutput' ], 'wpcui' );
 
@@ -36,7 +36,7 @@ class AdminSettingsService {
 			'wpcui',
 			'wpcui_section_index',
 			[
-				'option_name' => 'wpcui_sections',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'section_title',
 				'placeholder' => 'eg. Personal Info',
 			] );
@@ -45,7 +45,7 @@ class AdminSettingsService {
 		/**
 		 * Control Settings
 		 */
-		register_setting( 'wpcui-control', 'wpcui_controls', [ $this->sanitizer, 'sanitizeControl' ] );
+//		register_setting( 'wpcui-control', 'wpcui_controls', [ $this->sanitizer, 'sanitizeControl' ] );
 
 		add_settings_section( 'wpcui_section_control', 'Add Control', [ $this, 'controlOutput' ], 'wpcui-control' );
 
@@ -55,7 +55,7 @@ class AdminSettingsService {
 			'wpcui-control',
 			'wpcui_section_control',
 			[
-				'option_name' => 'wpcui_controls',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_id',
 				'placeholder' => 'eg. location_info',
 				'required'    => 'required'
@@ -67,7 +67,7 @@ class AdminSettingsService {
 			'wpcui-control',
 			'wpcui_section_control',
 			[
-				'option_name' => 'wpcui_controls',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info',
 				'required'    => 'required'
@@ -79,7 +79,7 @@ class AdminSettingsService {
 			'wpcui-control',
 			'wpcui_section_control',
 			[
-				'option_name' => 'wpcui_controls',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_type',
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
@@ -109,7 +109,7 @@ class AdminSettingsService {
 			'wpcui-control',
 			'wpcui_section_control',
 			[
-				'option_name' => 'wpcui_controls',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_choices',
 				'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
 				'class'       => 'hidden control-choices',
@@ -121,7 +121,7 @@ class AdminSettingsService {
 			'wpcui-control',
 			'wpcui_section_control',
 			[
-				'option_name' => 'wpcui_controls',
+				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_default',
 				'placeholder' => 'Default value'
 			] );

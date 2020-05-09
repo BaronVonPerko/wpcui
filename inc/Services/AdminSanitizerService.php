@@ -18,6 +18,7 @@ class AdminSanitizerService {
 	 * @return array|mixed|void
 	 */
 	public function sanitizeSection( $input ) {
+		var_dump($input); die;
 
 		// delete a section
 		if ( isset( $_POST['remove'] ) ) {

@@ -11,11 +11,11 @@ namespace PerkoCustomizerUI\Services;
  */
 class DataService {
 	public static function getSections() {
-		return get_option( 'wpcui_sections' );
+		return get_option( 'wpcui_settings' );
 	}
 
 	public static function setSections( $sections ) {
-		update_option( 'wpcui_sections', $sections );
+		update_option( 'wpcui_settings', $sections );
 	}
 
 	public static function getNextSectionId() {

@@ -120,7 +120,7 @@
                     <form method="post" action="options.php" class="wpcui-control-form">
                         <input type="hidden" name="section" value="<?= $key ?>">
 						<?php
-						settings_fields( 'wpcui-control' );
+						settings_fields( 'wpcui' );
 						do_settings_sections( 'wpcui-control' );
 						submit_button( 'Create New Control' );
 						?>
