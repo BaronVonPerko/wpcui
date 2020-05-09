@@ -84,18 +84,19 @@ class AdminSanitizerService {
 	}
 
 	private function sanitizeNewControl( $input, $settings ) {
+		$controlId           = strtolower( $input['control_id'] );
 		$sectionId           = $_POST['section'];
 		$input['section']    = $sectionId;
-		$input['control_id'] = strtolower( $input['control_id'] );
-		$error               = self::validateControlId( $input['control_id'] );
+		$input['control_id'] = $controlId;
+		$error               = self::validateControlId( $controlId );
+
 		if ( $error ) {
 			add_settings_error( 'control_id', null, $error );
 
 			return $settings;
 		}
 
-		$new_input = [ $input['control_id'] => $input ];
-		$settings[$sectionId]['controls'][] = $new_input;
+		$settings[ $sectionId ]['controls'][ $controlId ] = $input;
 
 		return $settings;
 	}
@@ -113,7 +114,6 @@ class AdminSanitizerService {
 
 			return $output;
 		}
-
 
 
 		// format the choices if there are any
