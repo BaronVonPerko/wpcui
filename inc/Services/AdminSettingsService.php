@@ -29,7 +29,7 @@ class AdminSettingsService {
 		register_setting(
 			'wpcui',
 			'wpcui_settings',
-			[ $this->sanitizer, 'sanitizeSection' ]
+			[ $this->sanitizer, 'sanitizeSettings' ]
 		);
 
 

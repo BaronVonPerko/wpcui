@@ -27,7 +27,7 @@ class DataService {
 	}
 
 	public static function getSectionIdByName( $sectionName ) {
-		foreach ( self::getSections() as $key => $section ) {
+		foreach ( self::getSettings() as $key => $section ) {
 			if ( $section['section_title'] == $sectionName ) {
 				return $key;
 			}
@@ -36,14 +36,12 @@ class DataService {
 		return - 1;
 	}
 
-	public static function deleteSection( $sectionName ) {
+	public static function deleteSection( $settings, $sectionName ) {
 		$id = DataService::getSectionIdByName( $sectionName );
 
-		$sections = self::getSections();
+		unset( $settings[ $id ] );
 
-		unset( $sections[ $id ] );
-
-		return $sections;
+		return $settings;
 	}
 
 	/**

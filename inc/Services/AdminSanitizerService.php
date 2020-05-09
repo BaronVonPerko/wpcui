@@ -17,14 +17,14 @@ class AdminSanitizerService {
 	 *
 	 * @return array|mixed|void
 	 */
-	public function sanitizeSection( $input ) {
-		var_dump($input); die;
+	public function sanitizeSettings( $input ) {
+		$settings = DataService::getSettings();
 
 		// delete a section
 		if ( isset( $_POST['remove'] ) ) {
 			$sectionName = $_POST['remove'];
 
-			return DataService::deleteSection( $sectionName );
+			return DataService::deleteSection( $settings, $sectionName );
 		}
 
 		// edit a section name
@@ -35,28 +35,26 @@ class AdminSanitizerService {
 			if ( $error ) {
 				add_settings_error( 'wpcui_sections', null, $error );
 
-				return DataService::getSections();
+				return $settings;
 			}
-			$sections                         = DataService::getSections();
-			$sections[ $id ]['section_title'] = $_POST['new_title'];
+			$settings[ $id ]['section_title'] = $_POST['new_title'];
 
-			return $sections;
+			return $settings;
 		}
 
 		$error = self::validateSectionName( $input['section_title'] );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
 
-			return DataService::getSections();
+			return $settings;
 		}
 
 		// create a new section
-		$sections        = DataService::getSections();
 		$id              = DataService::getNextSectionId();
-		$sections[ $id ] = $input;
+		$settings[ $id ] = $input;
 		DataService::updateNextSectionId();
 
-		return $sections;
+		return $settings;
 	}
 
 	/**
@@ -148,7 +146,7 @@ class AdminSanitizerService {
 
 
 	public function validateSectionName( $sectionName ) {
-		foreach ( DataService::getSections() as $section ) {
+		foreach ( DataService::getSettings() as $section ) {
 			if ( $section['section_title'] == $sectionName ) {
 				return "A section with this name already exists.";
 			}
