@@ -59,8 +59,8 @@ class AdminSanitizerService {
 
 		// create a new section
 		$id                          = DataService::getNextSectionId();
-		$settings[ $id ]             = $input;
-		$settings[ $id ]['controls'] = [];
+		$settings['sections'][ $id ]             = $input;
+		$settings['sections'][ $id ]['controls'] = [];
 		DataService::updateNextSectionId();
 
 		return $settings;
@@ -81,7 +81,7 @@ class AdminSanitizerService {
 
 				return $settings;
 			}
-			$settings[ $id ]['section_title'] = $_POST['new_title'];
+			$settings['sections'][ $id ]['section_title'] = $_POST['new_title'];
 		}
 
 		return $settings;
@@ -98,7 +98,7 @@ class AdminSanitizerService {
 
 			$id = DataService::getSectionIdByName( $sectionName );
 
-			unset( $settings[ $id ] );
+			unset( $settings['sections'][ $id ] );
 		}
 
 		return $settings;
@@ -123,7 +123,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$settings[ $sectionId ]['controls'][ $controlId ] = $input;
+		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $input;
 
 		return $settings;
 	}
@@ -136,10 +136,10 @@ class AdminSanitizerService {
 	private function sanitizeDeleteControl( $settings ) {
 		if ( isset( $_POST['control_id'] ) ) {
 			$controlId = $_POST['control_id'];
-			foreach ( $settings as $sectionKey => $section ) {
+			foreach ( $settings['sections'] as $sectionKey => $section ) {
 				foreach ( $section['controls'] as $controlKey => $controlData ) {
 					if ( $controlKey == $controlId ) {
-						unset( $settings[ $sectionKey ]['controls'][ $controlId ] );
+						unset( $settings['sections'][ $sectionKey ]['controls'][ $controlId ] );
 					}
 				}
 			}
@@ -181,7 +181,7 @@ class AdminSanitizerService {
 	 * @return bool|string
 	 */
 	public function validateSectionName( $sectionName ) {
-		foreach ( DataService::getSettings() as $section ) {
+		foreach ( DataService::getSettings()['sections'] as $section ) {
 			if ( $section['section_title'] == $sectionName ) {
 				return "A section with this name already exists.";
 			}

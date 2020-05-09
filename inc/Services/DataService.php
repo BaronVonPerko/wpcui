@@ -27,7 +27,7 @@ class DataService {
 	}
 
 	public static function getSectionIdByName( $sectionName ) {
-		foreach ( self::getSettings() as $key => $section ) {
+		foreach ( self::getSettings()['sections'] as $key => $section ) {
 			if ( $section['section_title'] == $sectionName ) {
 				return $key;
 			}
@@ -44,7 +44,7 @@ class DataService {
 	 * @return bool
 	 */
 	public static function checkControlIdExists( $controlId ) {
-		$settings = self::getSettings();
+		$settings = self::getSettings()['settings'];
 		foreach ( $settings as $setting ) {
 			foreach ( $setting['controls'] as $control ) {
 				if ( $control['id'] == $controlId ) {

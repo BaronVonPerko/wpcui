@@ -30,7 +30,7 @@ use PerkoCustomizerUI\Services\DataService;
 
 	<?php if ( count( $settings ) > 0 ): ?>
 
-		<?php foreach ( $settings as $key => $section ): ?>
+		<?php foreach ( $settings['sections'] as $key => $section ): ?>
 			<?php $editSectionId = "edit_section_$key"; ?>
 
             <div class="wpcui-panel" data-wpcui-collapsed="">
