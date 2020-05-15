@@ -2,148 +2,197 @@
 
 namespace PerkoCustomizerUI\Services;
 
+/**
+ * Class AdminSanitizerService
+ * @package PerkoCustomizerUI\Services
+ *
+ * Service for sanitizing form requests from the Admin page
+ */
 class AdminSanitizerService {
 
 	/**
-	 * Sanitization handler for saving the sections form
+	 * Sanitization handler for saving the sections form.
 	 *
 	 * @param $input
 	 *
 	 * @return array|mixed|void
 	 */
-	public function sanitizeSection( $input ) {
-		$output = DataService::getSections();
+	public function sanitizeSettings( $input ) {
+		$settings = DataService::getSettings();
 
-		// delete a section
-		if ( isset( $_POST['remove'] ) ) {
-			$sectionName = $_POST['remove'];
-
-			$id = DataService::getSectionIdByName( $sectionName );
-
-			unset( $output[ $id ] );
-
-			return $output;
-		}
-
-		// edit a section name
-		if ( isset( $_POST['edit_section'] ) ) {
-			$id = DataService::getSectionIdByName( $_POST['old_title'] );
-
-			$error = self::validateSectionName( $_POST['new_title'] );
-			if ( $error ) {
-				add_settings_error( 'wpcui_sections', null, $error );
-				return $output;
+		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
+			switch ( $_POST['wpcui_action'] ) {
+				case 'create_new_section':
+					$settings = $this->sanitizeNewSection( $input, $settings );
+					break;
+				case 'update_section_title':
+					$settings = $this->sanitizeUpdateSectionName( $settings );
+					break;
+				case 'delete_section':
+					$settings = $this->sanitizeDeleteSection( $settings );
+					break;
+				case 'create_new_control':
+					$settings = $this->sanitizeNewControl( $input, $settings );
+					break;
+				case 'delete_control':
+					$settings = $this->sanitizeDeleteControl( $settings );
+					break;
 			}
-
-			$output[ $id ]['section_title'] = $_POST['new_title'];
-			return $output;
 		}
 
-		$error = self::validateSectionName( $input['section_title'] );
-		if ( $error ) {
-			add_settings_error( 'wpcui_sections', null, $error );
-			return $output;
-		}
-
-		// create a new section
-		$id            = DataService::getNextSectionId();
-		$output[ $id ] = $input;
-		DataService::updateNextSectionId();
-
-		return $output;
+		return $settings;
 	}
 
 	/**
-	 * Sanitization handler for saving the control form
-	 *
 	 * @param $input
+	 * @param $settings
 	 *
-	 * @return array|mixed|void
+	 * @return mixed
 	 */
-	public function sanitizeControl( $input ) {
-		$sectionId        = $_POST['section'];
-		$input['section'] = $sectionId;
-		$output           = DataService::getControls();
+	private function sanitizeNewSection( $input, $settings ) {
+		$title = sanitize_text_field( $input['section_title'] );
+		$error = self::validateSectionName( $title );
+		if ( $error ) {
+			add_settings_error( 'wpcui_sections', null, $error );
 
-		// lowercase the id
-		$input['control_id'] = strtolower( $input['control_id'] );
+			return $settings;
+		}
 
-		$error = self::validateControlId( $input['control_id'] );
+		// create a new section
+		$id                                      = DataService::getNextSectionId();
+		$settings['sections'][ $id ]             = [ "section_title" => $title ];
+		$settings['sections'][ $id ]['controls'] = [];
+		DataService::updateNextSectionId();
+
+		return $settings;
+	}
+
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeUpdateSectionName( $settings ) {
+		if ( isset( $_POST['edit_section'] ) ) {
+			$oldTitle = sanitize_text_field( $_POST['edit_section'] );
+			$newTitle = sanitize_text_field( $_POST['new_title'] );
+
+			$id = DataService::getSectionIdByName( $oldTitle );
+
+			$error = self::validateSectionName( $newTitle );
+			if ( $error ) {
+				add_settings_error( 'wpcui_sections', null, $error );
+
+				return $settings;
+			}
+			$settings['sections'][ $id ]['section_title'] = $newTitle;
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeDeleteSection( $settings ) {
+		if ( isset( $_POST['section_title'] ) ) {
+			$sectionName = sanitize_text_field( $_POST['section_title'] );
+
+			$id = DataService::getSectionIdByName( $sectionName );
+
+			unset( $settings['sections'][ $id ] );
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeNewControl( $input, $settings ) {
+		$controlId = strtolower( sanitize_text_field( $input['control_id'] ) );
+		$sectionId = sanitize_text_field( $_POST['section'] );
+		$error     = self::validateControlId( $controlId );
+
 		if ( $error ) {
 			add_settings_error( 'control_id', null, $error );
 
-			return $output;
+			return $settings;
 		}
 
-		if ( isset( $_POST['remove'] ) ) {
-			unset( $output[ $_POST['remove'] ] );
+		$control                                                      = [
+			"control_id"      => $controlId,
+			"control_label"   => sanitize_text_field( $input['control_label'] ),
+			"control_type"    => sanitize_text_field( $input['control_type'] ),
+			"control_choices" => sanitize_text_field( $input['control_choices'] ),
+			"control_default" => sanitize_text_field( $input['control_default'] ),
+			"section"         => $sectionId
+		];
+		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
-			return $output;
-		}
-
-		$new_input = [ $input['control_id'] => $input ];
-
-		if ( count( $output ) == 0 ) {
-			$output = $new_input;
-
-			return $output;
-		}
-
-		// format the choices if there are any
-		if ( array_key_exists( 'control_choices', $input ) ) {
-			$choices     = explode( ',', $input['control_choices'] );
-			$new_choices = [];
-			foreach ( $choices as $choice ) {
-				$new_choices[ $choice ] = $choice;
-			}
-			$input['control_choices'] = $new_choices;
-		}
-
-		foreach ( $output as $key => $value ) {
-
-			/*
-			 * Clean up the database.  if the control's section no longer exists,
-			 * delete it.
-			 */
-			if ( ! array_key_exists( $value['section'], DataService::getSections() ) ) {
-				unset( $output[ $key ] );
-			}
-
-			// update existing value
-			if ( $input['control_id'] === $key ) {
-				$output[ $key ] = $input;
-			} // create new entry
-			else {
-				$output[ $input['control_id'] ] = $input;
-			}
-		}
-
-		return $output;
+		return $settings;
 	}
 
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeDeleteControl( $settings ) {
+		if ( isset( $_POST['control_id'] ) ) {
+			$controlId = sanitize_text_field( $_POST['control_id'] );
+			foreach ( $settings['sections'] as $sectionKey => $section ) {
+				foreach ( $section['controls'] as $controlKey => $controlData ) {
+					if ( $controlKey == $controlId ) {
+						unset( $settings['sections'][ $sectionKey ]['controls'][ $controlId ] );
+					}
+				}
+			}
+		}
 
+		return $settings;
+	}
+
+	/**
+	 * Validate to make sure that the control ID meets the requirements
+	 * of the WP Customizer.
+	 *
+	 * @param $id
+	 *
+	 * @return bool|string
+	 */
 	public function validateControlId( $id ) {
 		if ( strpos( $id, ' ' ) ) {
 			return 'Control ID must not contain spaces.';
 		}
 
 		if ( strpos( $id, '-' ) ) {
-		    return 'Control ID must not contain hyphens.  Use underscores instead.';
-        }
+			return 'Control ID must not contain hyphens.  Use underscores instead.';
+		}
 
-		foreach ( DataService::getControls() as $key => $control ) {
-			if ( $key == $id ) {
-				return "Control ID $id already exists.";
-			}
+		if ( DataService::checkControlIdExists( $id ) ) {
+			return "Control ID $id already exists.";
 		}
 
 		return false;
 	}
 
 
+	/**
+	 * Validate to make sure that the section name is unique.
+	 *
+	 * @param $sectionName
+	 *
+	 * @return bool|string
+	 */
 	public function validateSectionName( $sectionName ) {
-		foreach (DataService::getSections() as $section) {
-			if($section['section_title'] == $sectionName) {
+		foreach ( DataService::getSettings()['sections'] as $section ) {
+			if ( $section['section_title'] == $sectionName ) {
 				return "A section with this name already exists.";
 			}
 		}

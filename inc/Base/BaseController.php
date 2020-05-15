@@ -2,6 +2,10 @@
 
 namespace PerkoCustomizerUI\Base;
 
+/**
+ * Class BaseController
+ * @package PerkoCustomizerUI\Base
+ */
 class BaseController
 {
     public $plugin_path;
