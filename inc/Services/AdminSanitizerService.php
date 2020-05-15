@@ -115,11 +115,9 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeNewControl( $input, $settings ) {
-		$controlId           = strtolower( $input['control_id'] );
-		$sectionId           = $_POST['section'];
-		$input['section']    = $sectionId;
-		$input['control_id'] = $controlId;
-		$error               = self::validateControlId( $controlId );
+		$controlId = strtolower( sanitize_text_field( $input['control_id'] ) );
+		$sectionId = sanitize_text_field( $_POST['section'] );
+		$error     = self::validateControlId( $controlId );
 
 		if ( $error ) {
 			add_settings_error( 'control_id', null, $error );
@@ -127,7 +125,15 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $input;
+		$control                                                      = [
+			"control_id"      => $controlId,
+			"control_label"   => sanitize_text_field( $input['control_label'] ),
+			"control_type"    => sanitize_text_field( $input['control_type'] ),
+			"control_choices" => sanitize_text_field( $input['control_choices'] ),
+			"control_default" => sanitize_text_field( $input['control_default'] ),
+			"section"         => $sectionId
+		];
+		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
 		return $settings;
 	}

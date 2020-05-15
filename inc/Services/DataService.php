@@ -44,9 +44,9 @@ class DataService {
 	 * @return bool
 	 */
 	public static function checkControlIdExists( $controlId ) {
-		$settings = self::getSettings()['settings'];
-		foreach ( $settings as $setting ) {
-			foreach ( $setting['controls'] as $control ) {
+		$sections = self::getSettings()['sections'];
+		foreach ( $sections as $section ) {
+			foreach ( $section['controls'] as $control ) {
 				if ( $control['id'] == $controlId ) {
 					return true;
 				}
