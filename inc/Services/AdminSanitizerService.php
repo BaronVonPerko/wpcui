@@ -50,7 +50,8 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeNewSection( $input, $settings ) {
-		$error = self::validateSectionName( $input['section_title'] );
+		$title = sanitize_text_field( $input['section_title'] );
+		$error = self::validateSectionName( $title );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
 
@@ -58,8 +59,8 @@ class AdminSanitizerService {
 		}
 
 		// create a new section
-		$id                          = DataService::getNextSectionId();
-		$settings['sections'][ $id ]             = $input;
+		$id                                      = DataService::getNextSectionId();
+		$settings['sections'][ $id ]             = [ "section_title" => $title ];
 		$settings['sections'][ $id ]['controls'] = [];
 		DataService::updateNextSectionId();
 
@@ -73,15 +74,18 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
 		if ( isset( $_POST['edit_section'] ) ) {
-			$id = DataService::getSectionIdByName( $_POST['old_title'] );
+			$oldTitle = sanitize_text_field( $_POST['edit_section'] );
+			$newTitle = sanitize_text_field( $_POST['new_title'] );
 
-			$error = self::validateSectionName( $_POST['new_title'] );
+			$id = DataService::getSectionIdByName( $oldTitle );
+
+			$error = self::validateSectionName( $newTitle );
 			if ( $error ) {
 				add_settings_error( 'wpcui_sections', null, $error );
 
 				return $settings;
 			}
-			$settings['sections'][ $id ]['section_title'] = $_POST['new_title'];
+			$settings['sections'][ $id ]['section_title'] = $newTitle;
 		}
 
 		return $settings;
@@ -94,7 +98,7 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeDeleteSection( $settings ) {
 		if ( isset( $_POST['section_title'] ) ) {
-			$sectionName = $_POST['section_title'];
+			$sectionName = sanitize_text_field( $_POST['section_title'] );
 
 			$id = DataService::getSectionIdByName( $sectionName );
 
@@ -111,11 +115,9 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeNewControl( $input, $settings ) {
-		$controlId           = strtolower( $input['control_id'] );
-		$sectionId           = $_POST['section'];
-		$input['section']    = $sectionId;
-		$input['control_id'] = $controlId;
-		$error               = self::validateControlId( $controlId );
+		$controlId = strtolower( sanitize_text_field( $input['control_id'] ) );
+		$sectionId = sanitize_text_field( $_POST['section'] );
+		$error     = self::validateControlId( $controlId );
 
 		if ( $error ) {
 			add_settings_error( 'control_id', null, $error );
@@ -123,7 +125,15 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $input;
+		$control                                                      = [
+			"control_id"      => $controlId,
+			"control_label"   => sanitize_text_field( $input['control_label'] ),
+			"control_type"    => sanitize_text_field( $input['control_type'] ),
+			"control_choices" => sanitize_text_field( $input['control_choices'] ),
+			"control_default" => sanitize_text_field( $input['control_default'] ),
+			"section"         => $sectionId
+		];
+		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
 		return $settings;
 	}
@@ -135,7 +145,7 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeDeleteControl( $settings ) {
 		if ( isset( $_POST['control_id'] ) ) {
-			$controlId = $_POST['control_id'];
+			$controlId = sanitize_text_field( $_POST['control_id'] );
 			foreach ( $settings['sections'] as $sectionKey => $section ) {
 				foreach ( $section['controls'] as $controlKey => $controlData ) {
 					if ( $controlKey == $controlId ) {
