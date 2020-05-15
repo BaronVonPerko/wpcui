@@ -50,7 +50,8 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeNewSection( $input, $settings ) {
-		$error = self::validateSectionName( $input['section_title'] );
+		$title = sanitize_text_field( $input['section_title'] );
+		$error = self::validateSectionName( $title );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
 
@@ -58,8 +59,8 @@ class AdminSanitizerService {
 		}
 
 		// create a new section
-		$id                          = DataService::getNextSectionId();
-		$settings['sections'][ $id ]             = $input;
+		$id                                      = DataService::getNextSectionId();
+		$settings['sections'][ $id ]             = [ "section_title" => $title ];
 		$settings['sections'][ $id ]['controls'] = [];
 		DataService::updateNextSectionId();
 
@@ -73,15 +74,18 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
 		if ( isset( $_POST['edit_section'] ) ) {
-			$id = DataService::getSectionIdByName( $_POST['old_title'] );
+			$oldTitle = sanitize_text_field($_POST['edit_section']);
+			$newTitle = sanitize_text_field($_POST['new_title']);
 
-			$error = self::validateSectionName( $_POST['new_title'] );
+			$id = DataService::getSectionIdByName( $oldTitle );
+
+			$error = self::validateSectionName( $newTitle );
 			if ( $error ) {
 				add_settings_error( 'wpcui_sections', null, $error );
 
 				return $settings;
 			}
-			$settings['sections'][ $id ]['section_title'] = $_POST['new_title'];
+			$settings['sections'][ $id ]['section_title'] = $newTitle;
 		}
 
 		return $settings;
