@@ -74,8 +74,8 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
 		if ( isset( $_POST['edit_section'] ) ) {
-			$oldTitle = sanitize_text_field($_POST['edit_section']);
-			$newTitle = sanitize_text_field($_POST['new_title']);
+			$oldTitle = sanitize_text_field( $_POST['edit_section'] );
+			$newTitle = sanitize_text_field( $_POST['new_title'] );
 
 			$id = DataService::getSectionIdByName( $oldTitle );
 
@@ -98,7 +98,7 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeDeleteSection( $settings ) {
 		if ( isset( $_POST['section_title'] ) ) {
-			$sectionName = $_POST['section_title'];
+			$sectionName = sanitize_text_field( $_POST['section_title'] );
 
 			$id = DataService::getSectionIdByName( $sectionName );
 
