@@ -145,7 +145,7 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeDeleteControl( $settings ) {
 		if ( isset( $_POST['control_id'] ) ) {
-			$controlId = $_POST['control_id'];
+			$controlId = sanitize_text_field( $_POST['control_id'] );
 			foreach ( $settings['sections'] as $sectionKey => $section ) {
 				foreach ( $section['controls'] as $controlKey => $controlData ) {
 					if ( $controlKey == $controlId ) {
