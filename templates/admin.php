@@ -7,7 +7,7 @@ use PerkoCustomizerUI\Services\DataService;
  */
 ?>
 <div class="wrap">
-    <h1>WPCUI Options</h1>
+    <h1>Customizer UI Options</h1>
 
 
 	<?php settings_errors(); ?>

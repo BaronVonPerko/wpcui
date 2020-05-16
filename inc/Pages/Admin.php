@@ -26,7 +26,7 @@ class Admin extends BaseController {
 	}
 
 	function addAdminPage() {
-		add_menu_page( 'WPCUI Plugin', 'WPCUI', 'manage_options', 'wpcui', [ $this, 'adminIndex' ],
+		add_menu_page( 'WPCUI Plugin', 'Customizer UI', 'manage_options', 'wpcui', [ $this, 'adminIndex' ],
 			'dashicons-admin-customizer', 110 );
 	}
 }
