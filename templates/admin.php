@@ -96,6 +96,7 @@ use PerkoCustomizerUI\Services\DataService;
                                 <th class="manage-column">ID</th>
                                 <th class="manage-column">Label</th>
                                 <th class="manage-column">Type</th>
+                                <th class="manage-column">Default</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -105,6 +106,7 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= esc_attr($control['control_id']) ?></td>
                                     <td><?= esc_attr($control['control_label']) ?></td>
                                     <td><?= str_replace( '_', ' ', esc_attr($control['control_type']) ) ?></td>
+                                    <td><?= esc_attr($control['control_default']) ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
                                             <input type="hidden" name="control_id" value="<?= esc_attr($control['control_id']) ?>">
