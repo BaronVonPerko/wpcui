@@ -118,6 +118,9 @@ use PerkoCustomizerUI\Services\DataService;
                                         </form>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="5"><pre>get_theme_mod('<?= esc_attr($control['control_id'])?>')</pre></td>
+                                </tr>
 							<?php endforeach; ?> <!-- end loop over existing controls -->
                             </tbody>
                         </table>
