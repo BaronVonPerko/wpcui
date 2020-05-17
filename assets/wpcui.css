@@ -4,7 +4,7 @@
 }
 
 .wpcui-control-table, .wpcui-panel, .wpcui-control-form {
-    border: 1px solid rgb(229,229,229);
+    border: 1px solid rgb(229, 229, 229);
 }
 
 .wpcui-panel-title {
@@ -24,7 +24,7 @@
     flex-direction: row;
 }
 
-@media(max-width: 1030px) {
+@media (max-width: 1030px) {
     .wpcui-panel-body {
         flex-direction: column;
     }
@@ -73,7 +73,7 @@
     flex: 1;
 }
 
-@media(max-width: 1030px) {
+@media (max-width: 1030px) {
     .wpcui-control-form {
         margin: 10px 0 5px;
     }
@@ -84,4 +84,9 @@
     color: black;
     margin-right: 3px;
     transition: transform 250ms ease-in-out;
+}
+
+.wpcui-sample-php {
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    padding: 12px 8px;
 }
