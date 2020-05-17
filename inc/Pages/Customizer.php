@@ -34,7 +34,7 @@ class Customizer {
 	}
 
 	private function loadData() {
-		$settings = DataService::getSettings();
+		$settings = DataService::getSettings()['sections'];
 		$controls = [];
 
 		foreach ( $settings as $sectionKey => $section ) {
