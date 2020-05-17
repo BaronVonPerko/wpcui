@@ -19,6 +19,6 @@ composer install
 
 You can download the zipped version of the plugin with all of the composer dependencies already included from this link:
 
-[Download BETA v0.9](https://wpcui-build-prod.s3.amazonaws.com/wpcui-beta-0.9.zip)
+[Download BETA v0.91](https://wpcui-build-prod.s3.amazonaws.com/wpcui-beta-0.91.zip)
 
 This zip file can be directly uploaded to your WordPress website for use.
