@@ -93,6 +93,19 @@
     justify-content: space-between;
 }
 
+.wpcui-sample-php textarea {
+    width: 100%;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+
 .wpcui-copy-icon {
     cursor: pointer;
 }
