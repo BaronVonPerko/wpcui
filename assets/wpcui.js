@@ -36,4 +36,18 @@ document.addEventListener("DOMContentLoaded", function () {
             panel.setAttribute('data-wpcui-collapsed', isCollapsed ? "" : "true");
         };
     });
+
+
+    /**
+     * Click copy on example control code
+     */
+    let copyIcons = document.getElementsByClassName('wpcui-copy-icon');
+
+    [...copyIcons].forEach(copyIcon => {
+        copyIcon.onclick = () => {
+            copyIcon.previousSibling.select();
+            document.execCommand('copy');
+            alert('Code copied to your clipboard!');
+        };
+    });
 });

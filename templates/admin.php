@@ -118,6 +118,11 @@ use PerkoCustomizerUI\Services\DataService;
                                         </form>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <pre class="wpcui-sample-php"><textarea>get_theme_mod('<?= esc_attr($control['control_id'])?>', '<?= esc_attr($control['control_default']) ? esc_attr($control['control_default']) : "Default Value" ?>')</textarea><span title="Copy code" class="wpcui-copy-icon dashicons dashicons-admin-page"></span></pre>
+                                    </td>
+                                </tr>
 							<?php endforeach; ?> <!-- end loop over existing controls -->
                             </tbody>
                         </table>
