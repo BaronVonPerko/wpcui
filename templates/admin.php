@@ -120,7 +120,7 @@ use PerkoCustomizerUI\Services\DataService;
                                 </tr>
                                 <tr>
                                     <td colspan="5">
-                                        <pre class="wpcui-sample-php">get_theme_mod('<?= esc_attr($control['control_id'])?>', '<?= esc_attr($control['control_default']) ? esc_attr($control['control_default']) : "Default Value" ?>')</pre>
+                                        <pre class="wpcui-sample-php"><span>get_theme_mod('<?= esc_attr($control['control_id'])?>', '<?= esc_attr($control['control_default']) ? esc_attr($control['control_default']) : "Default Value" ?>')</span><span class="wpcui-copy-icon dashicons dashicons-admin-page"></span></pre>
                                     </td>
                                 </tr>
 							<?php endforeach; ?> <!-- end loop over existing controls -->

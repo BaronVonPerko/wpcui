@@ -89,4 +89,10 @@
 .wpcui-sample-php {
     box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
     padding: 12px 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wpcui-copy-icon {
+    cursor: pointer;
 }
