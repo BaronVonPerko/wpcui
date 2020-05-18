@@ -35,14 +35,18 @@ use PerkoCustomizerUI\Services\DataService;
 
             <div class="wpcui-panel" data-wpcui-collapsed="">
                 <div class="wpcui-panel-title">
-					<?php if ( array_key_exists($editSectionId, $_POST) ): ?> <!-- edit section title -->
+					<?php if ( array_key_exists( $editSectionId, $_POST ) ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
                             <form action="options.php" method="post">
                                 <input type="hidden" name="wpcui_action" value="update_section_title">
-                                <input type="hidden" name="edit_section" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="hidden" name="old_title" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="hidden" name="edit_section" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="text" name="new_title" value="<?= esc_attr($section['section_title']) ?>"/>
+                                <input type="hidden" name="edit_section"
+                                       value="<?= esc_attr( $section['section_title'] ) ?>">
+                                <input type="hidden" name="old_title"
+                                       value="<?= esc_attr( $section['section_title'] ) ?>">
+                                <input type="hidden" name="edit_section"
+                                       value="<?= esc_attr( $section['section_title'] ) ?>">
+                                <input type="text" name="new_title"
+                                       value="<?= esc_attr( $section['section_title'] ) ?>"/>
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Save Changes', 'small', 'edit', false ); ?>
                             </form>
@@ -55,21 +59,22 @@ use PerkoCustomizerUI\Services\DataService;
 					<?php else: ?> <!-- end edit section title, begin collapsible title -->
                         <div class="wpcui-collapsible-title">
 							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
-                            <h3><?= esc_attr($section['section_title']) ?></h3>
+                            <h3><?= esc_attr( $section['section_title'] ) ?></h3>
                         </div> <!-- end of .wpcui-collapsible-title -->
 					<?php endif; ?>
 
-					<?php if ( ! array_key_exists($editSectionId, $_POST) ): ?>
+					<?php if ( ! array_key_exists( $editSectionId, $_POST ) ): ?>
                         <div class="wpcui-panel-title-buttons">
                             <form action="" method="post">
                                 <input type="hidden" name="<?= $editSectionId ?>"
-                                       value="<?= esc_attr($section['section_title']) ?>">
+                                       value="<?= esc_attr( $section['section_title'] ) ?>">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Edit', 'small', 'edit', false ); ?>
                             </form>
 
                             <form action="options.php" method="post" style="margin-right: 5px;">
-                                <input type="hidden" name="section_title" value="<?= esc_attr($section['section_title']) ?>">
+                                <input type="hidden" name="section_title"
+                                       value="<?= esc_attr( $section['section_title'] ) ?>">
                                 <input type="hidden" name="wpcui_action" value="delete_section">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
@@ -102,14 +107,21 @@ use PerkoCustomizerUI\Services\DataService;
                             </thead>
                             <tbody>
 							<?php foreach ( $sectionControls as $control ): ?>
+								<?php
+								$controlId      = esc_attr( $control['control_id'] );
+								$controlLabel   = esc_attr( $control['control_label'] );
+								$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
+								$controlDefault = esc_attr( $control['control_default'] );
+								?>
                                 <tr>
-                                    <td><?= esc_attr($control['control_id']) ?></td>
-                                    <td><?= esc_attr($control['control_label']) ?></td>
-                                    <td><?= str_replace( '_', ' ', esc_attr($control['control_type']) ) ?></td>
-                                    <td><?= esc_attr($control['control_default']) ?></td>
+                                    <td><?= $controlId ?></td>
+                                    <td><?= $controlLabel ?></td>
+                                    <td><?= $controlType ?></td>
+                                    <td><?= $controlDefault ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="control_id" value="<?= esc_attr($control['control_id']) ?>">
+                                            <input type="hidden" name="control_id"
+                                                   value="<?= esc_attr( $control['control_id'] ) ?>">
                                             <input type="hidden" name="wpcui_action" value="delete_control">
 											<?php settings_fields( 'wpcui' ); ?>
 											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
@@ -120,7 +132,7 @@ use PerkoCustomizerUI\Services\DataService;
                                 </tr>
                                 <tr>
                                     <td colspan="5">
-                                        <pre class="wpcui-sample-php"><textarea>get_theme_mod('<?= esc_attr($control['control_id'])?>', '<?= esc_attr($control['control_default']) ? esc_attr($control['control_default']) : "Default Value" ?>')</textarea><span title="Copy code" class="wpcui-copy-icon dashicons dashicons-admin-page"></span></pre>
+										<?php do_action( 'wpcui_do_sample_control_code', $control ); ?>
                                     </td>
                                 </tr>
 							<?php endforeach; ?> <!-- end loop over existing controls -->
@@ -129,7 +141,7 @@ use PerkoCustomizerUI\Services\DataService;
 					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
                     <form method="post" action="options.php" class="wpcui-control-form">
-                        <input type="hidden" name="section" value="<?= esc_attr($key) ?>">
+                        <input type="hidden" name="section" value="<?= esc_attr( $key ) ?>">
                         <input type="hidden" name="wpcui_action" value="create_new_control">
 						<?php
 						settings_fields( 'wpcui' );
