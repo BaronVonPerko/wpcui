@@ -3,6 +3,8 @@
 namespace PerkoCustomizerUI\Services;
 
 
+use PerkoCustomizerUI\Classes\CustomizerControl;
+use PerkoCustomizerUI\Classes\CustomizerSetting;
 use WP_Customize_Color_Control;
 use WP_Customize_Control;
 use WP_Customize_Image_Control;
@@ -18,7 +20,8 @@ use WP_Customize_Upload_Control;
 class CustomizerGenerator {
 	public static function Generate( $wp_customize, $settings, $sections ) {
 		foreach ( $settings as $setting ) {
-			self::registerSetting( $wp_customize, $setting );
+			$validator = new CustomizerValidationService();
+			self::registerSetting( $wp_customize, $setting, $validator );
 		}
 
 		foreach ( $sections as $section ) {
@@ -30,11 +33,18 @@ class CustomizerGenerator {
 		}
 	}
 
-	private static function registerSetting( $wp_customize, $setting ) {
-		$wp_customize->add_setting( $setting->id, array(
+	private static function registerSetting( $wp_customize, $setting, $validator ) {
+		$args = [
 			'default'   => $setting->default,
 			'transport' => 'refresh',
-		) );
+		];
+
+		$validation = $validator->getValidation( $setting );
+		if ( !empty($validation) ) {
+			$args['validate_callback'] = $validation;
+		}
+
+		$wp_customize->add_setting( $setting->id, $args );
 	}
 
 	private static function registerSection( $wp_customize, $section ) {
@@ -100,8 +110,8 @@ class CustomizerGenerator {
 
 	private static function registerChoicesControl( $wp_customize, $control, $section, $type ) {
 		$choices = [];
-		foreach(explode(',', $control->choices) as $choice) {
-			$choices[$choice] = $choice;
+		foreach ( explode( ',', $control->choices ) as $choice ) {
+			$choices[ $choice ] = $choice;
 		}
 
 		$wp_customize->add_control( new WP_Customize_Control(
