@@ -17,7 +17,7 @@ use PerkoCustomizerUI\Services\DataService;
 		<?php
 		settings_fields( 'wpcui' );
 		do_settings_sections( 'wpcui' );
-		submit_button( 'Create New Section', 'primary', 'submit', true, ['id' => 'submitNewSection'] );
+		submit_button( 'Create New Section', 'primary', 'submit', true, [ 'id' => 'submitNewSection' ] );
 		?>
     </form>
 
@@ -31,7 +31,10 @@ use PerkoCustomizerUI\Services\DataService;
 	<?php if ( count( $settings ) > 0 ): ?>
 
 		<?php foreach ( $settings['sections'] as $key => $section ): ?>
-			<?php $editSectionId = "edit_section_$key"; ?>
+			<?php
+			$editSectionId = "edit_section_$key";
+			$sectionTitle  = esc_attr( $section['section_title'] )
+			?>
 
             <div class="wpcui-panel" data-wpcui-collapsed="">
                 <div class="wpcui-panel-title">
@@ -39,47 +42,41 @@ use PerkoCustomizerUI\Services\DataService;
                         <div class="wpcui-panel-title-buttons">
                             <form action="options.php" method="post">
                                 <input type="hidden" name="wpcui_action" value="update_section_title">
-                                <input type="hidden" name="edit_section"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>">
-                                <input type="hidden" name="old_title"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>">
-                                <input type="hidden" name="edit_section"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>">
-                                <input type="text" name="new_title"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>"/>
+                                <input type="hidden" name="edit_section" value="<?= $sectionTitle ?>">
+                                <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
+                                <input type="hidden" name="edit_section" value="<?= $sectionTitle ?>">
+                                <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Save Changes', 'small', 'edit', false, ['id' => 'submitEditSectionTitle'] ); ?>
+								<?php submit_button( 'Save Changes', 'small', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
                             </form>
                             <form action="" method="post">
                                 <input type="hidden" name="edit_section" value="">
 								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Cancel', 'small', 'edit', false, ['id' => 'submitCancelEditSectionTitle'] ); ?>
+								<?php submit_button( 'Cancel', 'small', 'edit', false, [ 'id' => 'submitCancelEditSectionTitle' ] ); ?>
                             </form>
                         </div>
 					<?php else: ?> <!-- end edit section title, begin collapsible title -->
                         <div class="wpcui-collapsible-title">
 							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
-                            <h3><?= esc_attr( $section['section_title'] ) ?></h3>
+                            <h3><?= $sectionTitle ?></h3>
                         </div> <!-- end of .wpcui-collapsible-title -->
 					<?php endif; ?>
 
 					<?php if ( ! array_key_exists( $editSectionId, $_POST ) ): ?>
                         <div class="wpcui-panel-title-buttons">
                             <form action="" method="post">
-                                <input type="hidden" name="<?= $editSectionId ?>"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>">
+                                <input type="hidden" name="<?= $editSectionId ?>" value="<?= $sectionTitle ?>">
 								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Edit', 'small', 'edit', false, ['id' => 'submitEditSection'] ); ?>
+								<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditSection' ] ); ?>
                             </form>
 
                             <form action="options.php" method="post" style="margin-right: 5px;">
-                                <input type="hidden" name="section_title"
-                                       value="<?= esc_attr( $section['section_title'] ) ?>">
+                                <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
                                 <input type="hidden" name="wpcui_action" value="delete_section">
 								<?php settings_fields( 'wpcui' ); ?>
 								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 									'onclick' => 'return confirm("Are you sure you want to delete this section?")',
-                                    'id' => 'submitDeleteSection'
+									'id'      => 'submitDeleteSection'
 								] ); ?>
                             </form>
                         </div>
@@ -121,13 +118,12 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= $controlDefault ?></td>
                                     <td>
                                         <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="control_id"
-                                                   value="<?= esc_attr( $control['control_id'] ) ?>">
+                                            <input type="hidden" name="control_id" value="<?= $controlId ?>">
                                             <input type="hidden" name="wpcui_action" value="delete_control">
 											<?php settings_fields( 'wpcui' ); ?>
 											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 												'onclick' => 'return confirm("Are you sure you want to delete this control?")',
-                                                'id' => 'submitDeleteControl_' . $controlId
+												'id'      => 'submitDeleteControl_' . $controlId
 											] ); ?>
                                         </form>
                                     </td>
@@ -148,7 +144,7 @@ use PerkoCustomizerUI\Services\DataService;
 						<?php
 						settings_fields( 'wpcui' );
 						do_settings_sections( 'wpcui-control' );
-						submit_button( 'Create New Control', 'primary', 'submit', true, ['id' => 'submitCreateNewControl'] );
+						submit_button( 'Create New Control', 'primary', 'submit', true, [ 'id' => 'submitCreateNewControl' ] );
 						?>
                     </form>
                 </div> <!-- end .wpcui-panel-body -->
