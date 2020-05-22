@@ -56,6 +56,7 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'section_title',
 				'placeholder' => 'eg. Personal Info',
+				'value'       => ''
 			] );
 	}
 
@@ -63,9 +64,16 @@ class AdminSettingsService {
 	 * Add the settigns for the customizer controls
 	 */
 	private function addControlSettings() {
+		$title           = 'Add Control';
+		$existingControl = null;
+		if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+			$title           = 'Edit Control';
+			$existingControl = DataService::getControlById( esc_attr( $_POST['edit_control_id'] ) );
+		}
+
 		add_settings_section(
 			'wpcui_section_control',
-			'Add Control',
+			$title,
 			[ $this, 'controlOutput' ],
 			'wpcui-control'
 		);
@@ -79,7 +87,8 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_id',
 				'placeholder' => 'eg. location_info',
-				'required'    => 'required'
+				'required'    => 'required',
+				'value'       => $existingControl ? $existingControl['control_id'] : ''
 			] );
 
 		add_settings_field( 'control_label',
@@ -91,7 +100,8 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info',
-				'required'    => 'required'
+				'required'    => 'required',
+				'value'       => $existingControl ? $existingControl['control_label'] : ''
 			] );
 
 		add_settings_field( 'control_type',
@@ -104,7 +114,8 @@ class AdminSettingsService {
 				'label_for'   => 'control_type',
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
-				'options'     => self::getControlTypeOptions()
+				'options'     => self::getControlTypeOptions(),
+				'value'       => $existingControl ? $existingControl['control_type'] : ''
 			] );
 
 		add_settings_field( 'control_choices',
@@ -117,6 +128,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_choices',
 				'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
 				'class'       => 'hidden control-choices',
+				'value'       => $existingControl ? $existingControl['control_choices'] : ''
 			] );
 
 		add_settings_field( 'control_default',
@@ -127,7 +139,8 @@ class AdminSettingsService {
 			[
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_default',
-				'placeholder' => 'Default value'
+				'placeholder' => 'Default value',
+				'value'       => $existingControl ? $existingControl['control_default'] : ''
 			] );
 	}
 
@@ -136,10 +149,14 @@ class AdminSettingsService {
 	}
 
 	public function controlOutput() {
-		echo '<p>Create a new control</p>';
+		if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+			echo '<p>Edit control</p>';
+		} else {
+			echo '<p>Create a new control</p>';
+		}
 	}
 
-	public static function getControlTypeOptions() {
+	private static function getControlTypeOptions() {
 		return [
 			'Standard'      => [
 				[ 'name' => 'Text' ],

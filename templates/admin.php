@@ -93,11 +93,7 @@ use PerkoCustomizerUI\Services\DataService;
                         </table>
 					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-					<?php if ( array_key_exists( 'edit_control_id', $_POST ) ): ?>
-						<?php do_action( 'wpcui_do_edit_control_form', esc_attr( $_POST['edit_control_id'] ) ); ?>
-					<?php else: ?>
-						<?php do_action( 'wpcui_do_new_control_form', esc_attr( $key ) ); ?>
-					<?php endif; ?>
+					<?php do_action( 'wpcui_do_control_form', esc_attr( $key ) ); ?>
                 </div> <!-- end .wpcui-panel-body -->
             </div> <!-- end .wpcui-panel -->
 		<?php endforeach; ?>
