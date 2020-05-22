@@ -25,6 +25,7 @@ class AdminPageActions extends BaseController {
 		add_action( 'wpcui_do_section_action_buttons', [ $this, 'do_section_action_buttons' ] );
 		add_action( 'wpcui_do_control_action_buttons', [ $this, 'do_control_action_buttons' ] );
 		add_action( 'wpcui_do_new_control_form', [ $this, 'do_new_control_form' ] );
+		add_action( 'wpcui_do_edit_control_form', [ $this, 'do_edit_control_form' ] );
 		add_action( 'wpcui_do_new_section_form', [ $this, 'do_new_section_form' ] );
 	}
 
@@ -108,8 +109,8 @@ class AdminPageActions extends BaseController {
 		?>
         <form action="" method="post" style="margin-right: 5px;">
             <input type="hidden" name="edit_control_id" value="<?= $controlId ?>">
-	        <?php settings_fields( 'wpcui' ); ?>
-	        <?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditControl' ] ); ?>
+			<?php settings_fields( 'wpcui' ); ?>
+			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditControl' ] ); ?>
         </form>
 
         <form action="options.php" method="post">
@@ -142,6 +143,16 @@ class AdminPageActions extends BaseController {
 			?>
         </form>
 		<?php
+	}
+
+
+	/**
+	 * Create the edit form for a given control id
+	 *
+	 * @param $controlId
+	 */
+	public function do_edit_control_form( $controlId ) {
+		echo '<h1>test</h1>';
 	}
 
 
