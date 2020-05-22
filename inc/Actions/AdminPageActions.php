@@ -133,10 +133,11 @@ class AdminPageActions extends BaseController {
 	 * @param $sectionKey
 	 */
 	public function do_control_form( $sectionKey ) {
+		$action = array_key_exists( 'edit_control_id', $_POST ) ? 'update_control' : 'create_new_control';
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
-            <input type="hidden" name="wpcui_action" value="create_new_control">
+            <input type="hidden" name="wpcui_action" value="<?= $action ?>">
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
@@ -156,7 +157,7 @@ class AdminPageActions extends BaseController {
 	 */
 	public function do_new_section_form() {
 		?>
-        <form method="post" action="options . php">
+        <form method="post" action="options.php">
             <input type="hidden" name="wpcui_action" value="create_new_section">
 			<?php
 			settings_fields( 'wpcui' );

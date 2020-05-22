@@ -61,7 +61,7 @@ class AdminSettingsService {
 	}
 
 	/**
-	 * Add the settigns for the customizer controls
+	 * Add the settings for the customizer controls
 	 */
 	private function addControlSettings() {
 		$title           = 'Add Control';
