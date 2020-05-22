@@ -107,7 +107,7 @@ class AdminPageActions extends BaseController {
 	public function do_control_action_buttons( $controlId ) {
 		?>
         <form action="" method="post" style="margin-right: 5px;">
-            <input type="hidden" name="edit_control_button" value="<?= $controlId ?>">
+            <input type="hidden" name="edit_control_id" value="<?= $controlId ?>">
 	        <?php settings_fields( 'wpcui' ); ?>
 	        <?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditControl' ] ); ?>
         </form>
