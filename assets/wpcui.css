@@ -73,6 +73,10 @@
     flex: 1;
 }
 
+.wpcui_control_action_buttons {
+    display: flex;
+}
+
 @media (max-width: 1030px) {
     .wpcui-control-form {
         margin: 10px 0 5px;

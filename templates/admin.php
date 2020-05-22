@@ -79,7 +79,7 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= $controlLabel ?></td>
                                     <td><?= $controlType ?></td>
                                     <td><?= $controlDefault ?></td>
-                                    <td>
+                                    <td class="wpcui_control_action_buttons">
 										<?php do_action( 'wpcui_do_control_action_buttons', $controlId ); ?>
                                     </td>
                                 </tr>
