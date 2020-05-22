@@ -128,7 +128,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$control                                                      = [
+		$control = [
 			"control_id"      => $controlId,
 			"control_label"   => sanitize_text_field( $input['control_label'] ),
 			"control_type"    => sanitize_text_field( $input['control_type'] ),
@@ -136,6 +136,7 @@ class AdminSanitizerService {
 			"control_default" => sanitize_text_field( $input['control_default'] ),
 			"section"         => $sectionId
 		];
+		
 		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
 		return $settings;
@@ -148,11 +149,21 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateControl( $input, $settings ) {
-		foreach($settings['sections'] as $sectionKey => $section) {
-			foreach($section['controls'] as $control) {
-				if($control['control_id'] == $input['control_id']) {
-					$input['section'] = $sectionKey;
-					$settings['sections'][$sectionKey]['controls'][$control['control_id']] = $input;
+		foreach ( $settings['sections'] as $sectionKey => $section ) {
+			foreach ( $section['controls'] as $control ) {
+				if ( $control['control_id'] == $input['control_id'] ) {
+					$controlId = sanitize_text_field( $input['control_id'] );
+
+					$control = [
+						"control_id"      => $controlId,
+						"control_label"   => sanitize_text_field( $input['control_label'] ),
+						"control_type"    => sanitize_text_field( $input['control_type'] ),
+						"control_choices" => sanitize_text_field( $input['control_choices'] ),
+						"control_default" => sanitize_text_field( $input['control_default'] ),
+						"section"         => $sectionKey
+					];
+
+					$settings['sections'][ $sectionKey ]['controls'][ $controlId ] = $control;
 				}
 			}
 		}
