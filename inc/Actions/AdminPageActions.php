@@ -152,7 +152,17 @@ class AdminPageActions extends BaseController {
 	 * @param $controlId
 	 */
 	public function do_edit_control_form( $controlId ) {
-		echo '<h1>test</h1>';
+		?>
+        <form method="post" action="options.php" class="wpcui-control-form">
+            <input type="hidden" name="control_id" value="<?= $controlId ?>">
+            <input type="hidden" name="wpcui_action" value="update_control">
+			<?php
+			settings_fields( 'wpcui' );
+			do_settings_sections( 'wpcui-control-edit' );
+			submit_button( 'Update Control', 'primary', 'submit', true, [ 'id' => 'submitUpdateControl' ] );
+			?>
+        </form>
+		<?php
 	}
 
 

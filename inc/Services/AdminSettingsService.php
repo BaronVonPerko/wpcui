@@ -32,10 +32,14 @@ class AdminSettingsService {
 			[ $this->sanitizer, 'sanitizeSettings' ]
 		);
 
+		$this->addSectionSettings();
+		$this->addControlSettings();
+	}
 
-		/**
-		 * Section Settings Section
-		 */
+	/**
+	 * Add the settings for the customizer sections.
+	 */
+	private function addSectionSettings() {
 		add_settings_section(
 			'wpcui_section_index',
 			'Add Section',
@@ -53,11 +57,12 @@ class AdminSettingsService {
 				'label_for'   => 'section_title',
 				'placeholder' => 'eg. Personal Info',
 			] );
+	}
 
-
-		/**
-		 * Control Settings Section
-		 */
+	/**
+	 * Add the settigns for the customizer controls
+	 */
+	private function addControlSettings() {
 		add_settings_section(
 			'wpcui_section_control',
 			'Add Control',

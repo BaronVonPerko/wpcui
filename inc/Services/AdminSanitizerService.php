@@ -34,6 +34,9 @@ class AdminSanitizerService {
 				case 'create_new_control':
 					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
+				case 'update_control':
+					$settings = $this->sanitizeUpdateControl( $input, $settings );
+					break;
 				case 'delete_control':
 					$settings = $this->sanitizeDeleteControl( $settings );
 					break;
@@ -135,6 +138,16 @@ class AdminSanitizerService {
 		];
 		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
+		return $settings;
+	}
+
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeUpdateControl( $input, $settings ) {
 		return $settings;
 	}
 
