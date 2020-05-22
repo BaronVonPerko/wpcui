@@ -17,7 +17,7 @@ class AdminSanitizerService {
 	 *
 	 * @return array|mixed|void
 	 */
-	public function sanitizeSettings( $input ) {
+	public function sanitizeSettings( $input ): array {
 		$settings = DataService::getSettings();
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
@@ -136,7 +136,7 @@ class AdminSanitizerService {
 			"control_default" => sanitize_text_field( $input['control_default'] ),
 			"section"         => $sectionId
 		];
-		
+
 		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
 
 		return $settings;

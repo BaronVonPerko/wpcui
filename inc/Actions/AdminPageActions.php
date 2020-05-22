@@ -3,8 +3,6 @@
 namespace PerkoCustomizerUI\Actions;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\DataService;
-use PerkoCustomizerUI\Services\FormControlsService;
 
 /**
  * Class AdminPageActions
