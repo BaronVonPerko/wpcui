@@ -57,6 +57,26 @@ class DataService {
 	}
 
 	/**
+	 * Get the control by it's id
+	 *
+	 * @param $controlId
+	 *
+	 * @return bool
+	 */
+	public static function getControlById( $controlId ) {
+		$sections = self::getSettings()['sections'];
+		foreach ( $sections as $section ) {
+			foreach ( $section['controls'] as $control ) {
+				if ( $control['control_id'] == $controlId ) {
+					return $control;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Set default options in the database
 	 */
 	public static function setDefaults() {

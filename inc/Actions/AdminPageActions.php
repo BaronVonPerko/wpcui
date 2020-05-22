@@ -3,6 +3,8 @@
 namespace PerkoCustomizerUI\Actions;
 
 use PerkoCustomizerUI\Base\BaseController;
+use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Services\FormControlsService;
 
 /**
  * Class AdminPageActions
@@ -152,15 +154,31 @@ class AdminPageActions extends BaseController {
 	 * @param $controlId
 	 */
 	public function do_edit_control_form( $controlId ) {
+		$control            = DataService::getControlById( $controlId );
+		$formControlService = new FormControlsService();
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
+            <h2>Edit Control</h2>
+            <p>Update the control</p>
+
             <input type="hidden" name="control_id" value="<?= $controlId ?>">
             <input type="hidden" name="wpcui_action" value="update_control">
-			<?php
-			settings_fields( 'wpcui' );
-			do_settings_sections( 'wpcui-control-edit' );
-			submit_button( 'Update Control', 'primary', 'submit', true, [ 'id' => 'submitUpdateControl' ] );
-			?>
+			<?php settings_fields( 'wpcui' ); ?>
+
+            <table class="form-table">
+                <tbody>
+				<?php
+				$formControlService->formTextRow( 'Control ID', 'control_id', $control['control_id'] );
+				$formControlService->formTextRow( 'Control Label', 'control_label', $control['control_label'] );
+				$formControlService->formControlTypeDropdown();
+				$formControlService->formTextArea('Control Choices', 'control_choices', $control['control_choices'], 'control-choices', true);
+				$formControlService->formTextRow( 'Default Value', 'control_default', $control['control_default'] );
+				?>
+
+                </tbody>
+            </table>
+
+			<?php submit_button( 'Update Control', 'primary', 'submit', true, [ 'id' => 'submitUpdateControl' ] ); ?>
         </form>
 		<?php
 	}
@@ -171,7 +189,7 @@ class AdminPageActions extends BaseController {
 	 */
 	public function do_new_section_form() {
 		?>
-        <form method="post" action="options.php">
+        <form method="post" action="options . php">
             <input type="hidden" name="wpcui_action" value="create_new_section">
 			<?php
 			settings_fields( 'wpcui' );

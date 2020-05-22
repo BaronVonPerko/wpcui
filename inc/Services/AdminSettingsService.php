@@ -104,24 +104,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_type',
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
-				'options'     => [
-					'Standard'      => [
-						[ 'name' => 'Text' ],
-						[ 'name' => 'Text Area' ],
-						[ 'name' => 'Select', 'has_options' => true ],
-						[ 'name' => 'Radio', 'has_options' => true ],
-						[ 'name' => 'Dropdown Pages' ],
-						[ 'name' => 'Email' ],
-						[ 'name' => 'URL' ],
-						[ 'name' => 'Number' ],
-						[ 'name' => 'Date' ],
-					],
-					'Media / Color' => [
-						[ 'name' => 'Upload' ],
-						[ 'name' => 'Image' ],
-						[ 'name' => 'Color Picker' ],
-					]
-				]
+				'options'     => self::getControlTypeOptions()
 			] );
 
 		add_settings_field( 'control_choices',
@@ -154,6 +137,27 @@ class AdminSettingsService {
 
 	public function controlOutput() {
 		echo '<p>Create a new control</p>';
+	}
+
+	public static function getControlTypeOptions() {
+		return [
+			'Standard'      => [
+				[ 'name' => 'Text' ],
+				[ 'name' => 'Text Area' ],
+				[ 'name' => 'Select', 'has_options' => true ],
+				[ 'name' => 'Radio', 'has_options' => true ],
+				[ 'name' => 'Dropdown Pages' ],
+				[ 'name' => 'Email' ],
+				[ 'name' => 'URL' ],
+				[ 'name' => 'Number' ],
+				[ 'name' => 'Date' ],
+			],
+			'Media / Color' => [
+				[ 'name' => 'Upload' ],
+				[ 'name' => 'Image' ],
+				[ 'name' => 'Color Picker' ],
+			]
+		];
 	}
 
 }
