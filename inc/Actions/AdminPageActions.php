@@ -140,7 +140,8 @@ class AdminPageActions extends BaseController {
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
 			if ( array_key_exists( 'edit_control_id', $_POST ) ) {
-				submit_button( 'Update Control', 'primary', 'submit', true, [ 'id' => 'submitUpdateControl' ] );
+				submit_button( 'Update Control', 'primary', 'submit', false, [ 'id' => 'submitUpdateControl' ] );
+				submit_button( 'Cancel', 'secondary wpcui-btn-cancel', 'cancel', false );
 			} else {
 				submit_button( 'Create New Control', 'primary', 'submit', true, [ 'id' => 'submitCreateNewControl' ] );
 			}

@@ -149,6 +149,9 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateControl( $input, $settings ) {
+		if ( $_POST['cancel'] ) {
+			return $settings;
+		}
 		foreach ( $settings['sections'] as $sectionKey => $section ) {
 			foreach ( $section['controls'] as $control ) {
 				if ( $control['control_id'] == $input['control_id'] ) {
