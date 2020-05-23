@@ -17,7 +17,7 @@ class AdminSanitizerService {
 	 *
 	 * @return array|mixed|void
 	 */
-	public function sanitizeSettings( $input ) {
+	public function sanitizeSettings( $input ): array {
 		$settings = DataService::getSettings();
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
@@ -33,6 +33,9 @@ class AdminSanitizerService {
 					break;
 				case 'create_new_control':
 					$settings = $this->sanitizeNewControl( $input, $settings );
+					break;
+				case 'update_control':
+					$settings = $this->sanitizeUpdateControl( $input, $settings );
 					break;
 				case 'delete_control':
 					$settings = $this->sanitizeDeleteControl( $settings );
@@ -125,7 +128,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$control                                                      = [
+		$control = [
 			"control_id"      => $controlId,
 			"control_label"   => sanitize_text_field( $input['control_label'] ),
 			"control_type"    => sanitize_text_field( $input['control_type'] ),
@@ -133,7 +136,40 @@ class AdminSanitizerService {
 			"control_default" => sanitize_text_field( $input['control_default'] ),
 			"section"         => $sectionId
 		];
+
 		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
+
+		return $settings;
+	}
+
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeUpdateControl( $input, $settings ) {
+		if ( $_POST['cancel'] ) {
+			return $settings;
+		}
+		foreach ( $settings['sections'] as $sectionKey => $section ) {
+			foreach ( $section['controls'] as $control ) {
+				if ( $control['control_id'] == $input['control_id'] ) {
+					$controlId = sanitize_text_field( $input['control_id'] );
+
+					$control = [
+						"control_id"      => $controlId,
+						"control_label"   => sanitize_text_field( $input['control_label'] ),
+						"control_type"    => sanitize_text_field( $input['control_type'] ),
+						"control_choices" => sanitize_text_field( $input['control_choices'] ),
+						"control_default" => sanitize_text_field( $input['control_default'] ),
+						"section"         => $sectionKey
+					];
+
+					$settings['sections'][ $sectionKey ]['controls'][ $controlId ] = $control;
+				}
+			}
+		}
 
 		return $settings;
 	}

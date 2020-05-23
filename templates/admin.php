@@ -79,7 +79,7 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= $controlLabel ?></td>
                                     <td><?= $controlType ?></td>
                                     <td><?= $controlDefault ?></td>
-                                    <td>
+                                    <td class="wpcui_control_action_buttons">
 										<?php do_action( 'wpcui_do_control_action_buttons', $controlId ); ?>
                                     </td>
                                 </tr>
@@ -93,7 +93,7 @@ use PerkoCustomizerUI\Services\DataService;
                         </table>
 					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-					<?php do_action( 'wpcui_do_new_control_form', esc_attr( $key ) ); ?>
+					<?php do_action( 'wpcui_do_control_form', esc_attr( $key ) ); ?>
                 </div> <!-- end .wpcui-panel-body -->
             </div> <!-- end .wpcui-panel -->
 		<?php endforeach; ?>

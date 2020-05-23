@@ -24,7 +24,7 @@ class AdminPageActions extends BaseController {
 		add_action( 'wpcui_do_edit_section_form', [ $this, 'do_edit_section_form' ] );
 		add_action( 'wpcui_do_section_action_buttons', [ $this, 'do_section_action_buttons' ] );
 		add_action( 'wpcui_do_control_action_buttons', [ $this, 'do_control_action_buttons' ] );
-		add_action( 'wpcui_do_new_control_form', [ $this, 'do_new_control_form' ] );
+		add_action( 'wpcui_do_control_form', [ $this, 'do_control_form' ] );
 		add_action( 'wpcui_do_new_section_form', [ $this, 'do_new_section_form' ] );
 	}
 
@@ -39,7 +39,7 @@ class AdminPageActions extends BaseController {
 		$controlDefault = esc_attr( $args['control_default'] );
 		?>
         <pre class="wpcui-sample-php">
-			<textarea>get_theme_mod(' <?= $controlId ?>', '<?= $controlDefault ? $controlDefault : "Default Value" ?>')</textarea>
+			<textarea>get_theme_mod( '<?= $controlId ?>', '<?= $controlDefault ? $controlDefault : "Default Value" ?>' )</textarea>
         <span title="Copy code" class="wpcui-copy-icon dashicons dashicons-admin-page"></span>
         </pre>
 		<?php
@@ -106,7 +106,13 @@ class AdminPageActions extends BaseController {
 	 */
 	public function do_control_action_buttons( $controlId ) {
 		?>
-        <form action="options.php" method="post" style="margin-right: 5px;">
+        <form action="" method="post" style="margin-right: 5px;">
+            <input type="hidden" name="edit_control_id" value="<?= $controlId ?>">
+			<?php settings_fields( 'wpcui' ); ?>
+			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditControl' ] ); ?>
+        </form>
+
+        <form action="options.php" method="post">
             <input type="hidden" name="control_id" value="<?= $controlId ?>">
             <input type="hidden" name="wpcui_action" value="delete_control">
 			<?php settings_fields( 'wpcui' ); ?>
@@ -120,19 +126,25 @@ class AdminPageActions extends BaseController {
 
 
 	/**
-	 * Given the section key, create the form to create a new control.
+	 * Given the section key, create the form to create/edit a control.
 	 *
 	 * @param $sectionKey
 	 */
-	public function do_new_control_form( $sectionKey ) {
+	public function do_control_form( $sectionKey ) {
+		$action = array_key_exists( 'edit_control_id', $_POST ) ? 'update_control' : 'create_new_control';
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
-            <input type="hidden" name="wpcui_action" value="create_new_control">
+            <input type="hidden" name="wpcui_action" value="<?= $action ?>">
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
-			submit_button( 'Create New Control', 'primary', 'submit', true, [ 'id' => 'submitCreateNewControl' ] );
+			if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+				submit_button( 'Update Control', 'primary', 'submit', false, [ 'id' => 'submitUpdateControl' ] );
+				submit_button( 'Cancel', 'secondary wpcui-btn-cancel', 'cancel', false );
+			} else {
+				submit_button( 'Create New Control', 'primary', 'submit', true, [ 'id' => 'submitCreateNewControl' ] );
+			}
 			?>
         </form>
 		<?php
