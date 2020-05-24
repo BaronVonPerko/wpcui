@@ -42,7 +42,7 @@ class AdminPageForms extends BaseController {
 	public static function EditSectionForm( $sectionTitle ) {
 		?>
         <form action="options.php" method="post">
-            <input type="hidden" name="wpcui_action" value="update_section_title">
+            <input type="hidden" name="wpcui_action" value=<?= AdminPageFormActions::UpdateSection ?>>
             <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
             <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 			<?php settings_fields( 'wpcui' ); ?>
@@ -69,7 +69,7 @@ class AdminPageForms extends BaseController {
 
         <form action="options.php" method="post" style="margin-right: 5px;">
             <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
-            <input type="hidden" name="wpcui_action" value="delete_section">
+            <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::DeleteSection ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this section?")',
@@ -95,7 +95,7 @@ class AdminPageForms extends BaseController {
 
         <form action="options.php" method="post">
             <input type="hidden" name="control_id" value="<?= $controlId ?>">
-            <input type="hidden" name="wpcui_action" value="delete_control">
+            <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::DeleteControl ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this control?")',
@@ -112,7 +112,9 @@ class AdminPageForms extends BaseController {
 	 * @param $sectionKey
 	 */
 	public static function ControlForm( $sectionKey ) {
-		$action = array_key_exists( 'edit_control_id', $_POST ) ? 'update_control' : 'create_new_control';
+		$action = array_key_exists( 'edit_control_id', $_POST )
+            ? AdminPageFormActions::UpdateControl
+            : AdminPageFormActions::CreateControl;
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
@@ -138,7 +140,7 @@ class AdminPageForms extends BaseController {
 	public static function NewSectionForm() {
 		?>
         <form method="post" action="options.php">
-            <input type="hidden" name="wpcui_action" value="create_new_section">
+            <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::CreateNewSection ?>">
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui' );
@@ -148,4 +150,13 @@ class AdminPageForms extends BaseController {
 		<?php
 	}
 
+}
+
+abstract class AdminPageFormActions {
+    const CreateNewSection = 0;
+    const DeleteSection = 1;
+    const UpdateSection = 2;
+    const CreateControl = 3;
+    const UpdateControl = 4;
+    const DeleteControl = 5;
 }

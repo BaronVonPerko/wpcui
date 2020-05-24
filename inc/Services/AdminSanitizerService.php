@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Forms\AdminPageFormActions;
+
 /**
  * Class AdminSanitizerService
  * @package PerkoCustomizerUI\Services
@@ -22,22 +24,22 @@ class AdminSanitizerService {
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
 			switch ( $_POST['wpcui_action'] ) {
-				case 'create_new_section':
+				case AdminPageFormActions::CreateNewSection:
 					$settings = $this->sanitizeNewSection( $input, $settings );
 					break;
-				case 'update_section_title':
+				case AdminPageFormActions::UpdateSection:
 					$settings = $this->sanitizeUpdateSectionName( $settings );
 					break;
-				case 'delete_section':
+				case AdminPageFormActions::DeleteSection:
 					$settings = $this->sanitizeDeleteSection( $settings );
 					break;
-				case 'create_new_control':
+				case AdminPageFormActions::CreateControl:
 					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
-				case 'update_control':
+				case AdminPageFormActions::UpdateControl:
 					$settings = $this->sanitizeUpdateControl( $input, $settings );
 					break;
-				case 'delete_control':
+				case AdminPageFormActions::DeleteControl:
 					$settings = $this->sanitizeDeleteControl( $settings );
 					break;
 			}
