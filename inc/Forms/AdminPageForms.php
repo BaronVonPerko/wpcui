@@ -23,7 +23,7 @@ class AdminPageForms extends BaseController {
 	 * @param $args
 	 */
 	public static function SampleControlCode( $controlId, $controlDefault ) {
-		$controlDefault = esc_attr( $args['control_default'] );
+		$controlDefault = esc_attr( $controlDefault );
 		?>
         <pre class="wpcui-sample-php">
 			<textarea>get_theme_mod( '<?= $controlId ?>', '<?= $controlDefault ? $controlDefault : "Default Value" ?>' )</textarea>
