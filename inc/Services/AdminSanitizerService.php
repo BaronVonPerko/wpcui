@@ -76,20 +76,22 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
-		if ( isset( $_POST['edit_section'] ) ) {
-			$oldTitle = sanitize_text_field( $_POST['edit_section'] );
-			$newTitle = sanitize_text_field( $_POST['new_title'] );
-
-			$id = DataService::getSectionIdByName( $oldTitle );
-
-			$error = self::validateSectionName( $newTitle );
-			if ( $error ) {
-				add_settings_error( 'wpcui_sections', null, $error );
-
-				return $settings;
-			}
-			$settings['sections'][ $id ]['section_title'] = $newTitle;
+		if ( isset( $_POST['cancel'] ) ) {
+			return $settings;
 		}
+
+		$oldTitle = sanitize_text_field( $_POST['old_title'] );
+		$newTitle = sanitize_text_field( $_POST['new_title'] );
+
+		$id = DataService::getSectionIdByName( $oldTitle );
+
+		$error = self::validateSectionName( $newTitle );
+		if ( $error ) {
+			add_settings_error( 'wpcui_sections', null, $error );
+
+			return $settings;
+		}
+		$settings['sections'][ $id ]['section_title'] = $newTitle;
 
 		return $settings;
 	}

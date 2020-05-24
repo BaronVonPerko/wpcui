@@ -55,17 +55,11 @@ class AdminPageActions extends BaseController {
 		?>
         <form action="options.php" method="post">
             <input type="hidden" name="wpcui_action" value="update_section_title">
-            <input type="hidden" name="edit_section" value="<?= $sectionTitle ?>">
             <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
-            <input type="hidden" name="edit_section" value="<?= $sectionTitle ?>">
             <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Save Changes', 'small', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
-        </form>
-        <form action="" method="post">
-            <input type="hidden" name="edit_section" value="">
-			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Cancel', 'small', 'edit', false, [ 'id' => 'submitCancelEditSectionTitle' ] ); ?>
+	        <?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
+	        <?php submit_button( 'Cancel', 'small secondary wpcui-btn-cancel', 'cancel', false, [ 'id' => 'submitEditCancelButton' ] ); ?>
         </form>
 		<?php
 	}
