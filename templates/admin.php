@@ -1,6 +1,7 @@
 <?php
 
 use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Forms\AdminPageForms;
 
 /**
  * Template file for the admin backend page.
@@ -11,7 +12,7 @@ use PerkoCustomizerUI\Services\DataService;
 
 	<?php settings_errors(); ?>
 
-	<?php do_action( 'wpcui_do_new_section_form' ); ?>
+	<?php AdminPageForms::NewSectionForm(); ?>
 
     <hr>
 
@@ -30,7 +31,7 @@ use PerkoCustomizerUI\Services\DataService;
                 <div class="wpcui-panel-title">
 					<?php if ( array_key_exists( $editSectionId, $_POST ) ): ?> <!-- edit section title -->
                         <div class="wpcui-panel-title-buttons">
-							<?php do_action( 'wpcui_do_edit_section_form', $sectionTitle ); ?>
+							<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
                         </div>
 					<?php else: ?> <!-- end edit section title, begin collapsible title -->
                         <div class="wpcui-collapsible-title">
@@ -41,7 +42,7 @@ use PerkoCustomizerUI\Services\DataService;
 
 					<?php if ( ! array_key_exists( $editSectionId, $_POST ) ): ?>
                         <div class="wpcui-panel-title-buttons">
-							<?php do_action( 'wpcui_do_section_action_buttons', [ $editSectionId, $sectionTitle ] ); ?>
+							<?php AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle ); ?>
                         </div>
 					<?php endif; ?>
                 </div> <!-- end .wpcui-panel-title -->
@@ -80,12 +81,12 @@ use PerkoCustomizerUI\Services\DataService;
                                     <td><?= $controlType ?></td>
                                     <td><?= $controlDefault ?></td>
                                     <td class="wpcui_control_action_buttons">
-										<?php do_action( 'wpcui_do_control_action_buttons', $controlId ); ?>
+										<?php AdminPageForms::ControlActionButtons( $controlId ); ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="5">
-										<?php do_action( 'wpcui_do_sample_control_code', $control ); ?>
+										<?php AdminPageForms::SampleControlCode( $controlId, $controlDefault ); ?>
                                     </td>
                                 </tr>
 							<?php endforeach; ?> <!-- end loop over existing controls -->
@@ -93,7 +94,7 @@ use PerkoCustomizerUI\Services\DataService;
                         </table>
 					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-					<?php do_action( 'wpcui_do_control_form', esc_attr( $key ) ); ?>
+					<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
                 </div> <!-- end .wpcui-panel-body -->
             </div> <!-- end .wpcui-panel -->
 		<?php endforeach; ?>

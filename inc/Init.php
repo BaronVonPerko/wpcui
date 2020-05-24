@@ -16,7 +16,7 @@ final class Init
             Pages\Customizer::class,
             Base\SettingsLinks::class,
             Base\Enqueue::class,
-	        Actions\AdminPageActions::class,
+	        Forms\AdminPageForms::class,
         ];
     }
 

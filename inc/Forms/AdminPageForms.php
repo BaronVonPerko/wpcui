@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Actions;
+namespace PerkoCustomizerUI\Forms;
 
 use PerkoCustomizerUI\Base\BaseController;
 
@@ -10,22 +10,10 @@ use PerkoCustomizerUI\Base\BaseController;
  *
  * Custom action hooks used on the Admin page.
  */
-class AdminPageActions extends BaseController {
+class AdminPageForms extends BaseController {
 
 	public function register() {
-		add_action( 'admin_init', [ $this, 'register_actions' ] );
-	}
-
-	/**
-	 * Register all of the action hooks with WordPress
-	 */
-	public function register_actions() {
-		add_action( 'wpcui_do_sample_control_code', [ $this, 'do_sample_control_code' ] );
-		add_action( 'wpcui_do_edit_section_form', [ $this, 'do_edit_section_form' ] );
-		add_action( 'wpcui_do_section_action_buttons', [ $this, 'do_section_action_buttons' ] );
-		add_action( 'wpcui_do_control_action_buttons', [ $this, 'do_control_action_buttons' ] );
-		add_action( 'wpcui_do_control_form', [ $this, 'do_control_form' ] );
-		add_action( 'wpcui_do_new_section_form', [ $this, 'do_new_section_form' ] );
+	    //
 	}
 
 	/**
@@ -34,8 +22,7 @@ class AdminPageActions extends BaseController {
 	 *
 	 * @param $args
 	 */
-	public function do_sample_control_code( $args ) {
-		$controlId      = esc_attr( $args['control_id'] );
+	public static function SampleControlCode( $controlId, $controlDefault ) {
 		$controlDefault = esc_attr( $args['control_default'] );
 		?>
         <pre class="wpcui-sample-php">
@@ -51,7 +38,7 @@ class AdminPageActions extends BaseController {
 	 *
 	 * @param $sectionTitle
 	 */
-	public function do_edit_section_form( $sectionTitle ) {
+	public static function EditSectionForm( $sectionTitle ) {
 		?>
         <form action="options.php" method="post">
             <input type="hidden" name="wpcui_action" value="update_section_title">
@@ -70,9 +57,7 @@ class AdminPageActions extends BaseController {
 	 *
 	 * @param $args [sectionId, sectionTitle]
 	 */
-	public function do_section_action_buttons( $args ) {
-		$editSectionId = $args[0];
-		$sectionTitle  = $args[1];
+	public static function SectionActionButtons( $editSectionId, $sectionTitle ) {
 		?>
         <form action="" method="post">
             <input type="hidden" name="<?= $editSectionId ?>" value="<?= $sectionTitle ?>">
@@ -98,7 +83,7 @@ class AdminPageActions extends BaseController {
 	 *
 	 * @param $controlId
 	 */
-	public function do_control_action_buttons( $controlId ) {
+	public static function ControlActionButtons( $controlId ) {
 		?>
         <form action="" method="post" style="margin-right: 5px;">
             <input type="hidden" name="edit_control_id" value="<?= $controlId ?>">
@@ -124,7 +109,7 @@ class AdminPageActions extends BaseController {
 	 *
 	 * @param $sectionKey
 	 */
-	public function do_control_form( $sectionKey ) {
+	public static function ControlForm( $sectionKey ) {
 		$action = array_key_exists( 'edit_control_id', $_POST ) ? 'update_control' : 'create_new_control';
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
@@ -148,7 +133,7 @@ class AdminPageActions extends BaseController {
 	/**
 	 * Create the form to create a new section
 	 */
-	public function do_new_section_form() {
+	public static function NewSectionForm() {
 		?>
         <form method="post" action="options.php">
             <input type="hidden" name="wpcui_action" value="create_new_section">
