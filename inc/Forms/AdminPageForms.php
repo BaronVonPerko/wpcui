@@ -20,7 +20,8 @@ class AdminPageForms extends BaseController {
 	 * Generate the HTML to show the example PHP code used for
 	 * using the customizer setting.
 	 *
-	 * @param $args
+	 * @param $controlId
+     * @param $controlDefault
 	 */
 	public static function SampleControlCode( $controlId, $controlDefault ) {
 		$controlDefault = esc_attr( $controlDefault );
@@ -55,7 +56,8 @@ class AdminPageForms extends BaseController {
 	/**
 	 * Create the Edit and Delete action buttons for a Section
 	 *
-	 * @param $args [sectionId, sectionTitle]
+	 * @param $editSectionId
+     * @param $sectionTitle
 	 */
 	public static function SectionActionButtons( $editSectionId, $sectionTitle ) {
 		?>
