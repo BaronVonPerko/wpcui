@@ -24,6 +24,10 @@
     flex-direction: row;
 }
 
+.wpcui-panel-body em {
+    flex: 1;
+}
+
 @media (max-width: 1030px) {
     .wpcui-panel-body {
         flex-direction: column;

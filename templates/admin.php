@@ -62,7 +62,10 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 						?>
 
 						<?php if ( count( $sectionControls ) == 0 ): ?>
-                            <em>There are currently no controls for this section.</em>
+                            <em>There are currently no controls for this section.
+                                This section will not appear in the Customizer until <strong>at least</strong> one
+                                control has been added to this section. Add a control with the form to the right.
+                            </em>
 						<?php else: ?>
                             <table class="wpcui-control-table">
                                 <thead>
