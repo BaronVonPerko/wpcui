@@ -29,51 +29,35 @@ class Customizer {
 		$this->loadData();
 
 		if ( ! empty( $this->customizer_fields ) && ! empty( $this->customizer_sections ) ) {
-			CustomizerGenerator::Generate( $wp_customize, $this->customizer_fields, $this->customizer_sections );
+			CustomizerGenerator::Generate( $wp_customize, $this->customizer_sections );
 		}
 	}
 
 	private function loadData() {
 		$settings = DataService::getSettings()['sections'];
-		$controls = [];
 
 		foreach ( $settings as $sectionKey => $section ) {
+
+			$sectionControls = [];
 			foreach ( $section['controls'] as $control ) {
-				$this->customizer_fields[] = new CustomizerControl(
+				$customizerControl = new CustomizerControl(
 					$control['control_id'],
 					$control['control_label'],
 					$control['control_id'],
-					$sectionKey,
+					$control['section'],
 					$control['control_type'],
 					$control['control_default'],
-					$control['control_choices']
-				);
+					$control['control_choices'] );
 
-				$controls[] = $control;
-			}
-		}
-
-		foreach ( $settings as $sectionKey => $section ) {
-
-			$section_controls = array_filter( $controls, function ( $control ) use ( $sectionKey ) {
-				return $control['section'] == $sectionKey;
-			} );
-
-			$controls = [];
-			foreach ( $section_controls as $section_control ) {
-				$controls[] = new CustomizerControl(
-					$section_control['control_id'],
-					$section_control['control_label'],
-					$section_control['control_id'],
-					$section_control['section'],
-					$section_control['control_type'],
-					$section_control['control_default'],
-					$section_control['control_choices'] );
+				$this->customizer_fields[] = $customizerControl;
+				$sectionControls[] = $customizerControl;
 			}
 
-			$id                          = strtolower( $section['section_title'] );
-			$id                          = str_replace( ' ', '_', $id );
-			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99, $controls );
+
+			$id = strtolower( $section['section_title'] );
+			$id = str_replace( ' ', '_', $id );
+
+			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99, $sectionControls );
 		}
 	}
 }

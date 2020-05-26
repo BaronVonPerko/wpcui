@@ -18,21 +18,34 @@ use WP_Customize_Upload_Control;
  * sections, and fields for use within the WordPress customizer.
  */
 class CustomizerGenerator {
-	public static function Generate( $wp_customize, $settings, $sections ) {
-		foreach ( $settings as $setting ) {
-			$validator = new CustomizerValidationService();
-			self::registerSetting( $wp_customize, $setting, $validator );
-		}
+
+	/**
+	 * Generate all of the settings, sections, and controls for
+	 * the WP Customizer.
+	 *
+	 * @param $wp_customize
+	 * @param $sections
+	 */
+	public static function Generate( $wp_customize, $sections ) {
+		$validator = new CustomizerValidationService();
 
 		foreach ( $sections as $section ) {
+
 			self::registerSection( $wp_customize, $section );
 
 			foreach ( $section->controls as $control ) {
-				self::registerControl( $wp_customize, $control, $section );
+				self::registerControl( $wp_customize, $control, $section, $validator );
 			}
 		}
 	}
 
+	/**
+	 * Register the customizer setting
+	 *
+	 * @param $wp_customize
+	 * @param $setting
+	 * @param $validator
+	 */
 	private static function registerSetting( $wp_customize, $setting, $validator ) {
 		$args = [
 			'default'   => $setting->default,
@@ -40,13 +53,20 @@ class CustomizerGenerator {
 		];
 
 		$validation = $validator->getValidation( $setting );
-		if ( !empty($validation) ) {
+		if ( ! empty( $validation ) ) {
 			$args['validate_callback'] = $validation;
 		}
 
 		$wp_customize->add_setting( $setting->id, $args );
 	}
 
+
+	/**
+	 * Register a customizer section.
+	 *
+	 * @param $wp_customize
+	 * @param $section
+	 */
 	private static function registerSection( $wp_customize, $section ) {
 		$wp_customize->add_section( $section->id, array(
 			'title'    => __( $section->title ),
@@ -54,7 +74,19 @@ class CustomizerGenerator {
 		) );
 	}
 
-	private static function registerControl( $wp_customize, $control, $section ) {
+
+	/**
+	 * Register a customizer control.
+	 *
+	 * @param $wp_customize
+	 * @param $control
+	 * @param $section
+	 * @param $validator
+	 */
+	private static function registerControl( $wp_customize, $control, $section, $validator ) {
+
+		self::registerSetting( $wp_customize, $control, $validator );
+
 		switch ( $control->type ) {
 			case "Text":
 				self::registerStandardControl( $wp_customize, $control, $section, 'text' );
