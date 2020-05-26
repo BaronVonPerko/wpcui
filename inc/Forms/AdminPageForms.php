@@ -13,7 +13,7 @@ use PerkoCustomizerUI\Base\BaseController;
 class AdminPageForms extends BaseController {
 
 	public function register() {
-	    //
+		//
 	}
 
 	/**
@@ -21,7 +21,7 @@ class AdminPageForms extends BaseController {
 	 * using the customizer setting.
 	 *
 	 * @param $controlId
-     * @param $controlDefault
+	 * @param $controlDefault
 	 */
 	public static function SampleControlCode( $controlId, $controlDefault ) {
 		$controlDefault = esc_attr( $controlDefault );
@@ -42,12 +42,12 @@ class AdminPageForms extends BaseController {
 	public static function EditSectionForm( $sectionTitle ) {
 		?>
         <form action="options.php" method="post">
-            <input type="hidden" name="wpcui_action" value=<?= AdminPageFormActions::UpdateSection ?>>
+			<?= self::FormAction( AdminPageFormActions::UpdateSection ); ?>
             <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
             <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 			<?php settings_fields( 'wpcui' ); ?>
-	        <?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
-	        <?php submit_button( 'Cancel', 'small secondary wpcui-btn-cancel', 'cancel', false, [ 'id' => 'submitEditCancelButton' ] ); ?>
+			<?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
+			<?php submit_button( 'Cancel', 'small secondary wpcui-btn-cancel', 'cancel', false, [ 'id' => 'submitEditCancelButton' ] ); ?>
         </form>
 		<?php
 	}
@@ -57,7 +57,7 @@ class AdminPageForms extends BaseController {
 	 * Create the Edit and Delete action buttons for a Section
 	 *
 	 * @param $editSectionId
-     * @param $sectionTitle
+	 * @param $sectionTitle
 	 */
 	public static function SectionActionButtons( $editSectionId, $sectionTitle ) {
 		?>
@@ -68,8 +68,8 @@ class AdminPageForms extends BaseController {
         </form>
 
         <form action="options.php" method="post" style="margin-right: 5px;">
+			<?= self::FormAction( AdminPageFormActions::DeleteSection ); ?>
             <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
-            <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::DeleteSection ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this section?")',
@@ -94,8 +94,8 @@ class AdminPageForms extends BaseController {
         </form>
 
         <form action="options.php" method="post">
+			<?= self::FormAction( AdminPageFormActions::DeleteControl ); ?>
             <input type="hidden" name="control_id" value="<?= $controlId ?>">
-            <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::DeleteControl ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this control?")',
@@ -113,12 +113,12 @@ class AdminPageForms extends BaseController {
 	 */
 	public static function ControlForm( $sectionKey ) {
 		$action = array_key_exists( 'edit_control_id', $_POST )
-            ? AdminPageFormActions::UpdateControl
-            : AdminPageFormActions::CreateControl;
+			? AdminPageFormActions::UpdateControl
+			: AdminPageFormActions::CreateControl;
 		?>
         <form method="post" action="options.php" class="wpcui-control-form">
+			<?= self::FormAction( $action ); ?>
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
-            <input type="hidden" name="wpcui_action" value="<?= $action ?>">
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
@@ -150,13 +150,25 @@ class AdminPageForms extends BaseController {
 		<?php
 	}
 
+
+	/**
+	 * Set the form action
+	 *
+	 * @param $action
+	 */
+	private static function FormAction( $action ) {
+		?>
+        <input type="hidden" name="wpcui_action" value=<?= $action ?>>
+		<?php
+	}
+
 }
 
 abstract class AdminPageFormActions {
-    const CreateNewSection = 0;
-    const DeleteSection = 1;
-    const UpdateSection = 2;
-    const CreateControl = 3;
-    const UpdateControl = 4;
-    const DeleteControl = 5;
+	const CreateNewSection = 0;
+	const DeleteSection = 1;
+	const UpdateSection = 2;
+	const CreateControl = 3;
+	const UpdateControl = 4;
+	const DeleteControl = 5;
 }
