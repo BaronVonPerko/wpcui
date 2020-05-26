@@ -160,9 +160,12 @@ class AdminSanitizerService {
 
 			return $settings;
 		}
+
+		$oldControlId = $_POST['old_control_id'];
+
 		foreach ( $settings['sections'] as $sectionKey => $section ) {
 			foreach ( $section['controls'] as $control ) {
-				if ( $control['control_id'] == $input['control_id'] ) {
+				if ( $control['control_id'] == $oldControlId ) {
 					$controlId = sanitize_text_field( $input['control_id'] );
 
 					$control = [
@@ -174,6 +177,9 @@ class AdminSanitizerService {
 						"section"         => $sectionKey
 					];
 
+					if ( $controlId != $oldControlId ) {
+						unset( $settings['sections'][ $sectionKey ]['controls'][ $oldControlId ] );
+					}
 					$settings['sections'][ $sectionKey ]['controls'][ $controlId ] = $control;
 				}
 			}
