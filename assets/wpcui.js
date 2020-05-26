@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     [...copyIcons].forEach(copyIcon => {
         copyIcon.onclick = () => {
-            copyIcon.previousSibling.select();
+            copyIcon.previousElementSibling.select();
             document.execCommand('copy');
             alert('Code copied to your clipboard!');
         };
