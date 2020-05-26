@@ -6,20 +6,23 @@ document.addEventListener("DOMContentLoaded", function () {
     let dropdownControls = document.getElementsByClassName('dropdown_control_type');
 
     [...dropdownControls].forEach(dropdownControl => {
-        dropdownControl.onchange = () => {
-            let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
-            let hasOptions = selectedOption.dataset.hasOptions;
-            let controlChoices = dropdownControl.parentElement.parentElement.nextSibling;
-
-            if (hasOptions) {
-                controlChoices.classList.remove('hidden');
-            } else {
-                if (!controlChoices.classList.contains('hidden')) {
-                    controlChoices.classList.add('hidden');
-                }
-            }
-        };
+        dropdownUpdated(dropdownControl); // check if dropdown is already in a state that has options
+        dropdownControl.onchange = () => dropdownUpdated(dropdownControl);
     });
+
+    function dropdownUpdated(dropdownControl) {
+        let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
+        let hasOptions = selectedOption.dataset.hasOptions;
+        let controlChoices = dropdownControl.parentElement.parentElement.nextSibling;
+
+        if (hasOptions) {
+            controlChoices.classList.remove('hidden');
+        } else {
+            if (!controlChoices.classList.contains('hidden')) {
+                controlChoices.classList.add('hidden');
+            }
+        }
+    }
 
 
     /**
