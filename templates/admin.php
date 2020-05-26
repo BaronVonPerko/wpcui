@@ -99,6 +99,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                     <tr>
                                         <td colspan="5">
 											<?php AdminPageForms::SampleControlCode( $controlId, $controlDefault ); ?>
+                                            <hr>
                                         </td>
                                     </tr>
 								<?php endforeach; ?> <!-- end loop over existing controls -->
