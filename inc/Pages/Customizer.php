@@ -38,7 +38,7 @@ class Customizer {
 		$controls = [];
 
 		foreach ( $settings as $sectionKey => $section ) {
-			foreach($section['controls'] as $control) {
+			foreach ( $section['controls'] as $control ) {
 				$this->customizer_fields[] = new CustomizerControl(
 					$control['control_id'],
 					$control['control_label'],
@@ -48,6 +48,7 @@ class Customizer {
 					$control['control_default'],
 					$control['control_choices']
 				);
+
 				$controls[] = $control;
 			}
 		}

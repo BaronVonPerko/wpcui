@@ -3,6 +3,8 @@
 namespace PerkoCustomizerUI\Forms;
 
 use PerkoCustomizerUI\Base\BaseController;
+use PerkoCustomizerUI\Services\AdminFormStatus;
+use PerkoCustomizerUI\Services\AdminFormStatusService;
 
 /**
  * Class AdminPageActions
@@ -47,7 +49,7 @@ class AdminPageForms extends BaseController {
             <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
-			<?php submit_button( 'Cancel', 'small secondary wpcui-btn-cancel', 'cancel', false, [ 'id' => 'submitEditCancelButton' ] ); ?>
+			<?php self::CancelButton( 'submitEditCancelButton', 'small' ); ?>
         </form>
 		<?php
 	}
@@ -88,7 +90,7 @@ class AdminPageForms extends BaseController {
 	public static function ControlActionButtons( $controlId ) {
 		?>
         <form action="" method="post" style="margin-right: 5px;">
-            <input type="hidden" name="edit_control_id" value="<?= $controlId ?>">
+            <input type="hidden" name="<?= AdminFormStatus::EditControl ?>" value="<?= $controlId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditControl' ] ); ?>
         </form>
@@ -112,7 +114,7 @@ class AdminPageForms extends BaseController {
 	 * @param $sectionKey
 	 */
 	public static function ControlForm( $sectionKey ) {
-		$action = array_key_exists( 'edit_control_id', $_POST )
+		$action = AdminFormStatusService::IsEditControlForSection( $sectionKey )
 			? AdminPageFormActions::UpdateControl
 			: AdminPageFormActions::CreateControl;
 		?>
@@ -122,9 +124,9 @@ class AdminPageForms extends BaseController {
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
-			if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+			if ( AdminFormStatusService::IsEditControlForSection( $sectionKey ) ) {
 				submit_button( 'Update Control', 'primary', 'submit', false, [ 'id' => 'submitUpdateControl' ] );
-				submit_button( 'Cancel', 'secondary wpcui-btn-cancel', 'cancel', false );
+				self::CancelButton( 'submitCancelEditControl' );
 			} else {
 				submit_button( 'Create New Control', 'primary', 'submit', true, [ 'id' => 'submitCreateNewControl' ] );
 			}
@@ -160,6 +162,11 @@ class AdminPageForms extends BaseController {
 		?>
         <input type="hidden" name="wpcui_action" value=<?= $action ?>>
 		<?php
+	}
+
+
+	private static function CancelButton( $id, $classes = '' ) {
+		submit_button( 'Cancel', 'secondary wpcui-btn-cancel ' . $classes, 'cancel', false, [ 'id' => $id ] );
 	}
 
 }

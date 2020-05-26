@@ -1,5 +1,7 @@
 <?php
 
+use PerkoCustomizerUI\Services\AdminFormStatus;
+use PerkoCustomizerUI\Services\AdminFormStatusService;
 use PerkoCustomizerUI\Services\DataService;
 use PerkoCustomizerUI\Forms\AdminPageForms;
 
@@ -27,76 +29,80 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 			$sectionTitle  = esc_attr( $section['section_title'] )
 			?>
 
-            <div class="wpcui-panel" data-wpcui-collapsed="">
-                <div class="wpcui-panel-title">
-					<?php if ( array_key_exists( $editSectionId, $_POST ) ): ?> <!-- edit section title -->
-                        <div class="wpcui-panel-title-buttons">
-							<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
-                        </div>
-					<?php else: ?> <!-- end edit section title, begin collapsible title -->
-                        <div class="wpcui-collapsible-title">
-							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
-                            <h3><?= $sectionTitle ?></h3>
-                        </div> <!-- end of .wpcui-collapsible-title -->
-					<?php endif; ?>
+            <!-- show the section panel if we are not editing a control, or if we are, only show the section the control being edited belongs to -->
+			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $key ) ): ?>
+                <div class="wpcui-panel" data-wpcui-collapsed="">
+                    <div class="wpcui-panel-title">
+						<?php if ( AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?> <!-- edit section title -->
+                            <div class="wpcui-panel-title-buttons">
+								<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
+                            </div>
+						<?php else: ?> <!-- end edit section title, begin collapsible title -->
+                            <div class="wpcui-collapsible-title">
+								<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
+                                <h3><?= $sectionTitle ?></h3>
+                            </div> <!-- end of .wpcui-collapsible-title -->
+						<?php endif; ?>
 
-					<?php if ( ! array_key_exists( $editSectionId, $_POST ) ): ?>
-                        <div class="wpcui-panel-title-buttons">
-							<?php AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle ); ?>
-                        </div>
-					<?php endif; ?>
-                </div> <!-- end .wpcui-panel-title -->
+                        <!-- Show the edit/delete buttons if not in edit mode -->
+						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?>
+                            <div class="wpcui-panel-title-buttons">
+								<?php AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle ); ?>
+                            </div>
+						<?php endif; ?>
+                    </div> <!-- end .wpcui-panel-title -->
 
-                <div class="wpcui-panel-body">
-					<?php
-					$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
-						return $control["section"] == $key;
-					} );
-					?>
+                    <div class="wpcui-panel-body">
+						<?php
+						$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
+							return $control["section"] == $key;
+						} );
+						?>
 
-					<?php if ( count( $sectionControls ) == 0 ): ?>
-                        <em>There are currently no controls for this section.</em>
-					<?php else: ?>
-                        <table class="wpcui-control-table">
-                            <thead>
-                            <tr>
-                                <th class="manage-column">ID</th>
-                                <th class="manage-column">Label</th>
-                                <th class="manage-column">Type</th>
-                                <th class="manage-column">Default</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							<?php foreach ( $sectionControls as $control ): ?>
-								<?php
-								$controlId      = esc_attr( $control['control_id'] );
-								$controlLabel   = esc_attr( $control['control_label'] );
-								$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
-								$controlDefault = esc_attr( $control['control_default'] );
-								?>
+						<?php if ( count( $sectionControls ) == 0 ): ?>
+                            <em>There are currently no controls for this section.</em>
+						<?php else: ?>
+                            <table class="wpcui-control-table">
+                                <thead>
                                 <tr>
-                                    <td><?= $controlId ?></td>
-                                    <td><?= $controlLabel ?></td>
-                                    <td><?= $controlType ?></td>
-                                    <td><?= $controlDefault ?></td>
-                                    <td class="wpcui_control_action_buttons">
-										<?php AdminPageForms::ControlActionButtons( $controlId ); ?>
-                                    </td>
+                                    <th class="manage-column">ID</th>
+                                    <th class="manage-column">Label</th>
+                                    <th class="manage-column">Type</th>
+                                    <th class="manage-column">Default</th>
+                                    <th></th>
                                 </tr>
-                                <tr>
-                                    <td colspan="5">
-										<?php AdminPageForms::SampleControlCode( $controlId, $controlDefault ); ?>
-                                    </td>
-                                </tr>
-							<?php endforeach; ?> <!-- end loop over existing controls -->
-                            </tbody>
-                        </table>
-					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
+                                </thead>
+                                <tbody>
+								<?php foreach ( $sectionControls as $control ): ?>
+									<?php
+									$controlId      = esc_attr( $control['control_id'] );
+									$controlLabel   = esc_attr( $control['control_label'] );
+									$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
+									$controlDefault = esc_attr( $control['control_default'] );
+									?>
+                                    <tr>
+                                        <td><?= $controlId ?></td>
+                                        <td><?= $controlLabel ?></td>
+                                        <td><?= $controlType ?></td>
+                                        <td><?= $controlDefault ?></td>
+                                        <td class="wpcui_control_action_buttons">
+											<?php AdminPageForms::ControlActionButtons( $controlId ); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+											<?php AdminPageForms::SampleControlCode( $controlId, $controlDefault ); ?>
+                                        </td>
+                                    </tr>
+								<?php endforeach; ?> <!-- end loop over existing controls -->
+                                </tbody>
+                            </table>
+						<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-					<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
-                </div> <!-- end .wpcui-panel-body -->
-            </div> <!-- end .wpcui-panel -->
+						<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
+                    </div> <!-- end .wpcui-panel-body -->
+                </div> <!-- end .wpcui-panel -->
+			<?php endif; ?>
 		<?php endforeach; ?>
 
 	<?php endif; ?> <!-- end if has sections -->

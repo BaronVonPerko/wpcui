@@ -66,9 +66,9 @@ class AdminSettingsService {
 	private function addControlSettings() {
 		$title           = 'Add Control';
 		$existingControl = null;
-		if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+		if ( AdminFormStatusService::IsEditControl() ) {
 			$title           = 'Edit Control';
-			$existingControl = DataService::getControlById( esc_attr( $_POST['edit_control_id'] ) );
+			$existingControl = DataService::getControlById( esc_attr( $_POST[AdminFormStatus::EditControl] ) );
 		}
 
 		add_settings_section(

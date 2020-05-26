@@ -78,7 +78,7 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
-		if ( isset( $_POST['cancel'] ) ) {
+		if ( AdminFormStatusService::IsCancel() ) {
 			add_settings_error( 'wpcui_sections', null, "No changes were made.", 'info' );
 
 			return $settings;
@@ -155,9 +155,9 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateControl( $input, $settings ) {
-		if ( $_POST['cancel'] ) {
+		if ( AdminFormStatusService::IsCancel() ) {
 			add_settings_error( 'wpcui_sections', null, "No changes were made.", 'info' );
-			
+
 			return $settings;
 		}
 		foreach ( $settings['sections'] as $sectionKey => $section ) {
