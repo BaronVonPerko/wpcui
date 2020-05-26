@@ -34,7 +34,7 @@ class FormControlsService {
 		$value       = $args['value'];
 		$required    = $required;
 
-		echo '<textarea rows="4" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . ' ' . $required . '"></textarea>';
+		echo '<textarea rows="4" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . ' ' . $required . '">' . $value . '</textarea>';
 	}
 
 	public function groupedDropDown( $args ) {
