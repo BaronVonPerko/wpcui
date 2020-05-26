@@ -47,7 +47,9 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                         <!-- Show the edit/delete buttons if not in edit mode -->
 						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?>
                             <div class="wpcui-panel-title-buttons">
-								<?php AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle ); ?>
+								<?php if ( ! AdminFormStatusService::IsEditControl() ) {
+									AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle );
+								} ?>
                             </div>
 						<?php endif; ?>
                     </div> <!-- end .wpcui-panel-title -->
@@ -86,7 +88,9 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                         <td><?= $controlType ?></td>
                                         <td><?= $controlDefault ?></td>
                                         <td class="wpcui_control_action_buttons">
-											<?php AdminPageForms::ControlActionButtons( $controlId ); ?>
+											<?php if ( ! AdminFormStatusService::IsEditControl() ) {
+												AdminPageForms::ControlActionButtons( $controlId );
+											} ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -105,9 +109,10 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 			<?php endif; ?> <!-- end wpcui-panel -->
 		<?php endforeach; ?>
 
-    <?php if(AdminFormStatusService::IsEditControl()): ?>
-    <em>You are currently editing a customizer control.  Your other sections are hidden until you complete the edit.</em>
-    <?php endif; ?>
+		<?php if ( AdminFormStatusService::IsEditControl() ): ?>
+            <em>You are currently editing a customizer control. Your other sections are hidden until you complete the
+                edit.</em>
+		<?php endif; ?>
 
 	<?php endif; ?> <!-- end if has sections -->
 
