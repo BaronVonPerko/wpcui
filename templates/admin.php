@@ -29,7 +29,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 			$sectionTitle  = esc_attr( $section['section_title'] )
 			?>
 
-            <!-- show the section panel if we are not editing a control, or if we are, only show the section the control being edited belongs to -->
+            <!-- show the section panel if we are not editing a control. if we are editing, only show the section the control being edited belongs to -->
 			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $key ) ): ?>
                 <div class="wpcui-panel" data-wpcui-collapsed="">
                     <div class="wpcui-panel-title">
@@ -102,8 +102,12 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 						<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
                     </div> <!-- end .wpcui-panel-body -->
                 </div> <!-- end .wpcui-panel -->
-			<?php endif; ?>
+			<?php endif; ?> <!-- end wpcui-panel -->
 		<?php endforeach; ?>
+
+    <?php if(AdminFormStatusService::IsEditControl()): ?>
+    <em>You are currently editing a customizer control.  Your other sections are hidden until you complete the edit.</em>
+    <?php endif; ?>
 
 	<?php endif; ?> <!-- end if has sections -->
 
