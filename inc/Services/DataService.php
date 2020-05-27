@@ -47,7 +47,7 @@ class DataService {
 		$sections = self::getSettings()['sections'];
 		foreach ( $sections as $section ) {
 			foreach ( $section['controls'] as $control ) {
-				if ( $control['id'] == $controlId ) {
+				if ( $control['control_id'] == $controlId ) {
 					return true;
 				}
 			}
