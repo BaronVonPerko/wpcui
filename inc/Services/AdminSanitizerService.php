@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Forms\AdminPageFormActions;
+
 /**
  * Class AdminSanitizerService
  * @package PerkoCustomizerUI\Services
@@ -17,24 +19,27 @@ class AdminSanitizerService {
 	 *
 	 * @return array|mixed|void
 	 */
-	public function sanitizeSettings( $input ) {
+	public function sanitizeSettings( $input ): array {
 		$settings = DataService::getSettings();
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
 			switch ( $_POST['wpcui_action'] ) {
-				case 'create_new_section':
+				case AdminPageFormActions::CreateNewSection:
 					$settings = $this->sanitizeNewSection( $input, $settings );
 					break;
-				case 'update_section_title':
+				case AdminPageFormActions::UpdateSection:
 					$settings = $this->sanitizeUpdateSectionName( $settings );
 					break;
-				case 'delete_section':
+				case AdminPageFormActions::DeleteSection:
 					$settings = $this->sanitizeDeleteSection( $settings );
 					break;
-				case 'create_new_control':
+				case AdminPageFormActions::CreateControl:
 					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
-				case 'delete_control':
+				case AdminPageFormActions::UpdateControl:
+					$settings = $this->sanitizeUpdateControl( $input, $settings );
+					break;
+				case AdminPageFormActions::DeleteControl:
 					$settings = $this->sanitizeDeleteControl( $settings );
 					break;
 			}
@@ -73,20 +78,24 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeUpdateSectionName( $settings ) {
-		if ( isset( $_POST['edit_section'] ) ) {
-			$oldTitle = sanitize_text_field( $_POST['edit_section'] );
-			$newTitle = sanitize_text_field( $_POST['new_title'] );
+		if ( AdminFormStatusService::IsCancel() ) {
+			add_settings_error( 'wpcui_sections', null, "No changes were made.", 'info' );
 
-			$id = DataService::getSectionIdByName( $oldTitle );
-
-			$error = self::validateSectionName( $newTitle );
-			if ( $error ) {
-				add_settings_error( 'wpcui_sections', null, $error );
-
-				return $settings;
-			}
-			$settings['sections'][ $id ]['section_title'] = $newTitle;
+			return $settings;
 		}
+
+		$oldTitle = sanitize_text_field( $_POST['old_title'] );
+		$newTitle = sanitize_text_field( $_POST['new_title'] );
+
+		$id = DataService::getSectionIdByName( $oldTitle );
+
+		$error = self::validateSectionName( $newTitle );
+		if ( $error ) {
+			add_settings_error( 'wpcui_sections', null, $error );
+
+			return $settings;
+		}
+		$settings['sections'][ $id ]['section_title'] = $newTitle;
 
 		return $settings;
 	}
@@ -125,7 +134,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$control                                                      = [
+		$control = [
 			"control_id"      => $controlId,
 			"control_label"   => sanitize_text_field( $input['control_label'] ),
 			"control_type"    => sanitize_text_field( $input['control_type'] ),
@@ -133,7 +142,48 @@ class AdminSanitizerService {
 			"control_default" => sanitize_text_field( $input['control_default'] ),
 			"section"         => $sectionId
 		];
+
 		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
+
+		return $settings;
+	}
+
+	/**
+	 * @param $input
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeUpdateControl( $input, $settings ) {
+		if ( AdminFormStatusService::IsCancel() ) {
+			add_settings_error( 'wpcui_sections', null, "No changes were made.", 'info' );
+
+			return $settings;
+		}
+
+		$oldControlId = $_POST['old_control_id'];
+
+		foreach ( $settings['sections'] as $sectionKey => $section ) {
+			foreach ( $section['controls'] as $control ) {
+				if ( $control['control_id'] == $oldControlId ) {
+					$controlId = sanitize_text_field( $input['control_id'] );
+
+					$control = [
+						"control_id"      => $controlId,
+						"control_label"   => sanitize_text_field( $input['control_label'] ),
+						"control_type"    => sanitize_text_field( $input['control_type'] ),
+						"control_choices" => sanitize_text_field( $input['control_choices'] ),
+						"control_default" => sanitize_text_field( $input['control_default'] ),
+						"section"         => $sectionKey
+					];
+
+					if ( $controlId != $oldControlId ) {
+						unset( $settings['sections'][ $sectionKey ]['controls'][ $oldControlId ] );
+					}
+					$settings['sections'][ $sectionKey ]['controls'][ $controlId ] = $control;
+				}
+			}
+		}
 
 		return $settings;
 	}

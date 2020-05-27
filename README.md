@@ -1,13 +1,17 @@
 # WordPress Customizer UI Plugin
-### v0.9 BETA
+### v1.0.0
 
 ![Logo](assets/logo.png)
 
-WordPress Customizer UI Plugin (WPCUI) is a free plugin to help WordPress developers quickly and easily add Customizer sections and controls, so they can get on with their lives creating what really matters... awesome websites!
+WordPress Customizer UI Plugin (WPCUI) is a free plugin to help WordPress developers quickly and easily add Customizer 
+sections and controls, so they can get on with their lives creating what really matters... awesome websites!
+
+> This version is currently in review by WordPress.  We hope to have it available in the plugin directory soon!
 
 ## Contributing
 
-Feel free to contribute to any part of this plugin!  Just be sure to make all pull-requests to the **dev** branch.  Thank you!
+Feel free to contribute to any part of this plugin!  Just be sure to make all pull-requests to the **dev** branch.  
+Thank you!
 
 ## Installation from Source
 
@@ -19,8 +23,9 @@ composer install
 
 ## Download Latest Build
 
-You can download the zipped version of the plugin with all of the composer dependencies already included from this link:
+You can download the zipped version of the plugin with all of the composer dependencies already included from the 
+following link:
 
-[Download BETA v0.91](https://wpcui-build-prod.s3.amazonaws.com/wpcui-beta-0.91.zip)
+[Download 1.0.0](https://wpcui-build-prod.s3.amazonaws.com/wpcui-1.0.0.zip)
 
 This zip file can be directly uploaded to your WordPress website for use.

@@ -32,10 +32,14 @@ class AdminSettingsService {
 			[ $this->sanitizer, 'sanitizeSettings' ]
 		);
 
+		$this->addSectionSettings();
+		$this->addControlSettings();
+	}
 
-		/**
-		 * Section Settings Section
-		 */
+	/**
+	 * Add the settings for the customizer sections.
+	 */
+	private function addSectionSettings() {
 		add_settings_section(
 			'wpcui_section_index',
 			'Add Section',
@@ -52,15 +56,24 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'section_title',
 				'placeholder' => 'eg. Personal Info',
+				'value'       => ''
 			] );
+	}
 
+	/**
+	 * Add the settings for the customizer controls
+	 */
+	private function addControlSettings() {
+		$title           = 'Add Control';
+		$existingControl = null;
+		if ( AdminFormStatusService::IsEditControl() ) {
+			$title           = 'Edit Control';
+			$existingControl = DataService::getControlById( esc_attr( $_POST[AdminFormStatus::EditControl] ) );
+		}
 
-		/**
-		 * Control Settings Section
-		 */
 		add_settings_section(
 			'wpcui_section_control',
-			'Add Control',
+			$title,
 			[ $this, 'controlOutput' ],
 			'wpcui-control'
 		);
@@ -74,7 +87,8 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_id',
 				'placeholder' => 'eg. location_info',
-				'required'    => 'required'
+				'required'    => 'required',
+				'value'       => $existingControl ? $existingControl['control_id'] : ''
 			] );
 
 		add_settings_field( 'control_label',
@@ -86,7 +100,8 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info',
-				'required'    => 'required'
+				'required'    => 'required',
+				'value'       => $existingControl ? $existingControl['control_label'] : ''
 			] );
 
 		add_settings_field( 'control_type',
@@ -99,24 +114,8 @@ class AdminSettingsService {
 				'label_for'   => 'control_type',
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
-				'options'     => [
-					'Standard'      => [
-						[ 'name' => 'Text' ],
-						[ 'name' => 'Text Area' ],
-						[ 'name' => 'Select', 'has_options' => true ],
-						[ 'name' => 'Radio', 'has_options' => true ],
-						[ 'name' => 'Dropdown Pages' ],
-						[ 'name' => 'Email' ],
-						[ 'name' => 'URL' ],
-						[ 'name' => 'Number' ],
-						[ 'name' => 'Date' ],
-					],
-					'Media / Color' => [
-						[ 'name' => 'Upload' ],
-						[ 'name' => 'Image' ],
-						[ 'name' => 'Color Picker' ],
-					]
-				]
+				'options'     => self::getControlTypeOptions(),
+				'value'       => $existingControl ? $existingControl['control_type'] : ''
 			] );
 
 		add_settings_field( 'control_choices',
@@ -129,6 +128,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_choices',
 				'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
 				'class'       => 'hidden control-choices',
+				'value'       => $existingControl ? $existingControl['control_choices'] : ''
 			] );
 
 		add_settings_field( 'control_default',
@@ -139,7 +139,8 @@ class AdminSettingsService {
 			[
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_default',
-				'placeholder' => 'Default value'
+				'placeholder' => 'Default value',
+				'value'       => $existingControl ? $existingControl['control_default'] : ''
 			] );
 	}
 
@@ -148,7 +149,32 @@ class AdminSettingsService {
 	}
 
 	public function controlOutput() {
-		echo '<p>Create a new control</p>';
+		if ( array_key_exists( 'edit_control_id', $_POST ) ) {
+			echo '<p>Edit control</p>';
+		} else {
+			echo '<p>Create a new control</p>';
+		}
+	}
+
+	private static function getControlTypeOptions() {
+		return [
+			'Standard'      => [
+				[ 'name' => 'Text' ],
+				[ 'name' => 'Text Area' ],
+				[ 'name' => 'Select', 'has_options' => true ],
+				[ 'name' => 'Radio', 'has_options' => true ],
+				[ 'name' => 'Dropdown Pages' ],
+				[ 'name' => 'Email' ],
+				[ 'name' => 'URL' ],
+				[ 'name' => 'Number' ],
+				[ 'name' => 'Date' ],
+			],
+			'Media / Color' => [
+				[ 'name' => 'Upload' ],
+				[ 'name' => 'Image' ],
+				[ 'name' => 'Color Picker' ],
+			]
+		];
 	}
 
 }

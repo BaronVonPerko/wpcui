@@ -1,138 +1,122 @@
 <?php
 
+use PerkoCustomizerUI\Services\AdminFormStatus;
+use PerkoCustomizerUI\Services\AdminFormStatusService;
 use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Forms\AdminPageForms;
 
 /**
  * Template file for the admin backend page.
  */
 ?>
 <div class="wrap">
-    <h1>WPCUI Options</h1>
-
+    <h1>Customizer UI Options</h1>
 
 	<?php settings_errors(); ?>
 
-    <form method="post" action="options.php">
-        <input type="hidden" name="wpcui_action" value="create_new_section">
-		<?php
-		settings_fields( 'wpcui' );
-		do_settings_sections( 'wpcui' );
-		submit_button( 'Create New Section' );
-		?>
-    </form>
+	<?php AdminPageForms::NewSectionForm(); ?>
 
     <hr>
 
-	<?php
-	$settings = DataService::getSettings();
-	?>
+	<?php $settings = DataService::getSettings(); ?>
 
 
 	<?php if ( count( $settings ) > 0 ): ?>
 
 		<?php foreach ( $settings['sections'] as $key => $section ): ?>
-			<?php $editSectionId = "edit_section_$key"; ?>
+			<?php
+			$editSectionId = "edit_section_$key";
+			$sectionTitle  = esc_attr( $section['section_title'] )
+			?>
 
-            <div class="wpcui-panel" data-wpcui-collapsed="">
-                <div class="wpcui-panel-title">
-					<?php if ( array_key_exists($editSectionId, $_POST) ): ?> <!-- edit section title -->
-                        <div class="wpcui-panel-title-buttons">
-                            <form action="options.php" method="post">
-                                <input type="hidden" name="wpcui_action" value="update_section_title">
-                                <input type="hidden" name="edit_section" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="hidden" name="old_title" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="hidden" name="edit_section" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="text" name="new_title" value="<?= esc_attr($section['section_title']) ?>"/>
-								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Save Changes', 'small', 'edit', false ); ?>
-                            </form>
-                            <form action="" method="post">
-                                <input type="hidden" name="edit_section" value="">
-								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Cancel', 'small', 'edit', false ); ?>
-                            </form>
-                        </div>
-					<?php else: ?> <!-- end edit section title, begin collapsible title -->
-                        <div class="wpcui-collapsible-title">
-							<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
-                            <h3><?= esc_attr($section['section_title']) ?></h3>
-                        </div> <!-- end of .wpcui-collapsible-title -->
-					<?php endif; ?>
+            <!-- show the section panel if we are not editing a control. if we are editing, only show the section the control being edited belongs to -->
+			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $key ) ): ?>
+                <div class="wpcui-panel" data-wpcui-collapsed="">
+                    <div class="wpcui-panel-title">
+						<?php if ( AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?> <!-- edit section title -->
+                            <div class="wpcui-panel-title-buttons">
+								<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
+                            </div>
+						<?php else: ?> <!-- end edit section title, begin collapsible title -->
+                            <div class="wpcui-collapsible-title">
+								<?php echo file_get_contents( plugin_dir_url( dirname( __FILE__, 1 ) ) . 'assets/chevron.svg' ) ?>
+                                <h3><?= $sectionTitle ?></h3>
+                            </div> <!-- end of .wpcui-collapsible-title -->
+						<?php endif; ?>
 
-					<?php if ( ! array_key_exists($editSectionId, $_POST) ): ?>
-                        <div class="wpcui-panel-title-buttons">
-                            <form action="" method="post">
-                                <input type="hidden" name="<?= $editSectionId ?>"
-                                       value="<?= esc_attr($section['section_title']) ?>">
-								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Edit', 'small', 'edit', false ); ?>
-                            </form>
+                        <!-- Show the edit/delete buttons if not in edit mode -->
+						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?>
+                            <div class="wpcui-panel-title-buttons">
+								<?php if ( ! AdminFormStatusService::IsEditControl() ) {
+									AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle );
+								} ?>
+                            </div>
+						<?php endif; ?>
+                    </div> <!-- end .wpcui-panel-title -->
 
-                            <form action="options.php" method="post" style="margin-right: 5px;">
-                                <input type="hidden" name="section_title" value="<?= esc_attr($section['section_title']) ?>">
-                                <input type="hidden" name="wpcui_action" value="delete_section">
-								<?php settings_fields( 'wpcui' ); ?>
-								<?php submit_button( 'Delete', 'delete small', 'submit', false, [
-									'onclick' => 'return confirm("Are you sure you want to delete this section?")'
-								] ); ?>
-                            </form>
-                        </div>
-					<?php endif; ?>
-                </div> <!-- end .wpcui-panel-title -->
-
-                <div class="wpcui-panel-body">
-					<?php
-					$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
-						return $control["section"] == $key;
-					} );
-					?>
-
-					<?php if ( count( $sectionControls ) == 0 ): ?>
-                        <em>There are currently no controls for this section.</em>
-					<?php else: ?>
-                        <table class="wpcui-control-table">
-                            <thead>
-                            <tr>
-                                <th class="manage-column">ID</th>
-                                <th class="manage-column">Label</th>
-                                <th class="manage-column">Type</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							<?php foreach ( $sectionControls as $control ): ?>
-                                <tr>
-                                    <td><?= esc_attr($control['control_id']) ?></td>
-                                    <td><?= esc_attr($control['control_label']) ?></td>
-                                    <td><?= str_replace( '_', ' ', esc_attr($control['control_type']) ) ?></td>
-                                    <td>
-                                        <form action="options.php" method="post" style="margin-right: 5px;">
-                                            <input type="hidden" name="control_id" value="<?= esc_attr($control['control_id']) ?>">
-                                            <input type="hidden" name="wpcui_action" value="delete_control">
-											<?php settings_fields( 'wpcui' ); ?>
-											<?php submit_button( 'Delete', 'delete small', 'submit', false, [
-												'onclick' => 'return confirm("Are you sure you want to delete this control?")'
-											] ); ?>
-                                        </form>
-                                    </td>
-                                </tr>
-							<?php endforeach; ?> <!-- end loop over existing controls -->
-                            </tbody>
-                        </table>
-					<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
-
-                    <form method="post" action="options.php" class="wpcui-control-form">
-                        <input type="hidden" name="section" value="<?= esc_attr($key) ?>">
-                        <input type="hidden" name="wpcui_action" value="create_new_control">
+                    <div class="wpcui-panel-body">
 						<?php
-						settings_fields( 'wpcui' );
-						do_settings_sections( 'wpcui-control' );
-						submit_button( 'Create New Control' );
+						$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
+							return $control["section"] == $key;
+						} );
 						?>
-                    </form>
-                </div> <!-- end .wpcui-panel-body -->
-            </div> <!-- end .wpcui-panel -->
+
+						<?php if ( count( $sectionControls ) == 0 ): ?>
+                            <em>There are currently no controls for this section.
+                                This section will not appear in the Customizer until <strong>at least</strong> one
+                                control has been added to this section. Add a control with the form to the right.
+                            </em>
+						<?php else: ?>
+                            <table class="wpcui-control-table">
+                                <thead>
+                                <tr>
+                                    <th class="manage-column">ID</th>
+                                    <th class="manage-column">Label</th>
+                                    <th class="manage-column">Type</th>
+                                    <th class="manage-column">Default</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+								<?php foreach ( $sectionControls as $control ): ?>
+									<?php
+									$controlId      = esc_attr( $control['control_id'] );
+									$controlLabel   = esc_attr( $control['control_label'] );
+									$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
+									$controlDefault = esc_attr( $control['control_default'] );
+									?>
+                                    <tr>
+                                        <td><?= $controlId ?></td>
+                                        <td><?= $controlLabel ?></td>
+                                        <td><?= $controlType ?></td>
+                                        <td><?= $controlDefault ?></td>
+                                        <td class="wpcui_control_action_buttons">
+											<?php if ( ! AdminFormStatusService::IsEditControl() ) {
+												AdminPageForms::ControlActionButtons( $controlId );
+											} ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+											<?php AdminPageForms::SampleControlCode( $controlId, $controlDefault ); ?>
+                                            <hr>
+                                        </td>
+                                    </tr>
+								<?php endforeach; ?> <!-- end loop over existing controls -->
+                                </tbody>
+                            </table>
+						<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
+
+						<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
+                    </div> <!-- end .wpcui-panel-body -->
+                </div> <!-- end .wpcui-panel -->
+			<?php endif; ?> <!-- end wpcui-panel -->
 		<?php endforeach; ?>
+
+		<?php if ( AdminFormStatusService::IsEditControl() ): ?>
+            <em>You are currently editing a customizer control. Your other sections are hidden until you complete the
+                edit.</em>
+		<?php endif; ?>
 
 	<?php endif; ?> <!-- end if has sections -->
 
