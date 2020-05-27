@@ -1,7 +1,7 @@
 # WordPress Customizer UI Plugin
 ### v0.9 BETA
 
-<div align="center">![Logo](assets/logo.png)</div>
+![Logo](assets/logo.png)
 
 WordPress Customizer UI Plugin (WPCUI) is a free plugin to help WordPress developers quickly and easily add Customizer sections and controls, so they can get on with their lives creating what really matters... awesome websites!
 
