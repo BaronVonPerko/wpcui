@@ -45,7 +45,7 @@ class AdminFormStatusService {
 	 */
 	public static function IsEditControlForSection( $sectionId ) {
 		if ( isset( $_POST[ AdminFormStatus::EditControl ] ) ) {
-			$control = DataService::getControlById( $_POST[ AdminFormStatus::EditControl ] );
+			$control = DataService::getControlById( sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) );
 
 			return $control['section'] == $sectionId;
 		}

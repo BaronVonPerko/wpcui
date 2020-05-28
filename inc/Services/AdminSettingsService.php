@@ -68,7 +68,7 @@ class AdminSettingsService {
 		$existingControl = null;
 		if ( AdminFormStatusService::IsEditControl() ) {
 			$title           = 'Edit Control';
-			$existingControl = DataService::getControlById( esc_attr( $_POST[AdminFormStatus::EditControl] ) );
+			$existingControl = DataService::getControlById( sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) );
 		}
 
 		add_settings_section(

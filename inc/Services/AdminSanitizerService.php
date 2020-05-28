@@ -23,7 +23,7 @@ class AdminSanitizerService {
 		$settings = DataService::getSettings();
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
-			switch ( $_POST['wpcui_action'] ) {
+			switch ( sanitize_text_field( $_POST['wpcui_action'] ) ) {
 				case AdminPageFormActions::CreateNewSection:
 					$settings = $this->sanitizeNewSection( $input, $settings );
 					break;
@@ -161,7 +161,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$oldControlId = $_POST['old_control_id'];
+		$oldControlId = sanitize_text_field( $_POST['old_control_id'] );
 
 		foreach ( $settings['sections'] as $sectionKey => $section ) {
 			foreach ( $section['controls'] as $control ) {
