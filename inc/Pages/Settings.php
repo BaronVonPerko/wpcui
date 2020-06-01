@@ -12,27 +12,27 @@ use PerkoCustomizerUI\Services\DataService;
  *
  * Create the plugin admin pages in the WordPress backend
  */
-class Admin extends BaseController {
+class Settings extends BaseController {
 
 	public function register() {
-		add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
+		add_action( 'admin_menu', [ $this, 'addSettingsPage' ] );
 
 		$settings_service = new AdminSettingsService();
 		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 
-	function adminIndex() {
-		require_once "$this->plugin_path/templates/admin.php";
+	function settingsIndex() {
+		require_once "$this->plugin_path/templates/settings.php";
 	}
 
-	function addAdminPage() {
-		add_menu_page(
-			'WPCUI Plugin',
-			'Customizer UI',
-			'manage_options',
+	function addSettingsPage() {
+		add_submenu_page(
 			'wpcui',
-			[ $this, 'adminIndex' ],
-			'dashicons-admin-customizer', 110
+			'Settings',
+			'Settings',
+			'manage_options',
+			'wpcui-settings',
+			[ $this, 'settingsIndex' ]
 		);
 	}
 }
