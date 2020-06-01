@@ -77,6 +77,17 @@ class DataService {
 	}
 
 	/**
+	 * Get the control id prefix from the settings.
+	 *
+	 * @return string
+	 */
+	public static function getControlIdPrefix() {
+		$settings = self::getSettings();
+
+		return array_key_exists( 'control_prefix', $settings ) ? $settings['control_prefix'] : '';
+	}
+
+	/**
 	 * Set default options in the database
 	 */
 	public static function setDefaults() {

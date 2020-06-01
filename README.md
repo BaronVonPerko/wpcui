@@ -1,5 +1,5 @@
 # WordPress Customizer UI Plugin
-### v1.0.0
+### v1.1.0
 
 ![Logo](assets/logo.png)
 

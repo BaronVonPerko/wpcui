@@ -34,9 +34,9 @@ class Customizer {
 	}
 
 	private function loadData() {
-		$settings = DataService::getSettings()['sections'];
+		$settings = DataService::getSettings();
 
-		foreach ( $settings as $sectionKey => $section ) {
+		foreach ( $settings['sections'] as $sectionKey => $section ) {
 
 			$sectionControls = [];
 			foreach ( $section['controls'] as $control ) {
@@ -50,14 +50,15 @@ class Customizer {
 					$control['control_choices'] );
 
 				$this->customizer_fields[] = $customizerControl;
-				$sectionControls[] = $customizerControl;
+				$sectionControls[]         = $customizerControl;
 			}
 
 
 			$id = strtolower( $section['section_title'] );
 			$id = str_replace( ' ', '_', $id );
 
-			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99, $sectionControls );
+			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99,
+				$sectionControls );
 		}
 	}
 }

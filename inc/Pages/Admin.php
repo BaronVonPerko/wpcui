@@ -15,7 +15,7 @@ use PerkoCustomizerUI\Services\DataService;
 class Admin extends BaseController {
 
 	public function register() {
-        add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
+		add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
 
 		$settings_service = new AdminSettingsService();
 		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
@@ -26,7 +26,13 @@ class Admin extends BaseController {
 	}
 
 	function addAdminPage() {
-		add_menu_page( 'WPCUI Plugin', 'Customizer UI', 'manage_options', 'wpcui', [ $this, 'adminIndex' ],
-			'dashicons-admin-customizer', 110 );
+		add_menu_page(
+			'WPCUI Plugin',
+			'Customizer UI',
+			'manage_options',
+			'wpcui',
+			[ $this, 'adminIndex' ],
+			'dashicons-admin-customizer', 110
+		);
 	}
 }
