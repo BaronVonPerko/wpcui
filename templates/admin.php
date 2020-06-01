@@ -10,9 +10,9 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
  */
 ?>
 <div class="wrap">
-    <h1>Customizer UI Options</h1>
-
 	<?php settings_errors(); ?>
+
+    <h1>Customizer UI Options</h1>
 
 	<?php AdminPageForms::NewSectionForm(); ?>
 

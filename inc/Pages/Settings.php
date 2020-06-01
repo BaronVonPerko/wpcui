@@ -5,6 +5,7 @@ namespace PerkoCustomizerUI\Pages;
 use PerkoCustomizerUI\Base\BaseController;
 use PerkoCustomizerUI\Services\AdminSettingsService;
 use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Services\SettingsPageSettingsService;
 
 /**
  * Class Admin
@@ -17,7 +18,7 @@ class Settings extends BaseController {
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'addSettingsPage' ] );
 
-		$settings_service = new AdminSettingsService();
+		$settings_service = new SettingsPageSettingsService();
 		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 
