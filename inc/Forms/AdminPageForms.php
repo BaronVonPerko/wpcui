@@ -19,6 +19,24 @@ class AdminPageForms extends BaseController {
 	}
 
 	/**
+	 * Get the control ID.  Add the prefix if there is one.
+	 *
+	 * @param $control
+	 * @param $settings
+	 *
+	 * @return string
+	 */
+	public static function GetControlId( $control, $settings ): string {
+		$prefix = '';
+
+		if ( array_key_exists( 'control_prefix', $settings ) ) {
+	        $prefix = $settings['control_prefix'] .  '_';
+		}
+
+		return $prefix . esc_attr( $control['control_id'] );
+	}
+
+	/**
 	 * Generate the HTML to show the example PHP code used for
 	 * using the customizer setting.
 	 *
@@ -48,7 +66,8 @@ class AdminPageForms extends BaseController {
             <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
             <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
 			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
+			<?php submit_button( 'Save Changes', 'small primary', 'edit', false,
+				[ 'id' => 'submitEditSectionTitle' ] ); ?>
 			<?php self::CancelButton( 'submitEditCancelButton', 'small' ); ?>
         </form>
 		<?php

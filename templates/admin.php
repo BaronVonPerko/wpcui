@@ -80,7 +80,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                 <tbody>
 								<?php foreach ( $sectionControls as $control ): ?>
 									<?php
-									$controlId      = esc_attr( $control['control_id'] );
+									$controlId      = AdminPageForms::GetControlId( $control, $settings );
 									$controlLabel   = esc_attr( $control['control_label'] );
 									$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
 									$controlDefault = esc_attr( $control['control_default'] );
