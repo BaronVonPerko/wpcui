@@ -29,8 +29,8 @@ class AdminPageForms extends BaseController {
 	public static function GetControlId( $control, $settings ): string {
 		$prefix = '';
 
-		if ( array_key_exists( 'control_prefix', $settings ) ) {
-	        $prefix = $settings['control_prefix'] .  '_';
+		if ( array_key_exists( 'control_prefix', $settings ) && ! empty( $settings['control_prefix'] ) ) {
+			$prefix = $settings['control_prefix'] . '_';
 		}
 
 		return $prefix . esc_attr( $control['control_id'] );
