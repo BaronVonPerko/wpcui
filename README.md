@@ -1,5 +1,5 @@
 # WordPress Customizer UI Plugin
-### v1.0.0
+### v1.0.2
 
 ![Logo](assets/logo.png)
 
@@ -26,6 +26,6 @@ composer install
 You can download the zipped version of the plugin with all of the composer dependencies already included from the 
 following link:
 
-[Download 1.0.1](https://wpcui-build-prod.s3.amazonaws.com/wpcui-1.0.0.zip)
+[Download 1.0.2](https://wpcui-build-prod.s3.amazonaws.com/wpcui-1.0.2.zip)
 
 This zip file can be directly uploaded to your WordPress website for use.

@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: Customizer User Interface
+Plugin Name: Customizer UI
 Plugin URI: https://ChrisPerko.net/WPCUI
 Description: This plugin is designed to help developers quickly and easily create customizer fields for WordPress without needing to write any code.  No more digging through the codex to find how to register a new control!
-Version: 0.9
+Version: 1.0.2
 Author: Chris Perko
 Author URI: https://ChrisPerko.net
 License: GPL2
