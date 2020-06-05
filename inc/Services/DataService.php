@@ -2,6 +2,7 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Classes\CustomizerSection;
 
 /**
@@ -136,12 +137,61 @@ class DataService {
 		$result = [];
 
 		foreach ( $sections as $section ) {
-			$title    = $section['section_title'];
-			$id       = str_replace( ' ', '_', strtolower( $title ) );
-			$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
-			$result[] = new CustomizerSection( $id, $title, $priority, $section['controls'] );
+			$result[] = self::normalizeSection( $section );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Normalize a single section.
+	 *
+	 * @param $section
+	 *
+	 * @return object
+	 */
+	public static function normalizeSection( $section ) {
+		$title    = $section['section_title'];
+		$id       = str_replace( ' ', '_', strtolower( $title ) );
+		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
+		$controls = self::normalizeControls( $section['controls'] );
+
+		return new CustomizerSection( $id, $title, $priority, $controls );
+	}
+
+	/**
+	 * Normalize an array of controls
+	 *
+	 * @param $controls
+	 *
+	 * @return array
+	 */
+	public static function normalizeControls( $controls ) {
+		$result = [];
+
+		foreach ( $controls as $control ) {
+			$result[] = self::normalizeControl( $control );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Normalize a single control
+	 *
+	 * @param $control
+	 *
+	 * @return CustomizerControl
+	 */
+	public static function normalizeControl( $control ) {
+		return new CustomizerControl(
+			$control['control_id'],
+			$control['control_label'],
+			$control['control_id'],
+			$control['section'],
+			$control['control_type'],
+			$control['control_default'],
+			$control['control_choices']
+		);
 	}
 }
