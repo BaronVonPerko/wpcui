@@ -14,11 +14,11 @@ $sections = DataService::getAllAvailableSections();
 
     <p>Use this table to re-order and hide sections.</p>
 
-    <?php
-    //$sectionList = new SectionManagerTable( $sections );
-    //$sectionList->prepare_items();
-    //$sectionList->display();
-    ?>
+	<?php
+	//$sectionList = new SectionManagerTable( $sections );
+	//$sectionList->prepare_items();
+	//$sectionList->display();
+	?>
 
     <table class="wp-list-table widefat fixed striped sections">
         <thead>
@@ -43,5 +43,8 @@ $sections = DataService::getAllAvailableSections();
         </tbody>
     </table>
 
-    <?php submit_button() ?>
+    <form action="options.php" method="post">
+	    <?php settings_fields( 'wpcui' ); ?>
+		<?php submit_button() ?>
+    </form>
 </div>
