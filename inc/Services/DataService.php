@@ -64,10 +64,15 @@ class DataService {
 	 * @return bool
 	 */
 	public static function getControlById( $controlId ) {
+		$prefix = self::getControlIdPrefix();
+		if ( ! empty( $prefix ) ) {
+			$prefix .= '_';
+		}
+
 		$sections = self::getSettings()['sections'];
 		foreach ( $sections as $section ) {
 			foreach ( $section['controls'] as $control ) {
-				if ( $control['control_id'] == $controlId ) {
+				if ( $prefix . $control['control_id'] == $controlId ) {
 					return $control;
 				}
 			}
