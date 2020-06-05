@@ -33,6 +33,9 @@ to allow the developer to create sections and controls, and get on to what reall
 
 == Changelog ==
 
+= 1.1.x =
+* New page to set a global control id prefix
+
 = 1.0.2 =
 * Minor updates to fix information on plugin listing
 
