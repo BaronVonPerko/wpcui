@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Classes\CustomizerSection;
+
 /**
  * Class DataService
  * @package PerkoCustomizerUI\Services
@@ -99,5 +101,20 @@ class DataService {
 		self::setSettings( [] );
 
 		update_option( 'wpcui_section_index', 0 );
+	}
+
+
+	/**
+	 * Get the core sections and their priorities
+	 */
+	public static function getCoreCustomizerSections() {
+		return [
+			new CustomizerSection('title_tagline', 'Site Identity', 20, []),
+			new CustomizerSection('colors', 'Colors', 40, []),
+			new CustomizerSection('header_image', 'Header Image', 60, []),
+			new CustomizerSection('background_image', 'Background Image', 80, []),
+			new CustomizerSection('static_front_page', 'Homepage Settings', 100, []),
+			new CustomizerSection('custom_css', 'Additional CSS', 200, []),
+		];
 	}
 }
