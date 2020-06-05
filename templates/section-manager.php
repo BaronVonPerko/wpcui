@@ -33,7 +33,10 @@ $sections = DataService::getAllAvailableSections();
             <tr>
                 <td><?= $section->title ?></td>
                 <td>
-                    <input type="number" value="<?= $section->priority ?>">
+                    <input onchange="window.updatePriorityForm('<?= $section->title ?>', this)"
+                           class="wpcui_input_priority"
+                           type="number"
+                           value="<?= $section->priority ?>">
                 </td>
                 <td>
                     <input type="checkbox" checked>
@@ -44,7 +47,8 @@ $sections = DataService::getAllAvailableSections();
     </table>
 
     <form action="options.php" method="post">
-	    <?php settings_fields( 'wpcui' ); ?>
+		<?php settings_fields( 'wpcui' ); ?>
+        <input id="hidden_priorities" type="hidden" name="priorities" value="">
 		<?php submit_button() ?>
     </form>
 </div>
