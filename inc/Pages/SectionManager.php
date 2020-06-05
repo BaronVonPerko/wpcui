@@ -8,32 +8,32 @@ use PerkoCustomizerUI\Services\DataService;
 use PerkoCustomizerUI\Services\SettingsPageSettingsService;
 
 /**
- * Class Settings
+ * Class SectionManager
  * @package PerkoCustomizerUI\Pages
  *
- * Create the settings page in the WordPress backend
+ * Create the Section Manager page in the WordPress backend
  */
-class Settings extends BaseController {
+class SectionManager extends BaseController {
 
 	public function register() {
-		add_action( 'admin_menu', [ $this, 'addSettingsPage' ] );
+		add_action( 'admin_menu', [ $this, 'addSectionManagerPage' ] );
 
 		$settings_service = new SettingsPageSettingsService();
 		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 
-	function settingsIndex() {
-		require_once "$this->plugin_path/templates/settings.php";
+	function sectionManagerIndex() {
+		require_once "$this->plugin_path/templates/section-manager.php";
 	}
 
-	function addSettingsPage() {
+	function addSectionManagerPage() {
 		add_submenu_page(
 			'wpcui',
-			'Settings',
-			'Settings',
+			'Section Manager',
+			'Section Manager',
 			'manage_options',
-			'wpcui-settings',
-			[ $this, 'settingsIndex' ]
+			'wpcui-section-manager',
+			[ $this, 'sectionManagerIndex' ]
 		);
 	}
 }
