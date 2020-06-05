@@ -3,6 +3,8 @@
 use PerkoCustomizerUI\Services\DataService;
 use PerkoCustomizerUI\Tables\SectionManagerTable;
 
+$sections = DataService::getAllAvailableSections();
+
 ?>
 
 <div class="wrap">
@@ -12,9 +14,32 @@ use PerkoCustomizerUI\Tables\SectionManagerTable;
 
     <p>Use this table to re-order and hide sections.</p>
 
-	<?php
-	$sectionList = new SectionManagerTable( DataService::getAllAvailableSections() );
-	$sectionList->prepare_items();
-	$sectionList->display();
-	?>
+    <?php
+    //$sectionList = new SectionManagerTable( $sections );
+    //$sectionList->prepare_items();
+    //$sectionList->display();
+    ?>
+
+    <table class="wp-list-table widefat fixed striped sections">
+        <thead>
+        <tr>
+            <th class="manage-column">Section</th>
+            <th class="manage-column">Priority</th>
+            <th class="manage-column">Visibility</th>
+        </tr>
+        </thead>
+        <tbody>
+		<?php foreach ( $sections as $section ): ?>
+            <tr>
+                <td><?= $section->title ?></td>
+                <td>
+                    <input type="number" value="<?= $section->priority ?>">
+                </td>
+                <td></td>
+            </tr>
+		<?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php submit_button() ?>
 </div>
