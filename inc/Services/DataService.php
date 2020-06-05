@@ -16,6 +16,12 @@ class DataService {
 		return get_option( 'wpcui_settings' );
 	}
 
+	public static function getSections( $normalized = true ) {
+		$sections = self::getSettings()['sections'];
+
+		return $normalized ? self::normalizeSections( $sections ) : $sections;
+	}
+
 	public static function setSettings( $sections ) {
 		update_option( 'wpcui_settings', $sections );
 	}
@@ -109,12 +115,33 @@ class DataService {
 	 */
 	public static function getCoreCustomizerSections() {
 		return [
-			new CustomizerSection('title_tagline', 'Site Identity', 20, []),
-			new CustomizerSection('colors', 'Colors', 40, []),
-			new CustomizerSection('header_image', 'Header Image', 60, []),
-			new CustomizerSection('background_image', 'Background Image', 80, []),
-			new CustomizerSection('static_front_page', 'Homepage Settings', 100, []),
-			new CustomizerSection('custom_css', 'Additional CSS', 200, []),
+			new CustomizerSection( 'title_tagline', 'Site Identity', 20, [] ),
+			new CustomizerSection( 'colors', 'Colors', 40, [] ),
+			new CustomizerSection( 'header_image', 'Header Image', 60, [] ),
+			new CustomizerSection( 'background_image', 'Background Image', 80, [] ),
+			new CustomizerSection( 'static_front_page', 'Homepage Settings', 100, [] ),
+			new CustomizerSection( 'custom_css', 'Additional CSS', 200, [] ),
 		];
+	}
+
+
+	/**
+	 * Convert the database array of sections into CustomizerSection objects
+	 *
+	 * @param $sections
+	 *
+	 * @return array|string
+	 */
+	public static function normalizeSections( $sections ) {
+		$result = [];
+
+		foreach ( $sections as $section ) {
+			$title    = $section['section_title'];
+			$id       = str_replace( ' ', '_', strtolower( $title ) );
+			$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
+			$result[] = new CustomizerSection( $id, $title, $priority, $section['controls'] );
+		}
+
+		return $result;
 	}
 }
