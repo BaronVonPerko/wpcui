@@ -194,4 +194,20 @@ class DataService {
 			$control['control_choices']
 		);
 	}
+
+
+	/**
+	 * Get all available sections, WPCUI plus Core, sorted by priority.
+	 * @return array
+	 */
+	public static function getAllAvailableSections() {
+		$coreSections  = DataService::getCoreCustomizerSections();
+		$wpcuiSections = DataService::getSections();
+		$sections      = array_merge( $coreSections, $wpcuiSections );
+		usort( $sections, function ( $a, $b ) {
+			return $a->priority - $b->priority;
+		} );
+
+		return $sections;
+	}
 }
