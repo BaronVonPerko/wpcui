@@ -140,8 +140,10 @@ class AdminPageForms extends BaseController {
         <form method="post" action="options.php" class="wpcui-control-form">
 			<?= self::FormAction( $action ); ?>
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
-            <input type="hidden" name="old_control_id"
-                   value="<?= sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) ?>">
+			<?php if ( $action == AdminPageFormActions::UpdateControl ): ?>
+                <input type="hidden" name="old_control_id"
+                       value="<?= sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) ?>">
+			<?php endif; ?>
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );

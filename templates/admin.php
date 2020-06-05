@@ -21,7 +21,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 	<?php $settings = DataService::getSettings(); ?>
 
 
-	<?php if ( count( $settings ) > 0 ): ?>
+	<?php if ( array_key_exists( 'sections', $settings ) ): ?>
 
 		<?php foreach ( $settings['sections'] as $key => $section ): ?>
 			<?php

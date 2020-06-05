@@ -54,7 +54,7 @@ class FormControlsService {
 			foreach ( $options as $option ) {
 				$option_name = $option['name'];
 				$option_id   = str_replace( ' ', '_', $option_name );
-				$has_options = $option['has_options'] == 'true';
+				$has_options = array_key_exists('has_options', $option) && $option['has_options'] == 'true';
 				$selected = $option_id == $value ? 'selected' : '';
 
 				echo "<option data-has-options='$has_options' value='$option_id' $selected>$option_name</option>";
