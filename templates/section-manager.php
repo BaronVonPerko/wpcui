@@ -35,7 +35,9 @@ $sections = DataService::getAllAvailableSections();
                 <td>
                     <input type="number" value="<?= $section->priority ?>">
                 </td>
-                <td></td>
+                <td>
+                    <input type="checkbox" checked>
+                </td>
             </tr>
 		<?php endforeach; ?>
         </tbody>
