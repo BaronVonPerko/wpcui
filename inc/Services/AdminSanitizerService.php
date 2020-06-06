@@ -241,8 +241,8 @@ class AdminSanitizerService {
 	 * @return bool|string
 	 */
 	public function validateSectionName( $sectionName ) {
-		foreach ( DataService::getSettings()['sections'] as $section ) {
-			if ( $section['section_title'] == $sectionName ) {
+		foreach ( DataService::getSections() as $section ) {
+			if ( $section->title == $sectionName ) {
 				return "A section with this name already exists.";
 			}
 		}
