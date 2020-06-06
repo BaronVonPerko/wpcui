@@ -20,7 +20,11 @@ class SectionManagerSettingsService {
 
 
 	public function setSettings() {
-		//
+		register_setting(
+			'wpcui',
+			'wpcui_settings',
+			[ $this->sanitizer, 'sanitizeSectionManager' ]
+		);
 	}
 
 }

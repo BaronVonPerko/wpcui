@@ -152,11 +152,16 @@ class DataService {
 	 */
 	public static function normalizeSection( $section ) {
 		$title    = $section['section_title'];
-		$id       = str_replace( ' ', '_', strtolower( $title ) );
+		$id       = self::getSectionIdFromTitle( $title );
 		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
 		$controls = self::normalizeControls( $section['controls'] );
 
 		return new CustomizerSection( $id, $title, $priority, $controls );
+	}
+
+
+	public static function getSectionIdFromTitle( $title ) {
+		return str_replace( ' ', '_', strtolower( $title ) );
 	}
 
 	/**

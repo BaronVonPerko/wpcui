@@ -10,6 +10,15 @@ namespace PerkoCustomizerUI\Services;
  */
 class SectionManagerSanitizerService {
 
-	//
+	public function sanitizeSectionManager( $input ) {
+		foreach ( $input['sections'] as &$section ) {
+			$id = DataService::getSectionIdFromTitle( $section['section_title'] );
+			if ( array_key_exists( "section_priority_$id", $_POST ) ) {
+				$section['priority'] = sanitize_text_field( $_POST["section_priority_$id"] );
+			}
+		}
+
+		return $input;
+	}
 
 }

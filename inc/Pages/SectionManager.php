@@ -3,9 +3,7 @@
 namespace PerkoCustomizerUI\Pages;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\AdminSettingsService;
-use PerkoCustomizerUI\Services\DataService;
-use PerkoCustomizerUI\Services\SettingsPageSettingsService;
+use PerkoCustomizerUI\Services\SectionManagerSettingsService;
 
 /**
  * Class SectionManager
@@ -18,7 +16,7 @@ class SectionManager extends BaseController {
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'addSectionManagerPage' ] );
 
-		$settings_service = new SettingsPageSettingsService();
+		$settings_service = new SectionManagerSettingsService();
 		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 

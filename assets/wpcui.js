@@ -54,16 +54,4 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     });
 
-
-    /**
-     * Update the hidden form field any time a priority input is changed on the Section Manager page
-     */
-    window.updatePriorityForm = function (section, element) {
-        console.log(section);
-        console.log(element.value);
-
-        let hiddenPriorities = document.getElementById('hidden_priorities');
-        hiddenPriorities.value = {section, priority: element.value};
-    }
-
 });
