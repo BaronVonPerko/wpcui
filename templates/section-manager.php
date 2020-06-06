@@ -1,10 +1,8 @@
 <?php
 
 use PerkoCustomizerUI\Services\DataService;
-use PerkoCustomizerUI\Tables\SectionManagerTable;
 
 $sections = DataService::getAllAvailableSections();
-
 ?>
 
 <div class="wrap">
@@ -13,12 +11,6 @@ $sections = DataService::getAllAvailableSections();
 	<?php settings_errors(); ?>
 
     <p>Use this table to re-order and hide sections.</p>
-
-	<?php
-	//$sectionList = new SectionManagerTable( $sections );
-	//$sectionList->prepare_items();
-	//$sectionList->display();
-	?>
 
     <form action="options.php" method="post">
 		<?php settings_fields( 'wpcui' ); ?>
