@@ -35,6 +35,8 @@ to allow the developer to create sections and controls, and get on to what reall
 
 = 1.1.x =
 * New page to set a global control id prefix
+* New Section Manager page which allows for changing priorities of all sections, including core sections
+* Section Manager also allows the user to change the visibility of any section, including core sections
 
 = 1.0.2 =
 * Minor updates to fix information on plugin listing
