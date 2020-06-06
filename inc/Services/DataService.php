@@ -112,17 +112,40 @@ class DataService {
 
 
 	/**
-	 * Get the core sections and their priorities
+	 * Get the core sections saved in the database.
+	 *
+	 * @return mixed
 	 */
-	public static function getCoreCustomizerSections() {
-		return [
-			new CustomizerSection( 'title_tagline', 'Site Identity', 20, [] ),
-			new CustomizerSection( 'colors', 'Colors', 40, [] ),
-			new CustomizerSection( 'header_image', 'Header Image', 60, [] ),
-			new CustomizerSection( 'background_image', 'Background Image', 80, [] ),
-			new CustomizerSection( 'static_front_page', 'Homepage Settings', 100, [] ),
-			new CustomizerSection( 'custom_css', 'Additional CSS', 200, [] ),
+	public static function getCoreSections() {
+		return self::getSettings()["core_sections"];
+	}
+
+
+	/**
+	 * Get the core sections and their priorities.
+	 * This function has hard-coded defaults from what is used in the
+	 * core wp files.  They are overridden by what is saved
+	 * in the database when set with the Section Manager page.
+	 */
+	public static function getCoreSectionsWithDefaults() {
+		$sections = self::getCoreSections();
+
+		$core = [
+			new CustomizerSection( 'title_tagline', 'Site Identity (core)', 20, [] ),
+			new CustomizerSection( 'colors', 'Colors (core)', 40, [] ),
+			new CustomizerSection( 'header_image', 'Header Image (core)', 60, [] ),
+			new CustomizerSection( 'background_image', 'Background Image (core)', 80, [] ),
+			new CustomizerSection( 'static_front_page', 'Homepage Settings (core)', 100, [] ),
+			new CustomizerSection( 'custom_css', 'Additional CSS (core)', 200, [] ),
 		];
+
+		foreach ( $core as &$coreSection ) {
+			if ( array_key_exists( $coreSection->id, $sections ) ) {
+				$coreSection->priority = $sections[ $coreSection->id ]['priority'];
+			}
+		}
+
+		return $core;
 	}
 
 
@@ -206,7 +229,7 @@ class DataService {
 	 * @return array
 	 */
 	public static function getAllAvailableSections() {
-		$coreSections  = DataService::getCoreCustomizerSections();
+		$coreSections  = DataService::getCoreSectionsWithDefaults();
 		$wpcuiSections = DataService::getSections();
 		$sections      = array_merge( $coreSections, $wpcuiSections );
 		usort( $sections, function ( $a, $b ) {

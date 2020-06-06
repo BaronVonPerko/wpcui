@@ -18,6 +18,12 @@ class SectionManagerSanitizerService {
 			}
 		}
 
+		foreach ( DataService::getCoreSectionsWithDefaults() as $coreSection ) {
+			if ( array_key_exists( "section_priority_$coreSection->id", $_POST ) ) {
+				$input["core_sections"][ $coreSection->id ]["priority"] = sanitize_text_field( $_POST["section_priority_$coreSection->id"] );
+			}
+		}
+
 		return $input;
 	}
 
