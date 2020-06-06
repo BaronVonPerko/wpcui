@@ -8,10 +8,10 @@ use PerkoCustomizerUI\Services\DataService;
 use PerkoCustomizerUI\Services\SettingsPageSettingsService;
 
 /**
- * Class Admin
+ * Class Settings
  * @package PerkoCustomizerUI\Pages
  *
- * Create the plugin admin pages in the WordPress backend
+ * Create the settings page in the WordPress backend
  */
 class Settings extends BaseController {
 

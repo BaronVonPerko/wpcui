@@ -11,11 +11,13 @@ class CustomizerSection{
 	public $title;
 	public $priority;
 	public $controls = [];
+	public $visible = true;
 
-	public function __construct($id, $title, $priority, $controls) {
+	public function __construct($id, $title, $priority, $controls, $visible = true) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->priority = $priority;
 		$this->controls = $controls;
+		$this->visible = $visible;
 	}
 }

@@ -18,47 +18,27 @@ use PerkoCustomizerUI\Services\DataService;
  */
 class Customizer {
 
-	public $customizer_fields = [];
 	public $customizer_sections = [];
+	public $core_sections = [];
 
 	public function register() {
-		add_action( 'customize_register', [ $this, 'registerCustomizerFields' ] );
+		add_action( 'customize_register', [ $this, 'registerCustomizerFields' ], 11 );
 	}
 
 	function registerCustomizerFields( $wp_customize ) {
 		$this->loadData();
 
-		if ( ! empty( $this->customizer_fields ) && ! empty( $this->customizer_sections ) ) {
+		if ( ! empty( $this->customizer_sections ) ) {
 			CustomizerGenerator::Generate( $wp_customize, $this->customizer_sections );
+		}
+
+		if ( ! empty( $this->core_sections ) ) {
+			CustomizerGenerator::UpdateCoreSections( $wp_customize, $this->core_sections );
 		}
 	}
 
 	private function loadData() {
-		$settings = DataService::getSettings();
-
-		foreach ( $settings['sections'] as $sectionKey => $section ) {
-
-			$sectionControls = [];
-			foreach ( $section['controls'] as $control ) {
-				$customizerControl = new CustomizerControl(
-					$control['control_id'],
-					$control['control_label'],
-					$control['control_id'],
-					$control['section'],
-					$control['control_type'],
-					$control['control_default'],
-					$control['control_choices'] );
-
-				$this->customizer_fields[] = $customizerControl;
-				$sectionControls[]         = $customizerControl;
-			}
-
-
-			$id = strtolower( $section['section_title'] );
-			$id = str_replace( ' ', '_', $id );
-
-			$this->customizer_sections[] = new CustomizerSection( $id, $section['section_title'], 99,
-				$sectionControls );
-		}
+		$this->customizer_sections = DataService::getSections();
+		$this->core_sections       = DataService::getCoreSections();
 	}
 }

@@ -10,7 +10,7 @@ use PerkoCustomizerUI\Services\DataService;
  * Class Admin
  * @package PerkoCustomizerUI\Pages
  *
- * Create the plugin admin pages in the WordPress backend
+ * Create the admin page in the WordPress backend
  */
 class Admin extends BaseController {
 
