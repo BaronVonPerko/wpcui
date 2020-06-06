@@ -144,6 +144,7 @@ class DataService {
 		foreach ( $core as &$coreSection ) {
 			if ( array_key_exists( $coreSection->id, $sections ) ) {
 				$coreSection->priority = $sections[ $coreSection->id ]['priority'];
+				$coreSection->visible  = $sections[ $coreSection->id ]['visible'];
 			}
 		}
 
@@ -180,8 +181,9 @@ class DataService {
 		$id       = self::getSectionIdFromTitle( $title );
 		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
 		$controls = self::normalizeControls( $section['controls'] );
+		$visible  = array_key_exists( 'visible', $section ) ? $section['visible'] : true;
 
-		return new CustomizerSection( $id, $title, $priority, $controls );
+		return new CustomizerSection( $id, $title, $priority, $controls, $visible );
 	}
 
 

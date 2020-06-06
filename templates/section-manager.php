@@ -34,7 +34,8 @@ $sections = DataService::getAllAvailableSections();
                                value="<?= $section->priority ?>">
                     </td>
                     <td>
-                        <input type="checkbox" checked>
+                        <input name="section_visible_<?= $section->id ?>"
+                               type="checkbox" <?= $section->visible ? 'checked' : '' ?>>
                     </td>
                 </tr>
 			<?php endforeach; ?>
