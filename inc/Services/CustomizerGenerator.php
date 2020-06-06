@@ -40,6 +40,19 @@ class CustomizerGenerator {
 		}
 	}
 
+
+	/**
+	 * Update the core sections
+	 * 
+	 * @param $wp_customize
+	 * @param $sections
+	 */
+	public static function UpdateCoreSections( $wp_customize, $sections ) {
+		foreach ( $sections as $section ) {
+			$wp_customize->get_section( $section->id )->priority = $section->priority;
+		}
+	}
+
 	/**
 	 * Register the customizer setting
 	 *
@@ -89,7 +102,7 @@ class CustomizerGenerator {
 	private static function registerControl( $wp_customize, $control, $section, $validator, $control_id_prefix ) {
 
 		if ( ! empty( $control_id_prefix ) ) {
-			$control->id = $control_id_prefix . '_' . $control->id;
+			$control->id         = $control_id_prefix . '_' . $control->id;
 			$control->setting_id = $control_id_prefix . '_' . $control->setting_id;
 		}
 

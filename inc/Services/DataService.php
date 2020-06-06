@@ -116,7 +116,7 @@ class DataService {
 	 *
 	 * @return mixed
 	 */
-	public static function getCoreSections() {
+	private static function getCoreSectionsData() {
 		return self::getSettings()["core_sections"];
 	}
 
@@ -127,9 +127,10 @@ class DataService {
 	 * core wp files.  They are overridden by what is saved
 	 * in the database when set with the Section Manager page.
 	 */
-	public static function getCoreSectionsWithDefaults() {
-		$sections = self::getCoreSections();
+	public static function getCoreSections() {
+		$sections = self::getCoreSectionsData();
 
+		// default values
 		$core = [
 			new CustomizerSection( 'title_tagline', 'Site Identity (core)', 20, [] ),
 			new CustomizerSection( 'colors', 'Colors (core)', 40, [] ),
@@ -139,6 +140,7 @@ class DataService {
 			new CustomizerSection( 'custom_css', 'Additional CSS (core)', 200, [] ),
 		];
 
+		// update with what is in the database
 		foreach ( $core as &$coreSection ) {
 			if ( array_key_exists( $coreSection->id, $sections ) ) {
 				$coreSection->priority = $sections[ $coreSection->id ]['priority'];
@@ -229,7 +231,7 @@ class DataService {
 	 * @return array
 	 */
 	public static function getAllAvailableSections() {
-		$coreSections  = DataService::getCoreSectionsWithDefaults();
+		$coreSections  = DataService::getCoreSections();
 		$wpcuiSections = DataService::getSections();
 		$sections      = array_merge( $coreSections, $wpcuiSections );
 		usort( $sections, function ( $a, $b ) {
