@@ -88,11 +88,20 @@ class AdminPageForms extends BaseController {
 			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditSection' ] ); ?>
         </form>
 
-        <form action="options.php" method="post" style="margin-right: 5px;">
+        <form action="options.php" method="post">
+			<?= self::FormAction( AdminPageFormActions::DuplicateSection ); ?>
+            <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
+			<?php settings_fields( 'wpcui' ); ?>
+			<?php submit_button( 'Duplicate', 'small', 'submit', false, [
+				'id'      => 'submitDuplicateSection'
+			] ); ?>
+        </form>
+
+        <form action="options.php" method="post">
 			<?= self::FormAction( AdminPageFormActions::DeleteSection ); ?>
             <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
 			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
+			<?php submit_button( 'Delete', 'small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this section?")',
 				'id'      => 'submitDeleteSection'
 			] ); ?>
@@ -201,4 +210,5 @@ abstract class AdminPageFormActions {
 	const CreateControl = 3;
 	const UpdateControl = 4;
 	const DeleteControl = 5;
+	const DuplicateSection = 6;
 }
