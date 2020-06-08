@@ -29,45 +29,20 @@ class DataService {
 		update_option( 'wpcui_settings', $settings );
 	}
 
-	public static function getNextSectionId() {
-		return get_option( 'wpcui_section_index' ) + 1;
-	}
-
-	public static function createNewSection( &$settings, $title, $controls = [] ) {
-		$section = new CustomizerSection( $title, 99 );
-
-		$settings['sections'][ $section->id ] = $section;
-	}
-
-	public static function convertControlsToArray( $controls ) {
-		foreach ( $controls as &$control ) {
-			$control = [
-				"control_id"      => $control->id,
-				"control_label"   => $control->label,
-				"control_type"    => $control->type,
-				"control_choices" => $control->choices,
-				"control_default" => $control->default,
-				"section"         => $control->section_id
-			];
-		}
-
-		return $controls;
-	}
-
 	/**
 	 * Create a duplicate of a section.  All controls
 	 * must also be duplicated with unique IDs.
 	 *
-	 * @param $sectionName
+	 * @param $section CustomizerSection
 	 *
 	 * @return null
 	 */
 	public static function duplicateSection( $section ) {
-
 		$newSectionTitle = '';
-		$num             = 1;
+
+		$num = 1;
 		while ( empty( $newSectionTitle ) ) {
-			$testTitle = $section->name . " $num";
+			$testTitle = $section->title . " $num";
 
 			if ( ! self::checkSectionExists( $testTitle ) ) {
 				$newSectionTitle = $testTitle;
@@ -77,11 +52,14 @@ class DataService {
 		}
 
 		return new CustomizerSection(
-			self::convertStringToId( $newSectionTitle ),
 			$newSectionTitle,
 			$section->priority,
-			self::convertControlsToArray( self::duplicateControls( $section->controls ) )
+			self::duplicateControls( $section->controls )
 		);
+	}
+
+	public static function insertNewSection( &$settings, $section ) {
+		$settings['sections'][$section->id] = $section;
 	}
 
 	/**
@@ -97,9 +75,7 @@ class DataService {
 		foreach ( $controls as $control ) {
 			$duplicatedControl = self::duplicateControl( $control );
 
-			$id = $duplicatedControl->id;
-
-			$duplicatedControls[ $id ] = $duplicatedControl;
+			$duplicatedControls[ $duplicatedControl->id ] = $duplicatedControl;
 		}
 
 		return $duplicatedControls;
@@ -140,10 +116,11 @@ class DataService {
 	 * @return bool
 	 */
 	public static function checkControlIdExists( $controlId ) {
-		$sections = self::getSettings()['sections'];
+		$sections = self::getSections();
+
 		foreach ( $sections as $section ) {
-			foreach ( $section['controls'] as $control ) {
-				if ( $control['control_id'] == $controlId ) {
+			foreach ( $section->controls as $control ) {
+				if ( $control->id == $controlId ) {
 					return true;
 				}
 			}
@@ -177,15 +154,10 @@ class DataService {
 	 * @return bool
 	 */
 	public static function getControlById( $controlId ) {
-		$prefix = self::getControlIdPrefix();
-		if ( ! empty( $prefix ) ) {
-			$prefix .= '_';
-		}
-
-		$sections = self::getSettings()['sections'];
+		$sections = self::getSections();
 		foreach ( $sections as $section ) {
-			foreach ( $section['controls'] as $control ) {
-				if ( $prefix . $control['control_id'] == $controlId ) {
+			foreach ( $section->controls as $control ) {
+				if ( $control->id == $controlId ) {
 					return $control;
 				}
 			}

@@ -87,7 +87,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                         <td><?= $controlDefault ?></td>
                                         <td class="wpcui_control_action_buttons">
 											<?php if ( ! AdminFormStatusService::IsEditControl() ) {
-												AdminPageForms::ControlActionButtons( $controlId );
+												AdminPageForms::ControlActionButtons( $control->id );
 											} ?>
                                         </td>
                                     </tr>
@@ -102,7 +102,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                             </table>
 						<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-						<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
+						<?php AdminPageForms::ControlForm( esc_attr( $section->id ) ); ?>
                     </div> <!-- end .wpcui-panel-body -->
                 </div> <!-- end .wpcui-panel -->
 			<?php endif; ?> <!-- end wpcui-panel -->

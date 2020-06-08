@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Data\DataService;
+
 /**
  * Class AdminSettingsService
  * @package PerkoCustomizerUI\Services
@@ -88,7 +90,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_id',
 				'placeholder' => 'eg. location_info',
 				'required'    => 'required',
-				'value'       => $existingControl ? $existingControl['control_id'] : ''
+				'value'       => $existingControl ? $existingControl->id : ''
 			] );
 
 		add_settings_field( 'control_label',
@@ -101,7 +103,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info',
 				'required'    => 'required',
-				'value'       => $existingControl ? $existingControl['control_label'] : ''
+				'value'       => $existingControl ? $existingControl->label : ''
 			] );
 
 		add_settings_field( 'control_type',
@@ -115,7 +117,7 @@ class AdminSettingsService {
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
 				'options'     => self::getControlTypeOptions(),
-				'value'       => $existingControl ? $existingControl['control_type'] : ''
+				'value'       => $existingControl ? $existingControl->type : ''
 			] );
 
 		add_settings_field( 'control_choices',
@@ -128,7 +130,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_choices',
 				'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
 				'class'       => 'hidden control-choices',
-				'value'       => $existingControl ? $existingControl['control_choices'] : ''
+				'value'       => $existingControl ? $existingControl->choices : ''
 			] );
 
 		add_settings_field( 'control_default',
@@ -140,7 +142,7 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_default',
 				'placeholder' => 'Default value',
-				'value'       => $existingControl ? $existingControl['control_default'] : ''
+				'value'       => $existingControl ? $existingControl->default : ''
 			] );
 	}
 

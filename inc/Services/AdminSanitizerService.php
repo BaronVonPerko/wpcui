@@ -2,6 +2,7 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Forms\AdminPageFormActions;
 
@@ -104,11 +105,11 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeDuplicateSection( $settings ) {
-		$sectionTitle = sanitize_text_field( $_POST['section_title'] );
+		$sectionId  = sanitize_text_field( $_POST['section_id'] );
+		$section    = DataService::getSections()[ $sectionId ];
+		$newSection = DataService::duplicateSection( $section );
 
-		$newSection = DataService::duplicateSection( $sectionTitle );
-
-		DataService::createNewSection( $settings, $newSection->title, $newSection->controls );
+		DataService::insertNewSection( $settings, $newSection );
 
 		return $settings;
 	}
@@ -145,16 +146,15 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$control = [
-			"control_id"      => $controlId,
-			"control_label"   => sanitize_text_field( $input['control_label'] ),
-			"control_type"    => sanitize_text_field( $input['control_type'] ),
-			"control_choices" => sanitize_text_field( $input['control_choices'] ),
-			"control_default" => sanitize_text_field( $input['control_default'] ),
-			"section"         => $sectionId
-		];
+		$control = new CustomizerControl(
+			sanitize_text_field( $input['control_id'] ),
+			sanitize_text_field( $input['control_label'] ),
+			sanitize_text_field( $input['control_type'] ),
+			sanitize_text_field( $input['control_default'] ),
+			sanitize_text_field( $input['control_choices'] )
+		);
 
-		$settings['sections'][ $sectionId ]['controls'][ $controlId ] = $control;
+		$settings['sections'][ $sectionId ]->controls[ $controlId ] = $control;
 
 		return $settings;
 	}
@@ -174,24 +174,24 @@ class AdminSanitizerService {
 
 		$oldControlId = sanitize_text_field( $_POST['old_control_id'] );
 
-		foreach ( $settings['sections'] as $sectionKey => $section ) {
-			foreach ( $section['controls'] as $control ) {
-				if ( $control['control_id'] == $oldControlId ) {
+		foreach ( $settings['sections'] as $section ) {
+			foreach ( $section->controls as $control ) {
+				if ( $control->id == $oldControlId ) {
 					$controlId = sanitize_text_field( $input['control_id'] );
 
-					$control = [
-						"control_id"      => $controlId,
-						"control_label"   => sanitize_text_field( $input['control_label'] ),
-						"control_type"    => sanitize_text_field( $input['control_type'] ),
-						"control_choices" => sanitize_text_field( $input['control_choices'] ),
-						"control_default" => sanitize_text_field( $input['control_default'] ),
-						"section"         => $sectionKey
-					];
+					$control = new CustomizerControl(
+						sanitize_text_field( $input['control_id'] ),
+						sanitize_text_field( $input['control_label'] ),
+						sanitize_text_field( $input['control_type'] ),
+						sanitize_text_field( $input['control_default'] ),
+						sanitize_text_field( $input['control_choices'] )
+					);
 
 					if ( $controlId != $oldControlId ) {
-						unset( $settings['sections'][ $sectionKey ]['controls'][ $oldControlId ] );
+						unset( $settings['sections'][ $section->id ]->controls[ $oldControlId ] );
 					}
-					$settings['sections'][ $sectionKey ]['controls'][ $controlId ] = $control;
+
+					$settings['sections'][ $section->id ]->controls[ $controlId ] = $control;
 				}
 			}
 		}
@@ -207,10 +207,10 @@ class AdminSanitizerService {
 	private function sanitizeDeleteControl( $settings ) {
 		if ( isset( $_POST['control_id'] ) ) {
 			$controlId = sanitize_text_field( $_POST['control_id'] );
-			foreach ( $settings['sections'] as $sectionKey => $section ) {
-				foreach ( $section['controls'] as $controlKey => $controlData ) {
-					if ( $controlKey == $controlId ) {
-						unset( $settings['sections'][ $sectionKey ]['controls'][ $controlId ] );
+			foreach ( $settings['sections'] as $section ) {
+				foreach ( $section->controls as $control ) {
+					if ( $control->id == $controlId ) {
+						unset( $settings['sections'][ $section->id ]->controls[ $controlId ] );
 					}
 				}
 			}
