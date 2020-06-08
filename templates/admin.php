@@ -55,11 +55,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                     </div> <!-- end .wpcui-panel-title -->
 
                     <div class="wpcui-panel-body">
-						<?php
-						$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
-							return $control["section"] == $key;
-						} );
-						?>
+						<?php $sectionControls = $section['controls']; ?>
 
 						<?php if ( count( $sectionControls ) == 0 ): ?>
                             <em>There are currently no controls for this section.

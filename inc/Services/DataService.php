@@ -101,14 +101,12 @@ class DataService {
 			$num ++;
 		}
 
-		$newSection = new CustomizerSection(
+		return new CustomizerSection(
 			self::createSectionIdFromTitle( $newSectionTitle ),
 			$newSectionTitle,
 			$section->priority,
 			self::convertControlsToArray( self::duplicateControls( $section->controls ) )
 		);
-
-		return $newSection;
 	}
 
 	/**
@@ -124,10 +122,9 @@ class DataService {
 		foreach ( $controls as $control ) {
 			$duplicatedControl = self::duplicateControl( $control );
 
-			var_dump($duplicatedControl->id);
 			$id = $duplicatedControl->id;
 
-			$duplicatedControls[$id] = $duplicatedControl;
+			$duplicatedControls[ $id ] = $duplicatedControl;
 		}
 
 		return $duplicatedControls;

@@ -109,12 +109,7 @@ class AdminSanitizerService {
 
 		$newSection = DataService::duplicateSection( $sectionTitle );
 
-		$controls = DataService::duplicateControls( $newSection->controls );
-		var_dump($controls); die;
-		DataService::createNewSection( $settings, $newSection->title, $controls );
-
-		var_dump( $settings );
-		die;
+		DataService::createNewSection( $settings, $newSection->title, $newSection->controls );
 
 		return $settings;
 	}
