@@ -2,7 +2,7 @@
 
 namespace PerkoCustomizerUI\Base;
 
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 
 /**
  * Class Activate

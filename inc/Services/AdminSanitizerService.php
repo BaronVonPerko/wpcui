@@ -2,6 +2,7 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Forms\AdminPageFormActions;
 
 /**
@@ -138,7 +139,7 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeNewControl( $input, $settings ) {
-		$controlId = strtolower( sanitize_text_field( $input['control_id'] ) );
+		$controlId = DataService::convertStringToId( $input['control_id'] );
 		$sectionId = sanitize_text_field( $_POST['section'] );
 		$error     = self::validateControlId( $controlId );
 

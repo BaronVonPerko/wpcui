@@ -4,7 +4,7 @@ namespace PerkoCustomizerUI\Pages;
 
 use PerkoCustomizerUI\Base\BaseController;
 use PerkoCustomizerUI\Services\AdminSettingsService;
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Services\SettingsPageSettingsService;
 
 /**

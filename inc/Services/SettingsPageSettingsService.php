@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Data\DataService;
+
 /**
  * Class SettingsPageSettingsService
  * @package PerkoCustomizerUI\Services

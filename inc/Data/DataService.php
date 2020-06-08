@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Data;
 
 use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Classes\CustomizerSection;
@@ -23,8 +23,12 @@ class DataService {
 		return $normalized ? self::normalizeSections( $sections ) : $sections;
 	}
 
-	public static function setSettings( $sections ) {
-		update_option( 'wpcui_settings', $sections );
+	public static function getDatabaseVersion() {
+		return self::getSettings()['db_version'];
+	}
+
+	public static function setSettings( $settings ) {
+		update_option( 'wpcui_settings', $settings );
 	}
 
 	public static function getNextSectionId() {
@@ -102,7 +106,7 @@ class DataService {
 		}
 
 		return new CustomizerSection(
-			self::createSectionIdFromTitle( $newSectionTitle ),
+			self::convertStringToId( $newSectionTitle ),
 			$newSectionTitle,
 			$section->priority,
 			self::convertControlsToArray( self::duplicateControls( $section->controls ) )
@@ -307,7 +311,7 @@ class DataService {
 	 */
 	public static function normalizeSection( $section ) {
 		$title    = $section['section_title'];
-		$id       = self::createSectionIdFromTitle( $title );
+		$id       = self::convertStringToId( $title );
 		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
 		$controls = self::normalizeControls( $section['controls'] );
 		$visible  = array_key_exists( 'visible', $section ) ? $section['visible'] : true;
@@ -316,8 +320,8 @@ class DataService {
 	}
 
 
-	public static function createSectionIdFromTitle( $title ) {
-		return str_replace( ' ', '_', strtolower( $title ) );
+	public static function convertStringToId( $string ) {
+		return str_replace( ' ', '_', strtolower( $string ) );
 	}
 
 	/**

@@ -2,7 +2,7 @@
 
 use PerkoCustomizerUI\Services\AdminFormStatus;
 use PerkoCustomizerUI\Services\AdminFormStatusService;
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Forms\AdminPageForms;
 
 /**

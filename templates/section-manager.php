@@ -1,6 +1,6 @@
 <?php
 
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 
 $sections = DataService::getAllAvailableSections();
 ?>

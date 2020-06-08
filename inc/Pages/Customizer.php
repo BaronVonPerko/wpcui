@@ -5,7 +5,7 @@ namespace PerkoCustomizerUI\Pages;
 use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Classes\CustomizerSection;
 use PerkoCustomizerUI\Services\CustomizerGenerator;
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 
 /**
  * Class Customizer
