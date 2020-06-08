@@ -14,12 +14,12 @@ class SectionManagerSanitizerService {
 
 	public function sanitizeSectionManager( $input ) {
 		foreach ( $input['sections'] as &$section ) {
-			$id = DataService::convertStringToId( $section['section_title'] );
+			$id = DataService::convertStringToId( $section->title );
 			if ( array_key_exists( "section_priority_$id", $_POST ) ) {
 				$section['priority'] = sanitize_text_field( $_POST["section_priority_$id"] );
 			}
 
-			$section['visible'] = array_key_exists( "section_visible_$id", $_POST ) ? true : false;
+			$section->visible = array_key_exists( "section_visible_$id", $_POST ) ? true : false;
 		}
 
 		foreach ( DataService::getCoreSections() as $coreSection ) {

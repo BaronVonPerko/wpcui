@@ -26,7 +26,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 		<?php foreach ( $settings['sections'] as $key => $section ): ?>
 			<?php
 			$editSectionId = "edit_section_$key";
-			$sectionTitle  = esc_attr( $section['section_title'] )
+			$sectionTitle  = esc_attr( $section->title );
 			?>
 
             <!-- show the section panel if we are not editing a control. if we are editing, only show the section the control being edited belongs to -->
@@ -55,7 +55,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                     </div> <!-- end .wpcui-panel-title -->
 
                     <div class="wpcui-panel-body">
-						<?php $sectionControls = $section['controls']; ?>
+						<?php $sectionControls = $section->controls; ?>
 
 						<?php if ( count( $sectionControls ) == 0 ): ?>
                             <em>There are currently no controls for this section.
@@ -77,9 +77,9 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 								<?php foreach ( $sectionControls as $control ): ?>
 									<?php
 									$controlId      = AdminPageForms::GetControlId( $control, $settings );
-									$controlLabel   = esc_attr( $control['control_label'] );
-									$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
-									$controlDefault = esc_attr( $control['control_default'] );
+									$controlLabel   = esc_attr( $control->label );
+									$controlType    = str_replace( '_', ' ', esc_attr( $control->type ) );
+									$controlDefault = esc_attr( $control->default );
 									?>
                                     <tr>
                                         <td><?= $controlId ?></td>

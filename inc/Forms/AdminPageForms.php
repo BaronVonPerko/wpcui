@@ -33,7 +33,7 @@ class AdminPageForms extends BaseController {
 			$prefix = $settings['control_prefix'] . '_';
 		}
 
-		return $prefix . esc_attr( $control['control_id'] );
+		return $prefix . esc_attr( $control->id );
 	}
 
 	/**

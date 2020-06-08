@@ -17,10 +17,8 @@ class DataService {
 		return get_option( 'wpcui_settings' );
 	}
 
-	public static function getSections( $normalized = true ) {
-		$sections = self::getSettings()['sections'];
-
-		return $normalized ? self::normalizeSections( $sections ) : $sections;
+	public static function getSections() {
+		return self::getSettings()['sections'];
 	}
 
 	public static function getDatabaseVersion() {
@@ -36,10 +34,9 @@ class DataService {
 	}
 
 	public static function createNewSection( &$settings, $title, $controls = [] ) {
-		$id                                      = self::getNextSectionId();
-		$settings['sections'][ $id ]             = [ "section_title" => $title ];
-		$settings['sections'][ $id ]['controls'] = $controls;
-		DataService::updateNextSectionId();
+		$section = new CustomizerSection( $title, 99 );
+
+		$settings['sections'][ $section->id ] = $section;
 	}
 
 	public static function convertControlsToArray( $controls ) {
@@ -57,13 +54,9 @@ class DataService {
 		return $controls;
 	}
 
-	public static function updateNextSectionId() {
-		update_option( 'wpcui_section_index', self::getNextSectionId() );
-	}
-
 	public static function getSectionIdByName( $sectionName ) {
 		foreach ( self::getSettings()['sections'] as $key => $section ) {
-			if ( $section['section_title'] == $sectionName ) {
+			if ( $section->title == $sectionName ) {
 				return $key;
 			}
 		}
@@ -91,7 +84,6 @@ class DataService {
 	 */
 	public static function duplicateSection( $sectionName ) {
 		$section = self::getSectionByName( $sectionName );
-		$section = self::normalizeSection( $section );
 
 		$newSectionTitle = '';
 		$num             = 1;
@@ -283,42 +275,6 @@ class DataService {
 
 		return $core;
 	}
-
-
-	/**
-	 * Convert the database array of sections into CustomizerSection objects
-	 *
-	 * @param $sections
-	 *
-	 * @return array|string
-	 */
-	public static function normalizeSections( $sections ) {
-		$result = [];
-
-		foreach ( $sections as $section ) {
-			$result[] = self::normalizeSection( $section );
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Normalize a single section.
-	 *
-	 * @param $section
-	 *
-	 * @return object
-	 */
-	public static function normalizeSection( $section ) {
-		$title    = $section['section_title'];
-		$id       = self::convertStringToId( $title );
-		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
-		$controls = self::normalizeControls( $section['controls'] );
-		$visible  = array_key_exists( 'visible', $section ) ? $section['visible'] : true;
-
-		return new CustomizerSection( $id, $title, $priority, $controls, $visible );
-	}
-
 
 	public static function convertStringToId( $string ) {
 		return str_replace( ' ', '_', strtolower( $string ) );

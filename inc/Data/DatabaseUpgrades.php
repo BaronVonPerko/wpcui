@@ -54,7 +54,6 @@ class DatabaseUpgrades {
 			}
 
 			$updatedSection = new CustomizerSection(
-				$id,
 				$section['section_title'],
 				$section['priority'],
 				$updatedControls,
@@ -63,6 +62,11 @@ class DatabaseUpgrades {
 
 			$settings['sections'][ $id ] = $updatedSection;
 		}
+
+		/**
+		 * Remove the unused wpcui_section_index option
+		 */
+		delete_option( 'wpcui_section_index' );
 
 		/**
 		 * set the database version
