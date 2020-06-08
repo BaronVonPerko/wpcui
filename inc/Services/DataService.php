@@ -31,6 +31,28 @@ class DataService {
 		return get_option( 'wpcui_section_index' ) + 1;
 	}
 
+	public static function createNewSection( &$settings, $title, $controls = [] ) {
+		$id                                      = self::getNextSectionId();
+		$settings['sections'][ $id ]             = [ "section_title" => $title ];
+		$settings['sections'][ $id ]['controls'] = $controls;
+		DataService::updateNextSectionId();
+	}
+
+	public static function convertControlsToArray( $controls ) {
+		foreach ( $controls as &$control ) {
+			$control = [
+				"control_id"      => $control->id,
+				"control_label"   => $control->label,
+				"control_type"    => $control->type,
+				"control_choices" => $control->choices,
+				"control_default" => $control->default,
+				"section"         => $control->section_id
+			];
+		}
+
+		return $controls;
+	}
+
 	public static function updateNextSectionId() {
 		update_option( 'wpcui_section_index', self::getNextSectionId() );
 	}
@@ -43,6 +65,96 @@ class DataService {
 		}
 
 		return - 1;
+	}
+
+	public static function getSectionByName( $sectionName ) {
+		foreach ( self::getSettings()['sections'] as $section ) {
+			if ( $section['section_title'] == $sectionName ) {
+				return $section;
+			}
+		}
+
+		return - 1;
+	}
+
+	/**
+	 * Create a duplicate of a section.  All controls
+	 * must also be duplicated with unique IDs.
+	 *
+	 * @param $sectionName
+	 *
+	 * @return null
+	 */
+	public static function duplicateSection( $sectionName ) {
+		$section = self::getSectionByName( $sectionName );
+		$section = self::normalizeSection( $section );
+
+		$newSectionTitle = '';
+		$num             = 1;
+		while ( empty( $newSectionTitle ) ) {
+			$testTitle = $sectionName . " $num";
+
+			if ( ! self::checkSectionExists( $testTitle ) ) {
+				$newSectionTitle = $testTitle;
+			}
+
+			$num ++;
+		}
+
+		return new CustomizerSection(
+			self::createSectionIdFromTitle( $newSectionTitle ),
+			$newSectionTitle,
+			$section->priority,
+			self::convertControlsToArray( self::duplicateControls( $section->controls ) )
+		);
+	}
+
+	/**
+	 * Duplicate an array of controls, changing each ID to a unique one
+	 *
+	 * @param $controls
+	 *
+	 * @return array
+	 */
+	public static function duplicateControls( $controls ) {
+		$duplicatedControls = [];
+
+		foreach ( $controls as $control ) {
+			$duplicatedControl = self::duplicateControl( $control );
+
+			$id = $duplicatedControl->id;
+
+			$duplicatedControls[ $id ] = $duplicatedControl;
+		}
+
+		return $duplicatedControls;
+	}
+
+	/**
+	 * Duplicate a single control, changing the ID to be unique
+	 *
+	 * @param $control
+	 *
+	 * @return mixed
+	 */
+	public static function duplicateControl( $control ) {
+		$newControlId = '';
+
+		$num = 1;
+
+		while ( empty( $newControlId ) ) {
+			$testId = $control->id . "_$num";
+
+			if ( ! self::checkControlIdExists( $testId ) ) {
+				$newControlId = $testId;
+			}
+
+			$num ++;
+		}
+
+		$control->id = $newControlId;
+
+		return $control;
 	}
 
 	/**
@@ -59,6 +171,23 @@ class DataService {
 				if ( $control['control_id'] == $controlId ) {
 					return true;
 				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if a given section already exists.
+	 *
+	 * @param $sectionName
+	 *
+	 * @return bool
+	 */
+	public static function checkSectionExists( $sectionName ) {
+		foreach ( self::getSections() as $section ) {
+			if ( $section->title == $sectionName ) {
+				return true;
 			}
 		}
 
@@ -178,7 +307,7 @@ class DataService {
 	 */
 	public static function normalizeSection( $section ) {
 		$title    = $section['section_title'];
-		$id       = self::getSectionIdFromTitle( $title );
+		$id       = self::createSectionIdFromTitle( $title );
 		$priority = array_key_exists( 'priority', $section ) ? $section['priority'] : 99;
 		$controls = self::normalizeControls( $section['controls'] );
 		$visible  = array_key_exists( 'visible', $section ) ? $section['visible'] : true;
@@ -187,7 +316,7 @@ class DataService {
 	}
 
 
-	public static function getSectionIdFromTitle( $title ) {
+	public static function createSectionIdFromTitle( $title ) {
 		return str_replace( ' ', '_', strtolower( $title ) );
 	}
 

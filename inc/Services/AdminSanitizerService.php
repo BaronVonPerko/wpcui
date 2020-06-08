@@ -30,6 +30,9 @@ class AdminSanitizerService {
 				case AdminPageFormActions::UpdateSection:
 					$settings = $this->sanitizeUpdateSectionName( $settings );
 					break;
+				case AdminPageFormActions::DuplicateSection:
+					$settings = $this->sanitizeDuplicateSection( $settings );
+					break;
 				case AdminPageFormActions::DeleteSection:
 					$settings = $this->sanitizeDeleteSection( $settings );
 					break;
@@ -63,11 +66,7 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		// create a new section
-		$id                                      = DataService::getNextSectionId();
-		$settings['sections'][ $id ]             = [ "section_title" => $title ];
-		$settings['sections'][ $id ]['controls'] = [];
-		DataService::updateNextSectionId();
+		DataService::createNewSection( $settings, $title );
 
 		return $settings;
 	}
@@ -96,6 +95,21 @@ class AdminSanitizerService {
 			return $settings;
 		}
 		$settings['sections'][ $id ]['section_title'] = $newTitle;
+
+		return $settings;
+	}
+
+	/**
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	private function sanitizeDuplicateSection( $settings ) {
+		$sectionTitle = sanitize_text_field( $_POST['section_title'] );
+
+		$newSection = DataService::duplicateSection( $sectionTitle );
+
+		DataService::createNewSection( $settings, $newSection->title, $newSection->controls );
 
 		return $settings;
 	}
@@ -241,12 +255,8 @@ class AdminSanitizerService {
 	 * @return bool|string
 	 */
 	public function validateSectionName( $sectionName ) {
-		foreach ( DataService::getSections() as $section ) {
-			if ( $section->title == $sectionName ) {
-				return "A section with this name already exists.";
-			}
-		}
-
-		return false;
+		return DataService::checkSectionExists( $sectionName )
+			? "A section with this name already exists."
+			: false;
 	}
 }
