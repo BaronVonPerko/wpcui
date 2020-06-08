@@ -57,14 +57,14 @@ class AdminPageForms extends BaseController {
 	/**
 	 * Given a section title, create the edit form.
 	 *
-	 * @param $sectionTitle
+	 * @param $section
 	 */
-	public static function EditSectionForm( $sectionTitle ) {
+	public static function EditSectionForm( $section ) {
 		?>
         <form action="options.php" method="post">
 			<?= self::FormAction( AdminPageFormActions::UpdateSection ); ?>
-            <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
-            <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
+            <input type="hidden" name="section_id" value="<?= $section->id ?>">
+            <input type="text" name="new_title" value="<?= $section->title ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Save Changes', 'small primary', 'edit', false,
 				[ 'id' => 'submitEditSectionTitle' ] ); ?>
@@ -80,26 +80,26 @@ class AdminPageForms extends BaseController {
 	 * @param $editSectionId
 	 * @param $sectionTitle
 	 */
-	public static function SectionActionButtons( $editSectionId, $sectionTitle ) {
+	public static function SectionActionButtons( $sectionId ) {
 		?>
         <form action="" method="post">
-            <input type="hidden" name="<?= $editSectionId ?>" value="<?= $sectionTitle ?>">
+            <input type="hidden" name="<?= "edit_section_$sectionId" ?>" value="<?= $sectionId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditSection' ] ); ?>
         </form>
 
         <form action="options.php" method="post">
 			<?= self::FormAction( AdminPageFormActions::DuplicateSection ); ?>
-            <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
+            <input type="hidden" name="section_id" value="<?= $sectionId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Duplicate', 'small', 'submit', false, [
-				'id'      => 'submitDuplicateSection'
+				'id' => 'submitDuplicateSection'
 			] ); ?>
         </form>
 
         <form action="options.php" method="post">
 			<?= self::FormAction( AdminPageFormActions::DeleteSection ); ?>
-            <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
+            <input type="hidden" name="section_id" value="<?= $sectionId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Delete', 'small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this section?")',

@@ -84,10 +84,8 @@ class AdminSanitizerService {
 			return $settings;
 		}
 
-		$oldTitle = sanitize_text_field( $_POST['old_title'] );
+		$id       = sanitize_text_field( $_POST['section_id'] );
 		$newTitle = sanitize_text_field( $_POST['new_title'] );
-
-		$id = DataService::getSectionIdByName( $oldTitle );
 
 		$error = self::validateSectionName( $newTitle );
 		if ( $error ) {
@@ -95,7 +93,7 @@ class AdminSanitizerService {
 
 			return $settings;
 		}
-		$settings['sections'][ $id ]['section_title'] = $newTitle;
+		$settings['sections'][ $id ]->title = $newTitle;
 
 		return $settings;
 	}
@@ -121,12 +119,10 @@ class AdminSanitizerService {
 	 * @return mixed
 	 */
 	private function sanitizeDeleteSection( $settings ) {
-		if ( isset( $_POST['section_title'] ) ) {
-			$sectionName = sanitize_text_field( $_POST['section_title'] );
+		if ( isset( $_POST['section_id'] ) ) {
+			$sectionId = sanitize_text_field( $_POST['section_id'] );
 
-			$id = DataService::getSectionIdByName( $sectionName );
-
-			unset( $settings['sections'][ $id ] );
+			unset( $settings['sections'][ $sectionId ] );
 		}
 
 		return $settings;

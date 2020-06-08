@@ -23,19 +23,18 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 
 	<?php if ( array_key_exists( 'sections', $settings ) ): ?>
 
-		<?php foreach ( $settings['sections'] as $key => $section ): ?>
+		<?php foreach ( $settings['sections'] as $section ): ?>
 			<?php
-			$editSectionId = "edit_section_$key";
 			$sectionTitle  = esc_attr( $section->title );
 			?>
 
             <!-- show the section panel if we are not editing a control. if we are editing, only show the section the control being edited belongs to -->
-			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $key ) ): ?>
+			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $section->id ) ): ?>
                 <div class="wpcui-panel" data-wpcui-collapsed="">
                     <div class="wpcui-panel-title">
-						<?php if ( AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?> <!-- edit section title -->
+						<?php if ( AdminFormStatusService::IsEditSectionTitle( $section ) ): ?> <!-- edit section title -->
                             <div class="wpcui-panel-title-buttons">
-								<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
+								<?php AdminPageForms::EditSectionForm( $section ); ?>
                             </div>
 						<?php else: ?> <!-- end edit section title, begin collapsible title -->
                             <div class="wpcui-collapsible-title">
@@ -45,10 +44,10 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 						<?php endif; ?>
 
                         <!-- Show the edit/delete buttons if not in edit mode -->
-						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?>
+						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $section ) ): ?>
                             <div class="wpcui-panel-title-buttons">
 								<?php if ( ! AdminFormStatusService::IsEditControl() ) {
-									AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle );
+									AdminPageForms::SectionActionButtons( $section->id );
 								} ?>
                             </div>
 						<?php endif; ?>

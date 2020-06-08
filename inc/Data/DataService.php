@@ -54,26 +54,6 @@ class DataService {
 		return $controls;
 	}
 
-	public static function getSectionIdByName( $sectionName ) {
-		foreach ( self::getSettings()['sections'] as $key => $section ) {
-			if ( $section->title == $sectionName ) {
-				return $key;
-			}
-		}
-
-		return - 1;
-	}
-
-	public static function getSectionByName( $sectionName ) {
-		foreach ( self::getSettings()['sections'] as $section ) {
-			if ( $section['section_title'] == $sectionName ) {
-				return $section;
-			}
-		}
-
-		return - 1;
-	}
-
 	/**
 	 * Create a duplicate of a section.  All controls
 	 * must also be duplicated with unique IDs.
@@ -82,13 +62,12 @@ class DataService {
 	 *
 	 * @return null
 	 */
-	public static function duplicateSection( $sectionName ) {
-		$section = self::getSectionByName( $sectionName );
+	public static function duplicateSection( $section ) {
 
 		$newSectionTitle = '';
 		$num             = 1;
 		while ( empty( $newSectionTitle ) ) {
-			$testTitle = $sectionName . " $num";
+			$testTitle = $section->name . " $num";
 
 			if ( ! self::checkSectionExists( $testTitle ) ) {
 				$newSectionTitle = $testTitle;

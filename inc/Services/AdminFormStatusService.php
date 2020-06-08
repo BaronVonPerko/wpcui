@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI\Services;
 
+use PerkoCustomizerUI\Classes\CustomizerSection;
+
 class AdminFormStatusService {
 
 	/**
@@ -17,12 +19,12 @@ class AdminFormStatusService {
 	/**
 	 * Is the given section in edit mode?
 	 *
-	 * @param $sectionId
+	 * @param $section CustomizerSection
 	 *
 	 * @return bool
 	 */
-	public static function IsEditSectionTitle( $sectionId ) {
-		return isset( $_POST[ $sectionId ] );
+	public static function IsEditSectionTitle( $section ) {
+		return isset( $_POST[ "edit_section_$section->id" ] );
 	}
 
 
