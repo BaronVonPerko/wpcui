@@ -37,6 +37,7 @@ to allow the developer to create sections and controls, and get on to what reall
 * New page to set a global control id prefix
 * New Section Manager page which allows for changing priorities of all sections, including core sections
 * Section Manager also allows the user to change the visibility of any section, including core sections
+* Main customizer builder page now has a 'duplicate' button on each section, allwing the user to completely duplicate a section and all controls within.
 
 = 1.0.2 =
 * Minor updates to fix information on plugin listing
