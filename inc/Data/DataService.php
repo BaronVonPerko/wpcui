@@ -59,7 +59,7 @@ class DataService {
 	}
 
 	public static function insertNewSection( &$settings, $section ) {
-		$settings['sections'][$section->id] = $section;
+		$settings['sections'][ $section->id ] = $section;
 	}
 
 	/**
@@ -218,7 +218,7 @@ class DataService {
 
 		// update with what is in the database
 		foreach ( $core as &$coreSection ) {
-			if ( array_key_exists( $coreSection->id, $sections ) ) {
+			if ( array_key_exists( $coreSection->id, (array) $sections ) ) {
 				$coreSection->priority = $sections[ $coreSection->id ]['priority'];
 				$coreSection->visible  = $sections[ $coreSection->id ]['visible'];
 			}
@@ -231,42 +231,6 @@ class DataService {
 		return str_replace( ' ', '_', strtolower( $string ) );
 	}
 
-	/**
-	 * Normalize an array of controls
-	 *
-	 * @param $controls
-	 *
-	 * @return array
-	 */
-	public static function normalizeControls( $controls ) {
-		$result = [];
-
-		foreach ( $controls as $control ) {
-			$result[] = self::normalizeControl( $control );
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Normalize a single control
-	 *
-	 * @param $control
-	 *
-	 * @return CustomizerControl
-	 */
-	public static function normalizeControl( $control ) {
-		return new CustomizerControl(
-			$control['control_id'],
-			$control['control_label'],
-			$control['control_id'],
-			$control['section'],
-			$control['control_type'],
-			$control['control_default'],
-			$control['control_choices']
-		);
-	}
-
 
 	/**
 	 * Get all available sections, WPCUI plus Core, sorted by priority.
@@ -276,6 +240,7 @@ class DataService {
 		$coreSections  = DataService::getCoreSections();
 		$wpcuiSections = DataService::getSections();
 		$sections      = array_merge( $coreSections, $wpcuiSections );
+
 		usort( $sections, function ( $a, $b ) {
 			return $a->priority - $b->priority;
 		} );
