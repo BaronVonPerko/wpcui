@@ -231,6 +231,12 @@ class DataService {
 		return str_replace( ' ', '_', strtolower( $string ) );
 	}
 
+	public static function createNewSection( &$settings, $title ) {
+		$section = new CustomizerSection( $title, 99 );
+
+		$settings['sections'][ $section->id ] = $section;
+	}
+
 
 	/**
 	 * Get all available sections, WPCUI plus Core, sorted by priority.
