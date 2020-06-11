@@ -36,7 +36,7 @@ class DatabaseUpgrades {
 
 		$settings['sections'] = [];
 
-		foreach ( $sections as $key => $section ) {
+		foreach ( (array) $sections as $key => $section ) {
 			$id = DataService::convertStringToId( $section['section_title'] );
 
 			$updatedControls = [];
