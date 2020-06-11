@@ -220,10 +220,24 @@ class DataService {
 		return $core;
 	}
 
+	/**
+	 * Convert a string to ID format (lowercase and spaces replaced
+	 * with underscores).
+	 *
+	 * @param $string
+	 *
+	 * @return string|string[]
+	 */
 	public static function convertStringToId( $string ) {
 		return str_replace( ' ', '_', strtolower( $string ) );
 	}
 
+	/**
+	 * Add a new section to the settings object.
+	 *
+	 * @param $settings
+	 * @param $title
+	 */
 	public static function createNewSection( &$settings, $title ) {
 		$section = new CustomizerSection( $title, 99 );
 

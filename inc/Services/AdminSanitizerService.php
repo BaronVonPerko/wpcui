@@ -4,6 +4,7 @@ namespace PerkoCustomizerUI\Services;
 
 use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Data\DataValidators;
 use PerkoCustomizerUI\Forms\AdminPageFormActions;
 
 /**
@@ -54,6 +55,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitization when a new section is created.
+	 *
 	 * @param $input
 	 * @param $settings
 	 *
@@ -61,7 +64,8 @@ class AdminSanitizerService {
 	 */
 	private function sanitizeNewSection( $input, $settings ) {
 		$title = sanitize_text_field( $input['section_title'] );
-		$error = self::validateSectionName( $title );
+		$error = DataValidators::validateSectionName( $title );
+
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
 
@@ -74,6 +78,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitization when a section name is updated.
+	 *
 	 * @param $settings
 	 *
 	 * @return mixed
@@ -88,7 +94,7 @@ class AdminSanitizerService {
 		$id       = sanitize_text_field( $_POST['section_id'] );
 		$newTitle = sanitize_text_field( $_POST['new_title'] );
 
-		$error = self::validateSectionName( $newTitle );
+		$error = DataValidators::validateSectionName( $newTitle );
 		if ( $error ) {
 			add_settings_error( 'wpcui_sections', null, $error );
 
@@ -100,6 +106,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitize when a section is duplicated.
+	 *
 	 * @param $settings
 	 *
 	 * @return mixed
@@ -115,6 +123,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitize when a section is deleted.
+	 *
 	 * @param $settings
 	 *
 	 * @return mixed
@@ -130,6 +140,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitize when a new control is created.
+	 *
 	 * @param $input
 	 * @param $settings
 	 *
@@ -138,7 +150,7 @@ class AdminSanitizerService {
 	private function sanitizeNewControl( $input, $settings ) {
 		$controlId = DataService::convertStringToId( $input['control_id'] );
 		$sectionId = sanitize_text_field( $_POST['section'] );
-		$error     = self::validateControlId( $controlId );
+		$error     = DataValidators::validateControlId( $controlId );
 
 		if ( $error ) {
 			add_settings_error( 'control_id', null, $error );
@@ -160,6 +172,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitize when a control is updated.
+	 *
 	 * @param $input
 	 * @param $settings
 	 *
@@ -200,6 +214,8 @@ class AdminSanitizerService {
 	}
 
 	/**
+	 * Sanitize when a control is deleted.
+	 *
 	 * @param $settings
 	 *
 	 * @return mixed
@@ -217,43 +233,5 @@ class AdminSanitizerService {
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * Validate to make sure that the control ID meets the requirements
-	 * of the WP Customizer.
-	 *
-	 * @param $id
-	 *
-	 * @return bool|string
-	 */
-	public function validateControlId( $id ) {
-		if ( strpos( $id, ' ' ) ) {
-			return 'Control ID must not contain spaces.';
-		}
-
-		if ( strpos( $id, '-' ) ) {
-			return 'Control ID must not contain hyphens.  Use underscores instead.';
-		}
-
-		if ( DataService::checkControlIdExists( $id ) ) {
-			return "Control ID $id already exists.";
-		}
-
-		return false;
-	}
-
-
-	/**
-	 * Validate to make sure that the section name is unique.
-	 *
-	 * @param $sectionName
-	 *
-	 * @return bool|string
-	 */
-	public function validateSectionName( $sectionName ) {
-		return DataService::checkSectionExists( $sectionName )
-			? "A section with this name already exists."
-			: false;
 	}
 }
