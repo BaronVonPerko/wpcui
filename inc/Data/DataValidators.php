@@ -25,7 +25,7 @@ class DataValidators {
 			return 'Control ID must not contain hyphens.  Use underscores instead.';
 		}
 
-		if ( DataService::checkControlIdExists( $id ) ) {
+		if ( ! empty( DataService::getControlById( $id ) ) ) {
 			return "Control ID $id already exists.";
 		}
 
@@ -41,7 +41,9 @@ class DataValidators {
 	 * @return bool|string
 	 */
 	public static function validateSectionName( $sectionName ) {
-		return DataService::checkSectionExists( $sectionName )
+		$id = DataService::convertStringToId( $sectionName );
+
+		return ( ! empty ( DataService::getSectionById( $id ) ) )
 			? "A section with this name already exists."
 			: false;
 	}

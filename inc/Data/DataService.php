@@ -44,7 +44,7 @@ class DataService {
 		while ( empty( $newSectionTitle ) ) {
 			$testTitle = $section->title . " $num";
 
-			if ( ! self::checkSectionExists( $testTitle ) ) {
+			if ( ! empty( self::getSectionById( $testTitle ) ) ) {
 				$newSectionTitle = $testTitle;
 			}
 
@@ -96,7 +96,7 @@ class DataService {
 		while ( empty( $newControlId ) ) {
 			$testId = $control->id . "_$num";
 
-			if ( ! self::checkControlIdExists( $testId ) ) {
+			if ( ! empty( self::getControlById( $testId ) ) ) {
 				$newControlId = $testId;
 			}
 
@@ -109,45 +109,7 @@ class DataService {
 	}
 
 	/**
-	 * Check if a given control id is already being used.
-	 *
-	 * @param $controlId
-	 *
-	 * @return bool
-	 */
-	public static function checkControlIdExists( $controlId ) {
-		$sections = self::getSections();
-
-		foreach ( $sections as $section ) {
-			foreach ( $section->controls as $control ) {
-				if ( $control->id == $controlId ) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if a given section already exists.
-	 *
-	 * @param $sectionName
-	 *
-	 * @return bool
-	 */
-	public static function checkSectionExists( $sectionName ) {
-		foreach ( self::getSections() as $section ) {
-			if ( $section->title == $sectionName ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get the control by it's id
+	 * Get the control by id
 	 *
 	 * @param $controlId
 	 *
@@ -164,6 +126,17 @@ class DataService {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get the section by ID
+	 *
+	 * @param $sectionId
+	 *
+	 * @return mixed
+	 */
+	public static function getSectionById( $sectionId ) {
+		return self::getSections()[ $sectionId ];
 	}
 
 	/**
