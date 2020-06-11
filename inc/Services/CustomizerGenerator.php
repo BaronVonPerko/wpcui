@@ -3,8 +3,7 @@
 namespace PerkoCustomizerUI\Services;
 
 
-use PerkoCustomizerUI\Classes\CustomizerControl;
-use PerkoCustomizerUI\Classes\CustomizerSetting;
+use PerkoCustomizerUI\Data\DataService;
 use WP_Customize_Color_Control;
 use WP_Customize_Control;
 use WP_Customize_Image_Control;

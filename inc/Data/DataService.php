@@ -207,14 +207,7 @@ class DataService {
 		$sections = self::getCoreSectionsData();
 
 		// default values
-		$core = [
-			new CustomizerSection( 'title_tagline', 'Site Identity (core)', 20, [] ),
-			new CustomizerSection( 'colors', 'Colors (core)', 40, [] ),
-			new CustomizerSection( 'header_image', 'Header Image (core)', 60, [] ),
-			new CustomizerSection( 'background_image', 'Background Image (core)', 80, [] ),
-			new CustomizerSection( 'static_front_page', 'Homepage Settings (core)', 100, [] ),
-			new CustomizerSection( 'custom_css', 'Additional CSS (core)', 200, [] ),
-		];
+		$core = CoreSections::get();
 
 		// update with what is in the database
 		foreach ( $core as &$coreSection ) {
