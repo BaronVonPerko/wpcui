@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Sanitizers;
 
 use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Forms\AdminPageFormActions;

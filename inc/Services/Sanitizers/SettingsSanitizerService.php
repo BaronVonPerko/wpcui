@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Sanitizers;
 
 /**
  * Class SettingsSanitizerService

@@ -3,7 +3,7 @@
 namespace PerkoCustomizerUI\Pages;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\SectionManagerSettingsService;
+use PerkoCustomizerUI\Services\Settings\SectionManagerSettingsService;
 
 /**
  * Class SectionManager

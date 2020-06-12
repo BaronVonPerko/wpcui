@@ -215,6 +215,17 @@ class DataService {
 	}
 
 
+	public static function updateSectionName( &$settings, $id, $newTitle ) {
+		$section        = $settings['sections'][ $id ];
+		$section->title = $newTitle;
+		$section->id    = self::convertStringToId( $newTitle );
+
+		unset( $settings['sections'][ $id ] );
+
+		self::insertNewSection( $settings, $section );
+	}
+
+
 	/**
 	 * Get all available sections, user created and Core, sorted by priority.
 	 * @return array

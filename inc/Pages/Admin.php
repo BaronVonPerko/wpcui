@@ -3,8 +3,7 @@
 namespace PerkoCustomizerUI\Pages;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\AdminSettingsService;
-use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Services\Settings\AdminSettingsService;
 
 /**
  * Class Admin

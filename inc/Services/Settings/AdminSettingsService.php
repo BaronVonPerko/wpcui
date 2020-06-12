@@ -1,10 +1,12 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Settings;
 
 use PerkoCustomizerUI\Data\DataService;
 use PerkoCustomizerUI\Forms\AdminFormStatus;
 use PerkoCustomizerUI\Forms\AdminFormStatusService;
+use PerkoCustomizerUI\Services\FormControlsService;
+use PerkoCustomizerUI\Services\Sanitizers\AdminSanitizerService;
 
 /**
  * Class AdminSettingsService

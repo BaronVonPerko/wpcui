@@ -1,8 +1,10 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Settings;
 
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Services\FormControlsService;
+use PerkoCustomizerUI\Services\Sanitizers\SettingsSanitizerService;
 
 /**
  * Class SettingsPageSettingsService

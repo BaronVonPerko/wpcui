@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Sanitizers;
 
 use PerkoCustomizerUI\Classes\CustomizerControl;
 use PerkoCustomizerUI\Data\DataService;
@@ -109,7 +109,8 @@ class AdminSanitizerService {
 
 			return $settings;
 		}
-		$settings['sections'][ $id ]->title = $newTitle;
+
+		DataService::updateSectionName( $settings, $id, $newTitle );
 
 		return $settings;
 	}

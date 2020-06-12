@@ -1,6 +1,9 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Settings;
+
+use PerkoCustomizerUI\Services\FormControlsService;
+use PerkoCustomizerUI\Services\Sanitizers\SectionManagerSanitizerService;
 
 /**
  * Class SectionManagerSettingsService
