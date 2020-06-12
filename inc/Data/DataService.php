@@ -215,6 +215,14 @@ class DataService {
 	}
 
 
+	/**
+	 * Update a section's name, and update the ID based
+	 * on the new title.
+	 *
+	 * @param $settings
+	 * @param $id
+	 * @param $newTitle
+	 */
 	public static function updateSectionName( &$settings, $id, $newTitle ) {
 		$section        = $settings['sections'][ $id ];
 		$section->title = $newTitle;
