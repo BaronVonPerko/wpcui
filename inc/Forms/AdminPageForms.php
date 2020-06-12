@@ -3,8 +3,8 @@
 namespace PerkoCustomizerUI\Forms;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\AdminFormStatus;
-use PerkoCustomizerUI\Services\AdminFormStatusService;
+use PerkoCustomizerUI\Forms\AdminFormStatus;
+use PerkoCustomizerUI\Forms\AdminFormStatusService;
 
 /**
  * Class AdminPageActions

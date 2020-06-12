@@ -1,8 +1,7 @@
 <?php
 
-use PerkoCustomizerUI\Services\AdminFormStatus;
-use PerkoCustomizerUI\Services\AdminFormStatusService;
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Forms\AdminFormStatusService;
 use PerkoCustomizerUI\Forms\AdminPageForms;
 
 /**

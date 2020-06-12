@@ -1,6 +1,6 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Forms;
 
 use PerkoCustomizerUI\Classes\CustomizerSection;
 use PerkoCustomizerUI\Data\DataService;

@@ -58,6 +58,12 @@ class DataService {
 		);
 	}
 
+	/**
+	 * Insert a new section
+	 *
+	 * @param $settings
+	 * @param $section
+	 */
 	public static function insertNewSection( &$settings, $section ) {
 		$settings['sections'][ $section->id ] = $section;
 	}
@@ -150,15 +156,6 @@ class DataService {
 		return array_key_exists( 'control_prefix', $settings ) ? $settings['control_prefix'] : '';
 	}
 
-	/**
-	 * Set default options in the database
-	 */
-	public static function setDefaults() {
-		self::setSettings( [] );
-
-		update_option( 'wpcui_section_index', 0 );
-	}
-
 
 	/**
 	 * Get the core sections saved in the database.
@@ -214,12 +211,12 @@ class DataService {
 	public static function createNewSection( &$settings, $title ) {
 		$section = new CustomizerSection( $title, 99 );
 
-		$settings['sections'][ $section->id ] = $section;
+		self::insertNewSection( $settings, $section );
 	}
 
 
 	/**
-	 * Get all available sections, WPCUI plus Core, sorted by priority.
+	 * Get all available sections, user created and Core, sorted by priority.
 	 * @return array
 	 */
 	public static function getAllAvailableSections() {
