@@ -1,6 +1,7 @@
 <?php
 
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Forms\AdminPageFormActions;
 
 $sections = DataService::getAllAvailableSections();
 ?>
@@ -14,6 +15,7 @@ $sections = DataService::getAllAvailableSections();
 
     <form action="options.php" method="post">
 		<?php settings_fields( 'wpcui' ); ?>
+        <input type="hidden" name="wpcui_action" value="<?= AdminPageFormActions::SectionManagerSave ?>">
 
         <table class="wp-list-table widefat fixed striped sections">
             <thead>

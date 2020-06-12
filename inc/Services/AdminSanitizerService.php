@@ -27,27 +27,35 @@ class AdminSanitizerService {
 
 		if ( array_key_exists( 'wpcui_action', $_POST ) ) {
 			switch ( sanitize_text_field( $_POST['wpcui_action'] ) ) {
+
 				case AdminPageFormActions::CreateNewSection:
 					$settings = $this->sanitizeNewSection( $input, $settings );
 					break;
+
 				case AdminPageFormActions::UpdateSection:
 					$settings = $this->sanitizeUpdateSectionName( $settings );
 					break;
+
 				case AdminPageFormActions::DuplicateSection:
 					$settings = $this->sanitizeDuplicateSection( $settings );
 					break;
+
 				case AdminPageFormActions::DeleteSection:
 					$settings = $this->sanitizeDeleteSection( $settings );
 					break;
+
 				case AdminPageFormActions::CreateControl:
 					$settings = $this->sanitizeNewControl( $input, $settings );
 					break;
+
 				case AdminPageFormActions::UpdateControl:
 					$settings = $this->sanitizeUpdateControl( $input, $settings );
 					break;
+
 				case AdminPageFormActions::DeleteControl:
 					$settings = $this->sanitizeDeleteControl( $settings );
 					break;
+
 			}
 		}
 

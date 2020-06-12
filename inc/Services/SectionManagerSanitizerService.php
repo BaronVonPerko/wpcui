@@ -3,6 +3,7 @@
 namespace PerkoCustomizerUI\Services;
 
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Forms\AdminPageFormActions;
 
 /**
  * Class SectionManagerSanitizerService
@@ -13,6 +14,12 @@ use PerkoCustomizerUI\Data\DataService;
 class SectionManagerSanitizerService {
 
 	public function sanitizeSectionManager( $input ) {
+		if ( ! array_key_exists( 'wpcui_action', $_POST )
+		     || $_POST['wpcui_action'] != AdminPageFormActions::SectionManagerSave ) {
+
+			return $input;
+		}
+
 		foreach ( $input['sections'] as &$section ) {
 			$id = DataService::convertStringToId( $section->title );
 			if ( array_key_exists( "section_priority_$id", $_POST ) ) {

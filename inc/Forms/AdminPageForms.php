@@ -211,4 +211,5 @@ abstract class AdminPageFormActions {
 	const UpdateControl = 4;
 	const DeleteControl = 5;
 	const DuplicateSection = 6;
+	const SectionManagerSave = 7;
 }
