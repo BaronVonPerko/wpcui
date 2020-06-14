@@ -110,7 +110,6 @@ class CustomizerGenerator {
 
 		if ( ! empty( $control_id_prefix ) ) {
 			$control->id         = $control_id_prefix . '_' . $control->id;
-			$control->setting_id = $control_id_prefix . '_' . $control->setting_id;
 		}
 
 		self::registerSetting( $wp_customize, $control, $validator );
@@ -162,7 +161,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 				'type'     => $type,
 			]
 		) );
@@ -180,7 +179,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 				'type'     => $type,
 				'choices'  => $choices
 			]
@@ -194,7 +193,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}
@@ -206,7 +205,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}
@@ -218,7 +217,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}
