@@ -29,3 +29,11 @@ following link:
 [Download 1.0.2](https://wpcui-build-prod.s3.amazonaws.com/wpcui-1.0.2.zip)
 
 This zip file can be directly uploaded to your WordPress website for use.
+
+## Download 1.1.0 Preview 
+
+You can download the current version of the **1.1.0 Preview** build here:
+
+[Download 1.1.0-Preview](https://wpcui-build-prod.s3.amazonaws.com/wpcui-1.1.0-preview.zip)
+
+*Note that this version may have bugs.  Do NOT use this in production.*
