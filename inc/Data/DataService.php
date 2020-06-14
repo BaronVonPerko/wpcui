@@ -43,8 +43,9 @@ class DataService {
 		$num = 1;
 		while ( empty( $newSectionTitle ) ) {
 			$testTitle = $section->title . " $num";
+			$testId    = self::convertStringToId( $testTitle );
 
-			if ( ! empty( self::getSectionById( $testTitle ) ) ) {
+			if ( empty( self::getSectionById( $testId ) ) ) {
 				$newSectionTitle = $testTitle;
 			}
 
@@ -102,7 +103,7 @@ class DataService {
 		while ( empty( $newControlId ) ) {
 			$testId = $control->id . "_$num";
 
-			if ( ! empty( self::getControlById( $testId ) ) ) {
+			if ( empty( self::getControlById( $testId ) ) ) {
 				$newControlId = $testId;
 			}
 
