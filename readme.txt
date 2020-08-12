@@ -3,8 +3,8 @@ Contributors: cperko
 Tags: customizer,ui,user interface
 Donate link: https://github.com/sponsors/BaronVonPerko
 Requires at least: 5.2
-Tested up to: 5.2
-Stable tag: 1.0.2
+Tested up to: 5.5
+Stable tag: 1.1.0
 Requires PHP: 7.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -34,7 +34,7 @@ to allow the developer to create sections and controls, and get on to what reall
 
 == Changelog ==
 
-= 1.1.x =
+= 1.1.0 =
 * New page to set a global control id prefix
 * New Section Manager page which allows for changing priorities of all sections, including core sections
 * Section Manager also allows the user to change the visibility of any section, including core sections
