@@ -18,11 +18,19 @@ class DataService {
 	}
 
 	public static function getSections() {
-		return self::getSettings()['sections'];
+	    if(array_key_exists('sections', self::getSettings())) {
+            return self::getSettings()['sections'];
+        } else {
+	        return [];
+        }
 	}
 
 	public static function getDatabaseVersion() {
-		return self::getSettings()['db_version'];
+	    if(array_key_exists('db_version', self::getSettings())) {
+            return self::getSettings()['db_version'];
+        } else {
+            return null;
+        }
 	}
 
 	public static function setSettings( $settings ) {

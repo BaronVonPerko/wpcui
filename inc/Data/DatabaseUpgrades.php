@@ -32,7 +32,7 @@ class DatabaseUpgrades {
 		 * the keys to match the CustomizerSection class.
 		 * Also, update the controls to match the CustomizerControl class.
 		 */
-		$sections = $settings['sections'];
+		$sections = array_key_exists('sections', $settings) ? $settings['sections'] : [];
 
 		$settings['sections'] = [];
 
