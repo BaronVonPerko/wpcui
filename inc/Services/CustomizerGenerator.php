@@ -3,8 +3,7 @@
 namespace PerkoCustomizerUI\Services;
 
 
-use PerkoCustomizerUI\Classes\CustomizerControl;
-use PerkoCustomizerUI\Classes\CustomizerSetting;
+use PerkoCustomizerUI\Data\DataService;
 use WP_Customize_Color_Control;
 use WP_Customize_Control;
 use WP_Customize_Image_Control;
@@ -27,14 +26,36 @@ class CustomizerGenerator {
 	 * @param $sections
 	 */
 	public static function Generate( $wp_customize, $sections ) {
-		$validator = new CustomizerValidationService();
+		$validator      = new CustomizerValidationService();
+		$control_prefix = DataService::getControlIdPrefix();
+
+		$sections = array_filter( $sections, function ( $section ) {
+			return $section->visible;
+		} );
 
 		foreach ( $sections as $section ) {
 
 			self::registerSection( $wp_customize, $section );
 
 			foreach ( $section->controls as $control ) {
-				self::registerControl( $wp_customize, $control, $section, $validator );
+				self::registerControl( $wp_customize, $control, $section, $validator, $control_prefix );
+			}
+		}
+	}
+
+
+	/**
+	 * Update the core sections
+	 *
+	 * @param $wp_customize
+	 * @param $sections
+	 */
+	public static function UpdateCoreSections( $wp_customize, $sections ) {
+		foreach ( $sections as $section ) {
+			$wp_customize->get_section( $section->id )->priority = $section->priority;
+
+			if ( ! $section->visible ) {
+				$wp_customize->remove_section( $section->id );
 			}
 		}
 	}
@@ -45,6 +66,7 @@ class CustomizerGenerator {
 	 * @param $wp_customize
 	 * @param $setting
 	 * @param $validator
+	 * $id_prefix
 	 */
 	private static function registerSetting( $wp_customize, $setting, $validator ) {
 		$args = [
@@ -82,8 +104,13 @@ class CustomizerGenerator {
 	 * @param $control
 	 * @param $section
 	 * @param $validator
+	 * @param $control_id_prefix
 	 */
-	private static function registerControl( $wp_customize, $control, $section, $validator ) {
+	private static function registerControl( $wp_customize, $control, $section, $validator, $control_id_prefix ) {
+
+		if ( ! empty( $control_id_prefix ) ) {
+			$control->id         = $control_id_prefix . '_' . $control->id;
+		}
 
 		self::registerSetting( $wp_customize, $control, $validator );
 
@@ -134,7 +161,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 				'type'     => $type,
 			]
 		) );
@@ -152,7 +179,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 				'type'     => $type,
 				'choices'  => $choices
 			]
@@ -166,7 +193,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}
@@ -178,7 +205,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}
@@ -190,7 +217,7 @@ class CustomizerGenerator {
 			[
 				'label'    => __( $control->label ),
 				'section'  => $section->id,
-				'settings' => $control->setting_id,
+				'settings' => $control->id,
 			]
 		) );
 	}

@@ -53,4 +53,5 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Code copied to your clipboard!');
         };
     });
+
 });

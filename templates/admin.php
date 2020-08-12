@@ -1,8 +1,7 @@
 <?php
 
-use PerkoCustomizerUI\Services\AdminFormStatus;
-use PerkoCustomizerUI\Services\AdminFormStatusService;
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Forms\AdminFormStatusService;
 use PerkoCustomizerUI\Forms\AdminPageForms;
 
 /**
@@ -10,9 +9,9 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
  */
 ?>
 <div class="wrap">
-    <h1>Customizer UI Options</h1>
-
 	<?php settings_errors(); ?>
+
+    <h1>Customizer UI Options</h1>
 
 	<?php AdminPageForms::NewSectionForm(); ?>
 
@@ -21,21 +20,20 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 	<?php $settings = DataService::getSettings(); ?>
 
 
-	<?php if ( count( $settings ) > 0 ): ?>
+	<?php if ( array_key_exists( 'sections', $settings ) ): ?>
 
-		<?php foreach ( $settings['sections'] as $key => $section ): ?>
+		<?php foreach ( $settings['sections'] as $section ): ?>
 			<?php
-			$editSectionId = "edit_section_$key";
-			$sectionTitle  = esc_attr( $section['section_title'] )
+			$sectionTitle  = esc_attr( $section->title );
 			?>
 
             <!-- show the section panel if we are not editing a control. if we are editing, only show the section the control being edited belongs to -->
-			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $key ) ): ?>
+			<?php if ( ! AdminFormStatusService::IsEditControl() || AdminFormStatusService::IsEditControlForSection( $section->id ) ): ?>
                 <div class="wpcui-panel" data-wpcui-collapsed="">
                     <div class="wpcui-panel-title">
-						<?php if ( AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?> <!-- edit section title -->
+						<?php if ( AdminFormStatusService::IsEditSectionTitle( $section ) ): ?> <!-- edit section title -->
                             <div class="wpcui-panel-title-buttons">
-								<?php AdminPageForms::EditSectionForm( $sectionTitle ); ?>
+								<?php AdminPageForms::EditSectionForm( $section ); ?>
                             </div>
 						<?php else: ?> <!-- end edit section title, begin collapsible title -->
                             <div class="wpcui-collapsible-title">
@@ -45,21 +43,17 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 						<?php endif; ?>
 
                         <!-- Show the edit/delete buttons if not in edit mode -->
-						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $editSectionId ) ): ?>
+						<?php if ( ! AdminFormStatusService::IsEditSectionTitle( $section ) ): ?>
                             <div class="wpcui-panel-title-buttons">
 								<?php if ( ! AdminFormStatusService::IsEditControl() ) {
-									AdminPageForms::SectionActionButtons( $editSectionId, $sectionTitle );
+									AdminPageForms::SectionActionButtons( $section->id );
 								} ?>
                             </div>
 						<?php endif; ?>
                     </div> <!-- end .wpcui-panel-title -->
 
                     <div class="wpcui-panel-body">
-						<?php
-						$sectionControls = array_filter( $section['controls'], function ( $control ) use ( $key ) {
-							return $control["section"] == $key;
-						} );
-						?>
+						<?php $sectionControls = $section->controls; ?>
 
 						<?php if ( count( $sectionControls ) == 0 ): ?>
                             <em>There are currently no controls for this section.
@@ -80,10 +74,10 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                 <tbody>
 								<?php foreach ( $sectionControls as $control ): ?>
 									<?php
-									$controlId      = esc_attr( $control['control_id'] );
-									$controlLabel   = esc_attr( $control['control_label'] );
-									$controlType    = str_replace( '_', ' ', esc_attr( $control['control_type'] ) );
-									$controlDefault = esc_attr( $control['control_default'] );
+									$controlId      = AdminPageForms::GetControlId( $control, $settings );
+									$controlLabel   = esc_attr( $control->label );
+									$controlType    = str_replace( '_', ' ', esc_attr( $control->type ) );
+									$controlDefault = esc_attr( $control->default );
 									?>
                                     <tr>
                                         <td><?= $controlId ?></td>
@@ -92,7 +86,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                                         <td><?= $controlDefault ?></td>
                                         <td class="wpcui_control_action_buttons">
 											<?php if ( ! AdminFormStatusService::IsEditControl() ) {
-												AdminPageForms::ControlActionButtons( $controlId );
+												AdminPageForms::ControlActionButtons( $control->id );
 											} ?>
                                         </td>
                                     </tr>
@@ -107,7 +101,7 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
                             </table>
 						<?php endif; ?> <!-- end if no controls show error / otherwise show controls table -->
 
-						<?php AdminPageForms::ControlForm( esc_attr( $key ) ); ?>
+						<?php AdminPageForms::ControlForm( esc_attr( $section->id ) ); ?>
                     </div> <!-- end .wpcui-panel-body -->
                 </div> <!-- end .wpcui-panel -->
 			<?php endif; ?> <!-- end wpcui-panel -->

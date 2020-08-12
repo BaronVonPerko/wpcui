@@ -3,8 +3,8 @@
 namespace PerkoCustomizerUI\Forms;
 
 use PerkoCustomizerUI\Base\BaseController;
-use PerkoCustomizerUI\Services\AdminFormStatus;
-use PerkoCustomizerUI\Services\AdminFormStatusService;
+use PerkoCustomizerUI\Forms\AdminFormStatus;
+use PerkoCustomizerUI\Forms\AdminFormStatusService;
 
 /**
  * Class AdminPageActions
@@ -16,6 +16,24 @@ class AdminPageForms extends BaseController {
 
 	public function register() {
 		//
+	}
+
+	/**
+	 * Get the control ID.  Add the prefix if there is one.
+	 *
+	 * @param $control
+	 * @param $settings
+	 *
+	 * @return string
+	 */
+	public static function GetControlId( $control, $settings ): string {
+		$prefix = '';
+
+		if ( array_key_exists( 'control_prefix', $settings ) && ! empty( $settings['control_prefix'] ) ) {
+			$prefix = $settings['control_prefix'] . '_';
+		}
+
+		return $prefix . esc_attr( $control->id );
 	}
 
 	/**
@@ -39,16 +57,17 @@ class AdminPageForms extends BaseController {
 	/**
 	 * Given a section title, create the edit form.
 	 *
-	 * @param $sectionTitle
+	 * @param $section
 	 */
-	public static function EditSectionForm( $sectionTitle ) {
+	public static function EditSectionForm( $section ) {
 		?>
         <form action="options.php" method="post">
 			<?= self::FormAction( AdminPageFormActions::UpdateSection ); ?>
-            <input type="hidden" name="old_title" value="<?= $sectionTitle ?>">
-            <input type="text" name="new_title" value="<?= $sectionTitle ?>"/>
+            <input type="hidden" name="section_id" value="<?= $section->id ?>">
+            <input type="text" name="new_title" value="<?= $section->title ?>">
 			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Save Changes', 'small primary', 'edit', false, [ 'id' => 'submitEditSectionTitle' ] ); ?>
+			<?php submit_button( 'Save Changes', 'small primary', 'edit', false,
+				[ 'id' => 'submitEditSectionTitle' ] ); ?>
 			<?php self::CancelButton( 'submitEditCancelButton', 'small' ); ?>
         </form>
 		<?php
@@ -61,19 +80,28 @@ class AdminPageForms extends BaseController {
 	 * @param $editSectionId
 	 * @param $sectionTitle
 	 */
-	public static function SectionActionButtons( $editSectionId, $sectionTitle ) {
+	public static function SectionActionButtons( $sectionId ) {
 		?>
         <form action="" method="post">
-            <input type="hidden" name="<?= $editSectionId ?>" value="<?= $sectionTitle ?>">
+            <input type="hidden" name="<?= "edit_section_$sectionId" ?>" value="<?= $sectionId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
 			<?php submit_button( 'Edit', 'small', 'edit', false, [ 'id' => 'submitEditSection' ] ); ?>
         </form>
 
-        <form action="options.php" method="post" style="margin-right: 5px;">
-			<?= self::FormAction( AdminPageFormActions::DeleteSection ); ?>
-            <input type="hidden" name="section_title" value="<?= $sectionTitle ?>">
+        <form action="options.php" method="post">
+			<?= self::FormAction( AdminPageFormActions::DuplicateSection ); ?>
+            <input type="hidden" name="section_id" value="<?= $sectionId ?>">
 			<?php settings_fields( 'wpcui' ); ?>
-			<?php submit_button( 'Delete', 'delete small', 'submit', false, [
+			<?php submit_button( 'Duplicate', 'small', 'submit', false, [
+				'id' => 'submitDuplicateSection'
+			] ); ?>
+        </form>
+
+        <form action="options.php" method="post">
+			<?= self::FormAction( AdminPageFormActions::DeleteSection ); ?>
+            <input type="hidden" name="section_id" value="<?= $sectionId ?>">
+			<?php settings_fields( 'wpcui' ); ?>
+			<?php submit_button( 'Delete', 'small', 'submit', false, [
 				'onclick' => 'return confirm("Are you sure you want to delete this section?")',
 				'id'      => 'submitDeleteSection'
 			] ); ?>
@@ -121,8 +149,10 @@ class AdminPageForms extends BaseController {
         <form method="post" action="options.php" class="wpcui-control-form">
 			<?= self::FormAction( $action ); ?>
             <input type="hidden" name="section" value="<?= $sectionKey ?>">
-            <input type="hidden" name="old_control_id"
-                   value="<?= sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) ?>">
+			<?php if ( $action == AdminPageFormActions::UpdateControl ): ?>
+                <input type="hidden" name="old_control_id"
+                       value="<?= sanitize_text_field( $_POST[ AdminFormStatus::EditControl ] ) ?>">
+			<?php endif; ?>
 			<?php
 			settings_fields( 'wpcui' );
 			do_settings_sections( 'wpcui-control' );
@@ -180,4 +210,6 @@ abstract class AdminPageFormActions {
 	const CreateControl = 3;
 	const UpdateControl = 4;
 	const DeleteControl = 5;
+	const DuplicateSection = 6;
+	const SectionManagerSave = 7;
 }

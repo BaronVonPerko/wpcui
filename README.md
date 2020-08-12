@@ -1,5 +1,5 @@
 # WordPress Customizer UI Plugin
-### v1.0.2
+### v1.1.0
 
 ![Logo](assets/banner-772x250.png)
 

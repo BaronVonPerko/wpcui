@@ -2,7 +2,7 @@
 
 namespace PerkoCustomizerUI\Base;
 
-use PerkoCustomizerUI\Services\DataService;
+use PerkoCustomizerUI\Data\DataService;
 
 /**
  * Class Activate
@@ -12,6 +12,6 @@ class Activate extends BaseController {
 	public static function activate() {
 		flush_rewrite_rules();
 
-		DataService::setDefaults();
+		DataService::setSettings( [] );
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace PerkoCustomizerUI;
 
+use PerkoCustomizerUI\Data\DatabaseUpgrades;
+
 /**
  * Class Init
  * @package PerkoCustomizerUI
@@ -14,9 +16,12 @@ final class Init
         return [
             Pages\Admin::class,
             Pages\Customizer::class,
+	        Pages\SectionManager::class,
+	        Pages\Settings::class,
             Base\SettingsLinks::class,
             Base\Enqueue::class,
 	        Forms\AdminPageForms::class,
+	        DatabaseUpgrades::class
         ];
     }
 

@@ -1,6 +1,12 @@
 <?php
 
-namespace PerkoCustomizerUI\Services;
+namespace PerkoCustomizerUI\Services\Settings;
+
+use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Forms\AdminFormStatus;
+use PerkoCustomizerUI\Forms\AdminFormStatusService;
+use PerkoCustomizerUI\Services\FormControlsService;
+use PerkoCustomizerUI\Services\Sanitizers\AdminSanitizerService;
 
 /**
  * Class AdminSettingsService
@@ -88,7 +94,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_id',
 				'placeholder' => 'eg. location_info',
 				'required'    => 'required',
-				'value'       => $existingControl ? $existingControl['control_id'] : ''
+				'value'       => $existingControl ? $existingControl->id : ''
 			] );
 
 		add_settings_field( 'control_label',
@@ -101,7 +107,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_label',
 				'placeholder' => 'eg. Location Info',
 				'required'    => 'required',
-				'value'       => $existingControl ? $existingControl['control_label'] : ''
+				'value'       => $existingControl ? $existingControl->label : ''
 			] );
 
 		add_settings_field( 'control_type',
@@ -115,7 +121,7 @@ class AdminSettingsService {
 				'html_id'     => 'dropdown_control_type',
 				'html_class'  => 'dropdown_control_type',
 				'options'     => self::getControlTypeOptions(),
-				'value'       => $existingControl ? $existingControl['control_type'] : ''
+				'value'       => $existingControl ? $existingControl->type : ''
 			] );
 
 		add_settings_field( 'control_choices',
@@ -128,7 +134,7 @@ class AdminSettingsService {
 				'label_for'   => 'control_choices',
 				'placeholder' => 'Comma separated values.  Ex. Soup,Pastas,Buffets',
 				'class'       => 'hidden control-choices',
-				'value'       => $existingControl ? $existingControl['control_choices'] : ''
+				'value'       => $existingControl ? $existingControl->choices : ''
 			] );
 
 		add_settings_field( 'control_default',
@@ -140,7 +146,7 @@ class AdminSettingsService {
 				'option_name' => 'wpcui_settings',
 				'label_for'   => 'control_default',
 				'placeholder' => 'Default value',
-				'value'       => $existingControl ? $existingControl['control_default'] : ''
+				'value'       => $existingControl ? $existingControl->default : ''
 			] );
 	}
 
