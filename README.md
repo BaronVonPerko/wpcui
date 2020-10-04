@@ -10,8 +10,7 @@ sections and controls, so they can get on with their lives creating what really 
 
 ## Contributing
 
-Feel free to contribute to any part of this plugin!  Just be sure to make all pull-requests to the **dev** branch.  
-Thank you!
+Feel free to contribute to any part of this plugin!
 
 ## Installation from Source
 
