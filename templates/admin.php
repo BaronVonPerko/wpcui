@@ -12,4 +12,6 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
 	<?php settings_errors(); ?>
 
     <h1>Customizer UI</h1>
+
+    <div id="wpcui-app"></div>
 </div>
