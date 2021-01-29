@@ -18,7 +18,8 @@ final class Init
             Base\SettingsLinks::class,
             Base\Enqueue::class,
 	        Forms\AdminPageForms::class,
-	        DatabaseUpgrades::class
+	        DatabaseUpgrades::class,
+	        API\CustomizerLookupController::class
         ];
     }
 
