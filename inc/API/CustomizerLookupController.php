@@ -2,36 +2,21 @@
 
 namespace PerkoCustomizerUI\API;
 
-use PerkoCustomizerUI\Base\BaseController;
-
-class CustomizerLookupController extends BaseController {
-	public $base_path;
-
-	public function __construct() {
-		parent::__construct();
-		$this->base_path = 'wpcui/v2';
-	}
-
-	public function register() {
-		add_action( 'rest_api_init', [$this, 'addRestEndpoints']);
-	}
+class CustomizerLookupController extends BaseAPI {
 
 	function addRestEndpoints() {
-		$this->test();
+		$this->getCustomizerSections();
 	}
 
 	/** Routes */
-	function test() {
-		register_rest_route( $this->base_path, "/test", [
+	function getCustomizerSections() {
+		register_rest_route( $this->base_path, "/getCustomizerSections", [
 			[
-				'methods' => 'GET',
-				'callback' => [$this, 'getTestValues'],
+				'methods'  => 'GET',
+				'callback' => function () {
+					
+				}
 			]
-		]);
-	}
-
-	/** Callbacks */
-	function getTestValues() {
-		return [1,2,3,4,5];
+		] );
 	}
 }
