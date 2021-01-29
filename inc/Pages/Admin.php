@@ -15,9 +15,6 @@ class Admin extends BaseController {
 
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
-
-		$settings_service = new AdminSettingsService();
-		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 
 	function adminIndex() {
