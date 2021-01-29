@@ -1,0 +1,24 @@
+{
+  "name": "wpcui",
+  "version": "2.0.0",
+  "scripts": {
+    "dev": "parcel assets/wpcui.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaronVonPerko/wpcui.git"
+  },
+  "author": "Chris Perko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BaronVonPerko/wpcui/issues"
+  },
+  "homepage": "https://github.com/BaronVonPerko/wpcui#readme",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}

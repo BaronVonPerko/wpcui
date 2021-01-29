@@ -1,57 +1,7 @@
-document.addEventListener("DOMContentLoaded", function () {
+import React from 'react';
+import ReactDOM from 'react-dom';
+import CustomizerUI from "./react-lib/CustomizerUI";
 
-    /**
-     * Show/Hide the control choices text box for specific control types
-     */
-    let dropdownControls = document.getElementsByClassName('dropdown_control_type');
-
-    [...dropdownControls].forEach(dropdownControl => {
-        dropdownUpdated(dropdownControl); // check if dropdown is already in a state that has options
-        dropdownControl.onchange = () => dropdownUpdated(dropdownControl);
-    });
-
-    function dropdownUpdated(dropdownControl) {
-        let selectedOption = dropdownControl.options[dropdownControl.selectedIndex];
-        let hasOptions = selectedOption.dataset.hasOptions;
-        let controlChoices = dropdownControl.parentElement.parentElement.nextSibling;
-
-        if (hasOptions) {
-            controlChoices.classList.remove('hidden');
-        } else {
-            if (!controlChoices.classList.contains('hidden')) {
-                controlChoices.classList.add('hidden');
-            }
-        }
-    }
-
-
-    /**
-     * Collapsible sections
-     */
-    let sectionTitles = document.getElementsByClassName('wpcui-collapsible-title');
-
-    [...sectionTitles].forEach(title => {
-        title.onclick = () => {
-            let panel = title.parentElement.parentElement;
-
-            let isCollapsed = panel.getAttribute('data-wpcui-collapsed');
-
-            panel.setAttribute('data-wpcui-collapsed', isCollapsed ? "" : "true");
-        };
-    });
-
-
-    /**
-     * Click copy on example control code
-     */
-    let copyIcons = document.getElementsByClassName('wpcui-copy-icon');
-
-    [...copyIcons].forEach(copyIcon => {
-        copyIcon.onclick = () => {
-            copyIcon.previousElementSibling.select();
-            document.execCommand('copy');
-            alert('Code copied to your clipboard!');
-        };
-    });
-
+document.addEventListener('DOMContentLoaded', () => {
+   ReactDOM.render(<CustomizerUI />, document.getElementById('wpcui-app'));
 });
