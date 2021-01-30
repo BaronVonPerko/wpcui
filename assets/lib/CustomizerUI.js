@@ -8,7 +8,7 @@ export default class CustomizerUI extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/wp-json/wpcui/v2/test')
+        axios.get('/wp-json/wpcui/v2/getCustomizerSections')
             .then(res => {
                 this.setState({data: res.data});
             });
@@ -16,9 +16,7 @@ export default class CustomizerUI extends React.Component {
 
     render() {
         return (
-            <ul>
-                { this.state.data.map(item => <li>{item}</li>)}
-            </ul>
+            <p>Loading...</p>
         )
     }
 }
