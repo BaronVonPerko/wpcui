@@ -2,10 +2,13 @@
 
 namespace PerkoCustomizerUI\API;
 
+use PerkoCustomizerUI\Data\DataService;
+
 class CustomizerLookupController extends BaseAPI {
 
 	function addRestEndpoints() {
 		$this->getCustomizerSections();
+		$this->getOptions();
 	}
 
 	/** Routes */
@@ -18,5 +21,16 @@ class CustomizerLookupController extends BaseAPI {
 				}
 			]
 		] );
+	}
+
+	function getOptions() {
+		register_rest_route( $this->base_path, "/getOptions", [
+			[
+				"methods" => "GET",
+				"callback" => function() {
+					return DataService::getSettings();
+				}
+			]
+		]);
 	}
 }

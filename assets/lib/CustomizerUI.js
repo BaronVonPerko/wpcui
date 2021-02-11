@@ -1,24 +1,29 @@
 import React from 'react';
 import axios from 'axios';
+import SectionList from './components/SectionList';
 
 export default class CustomizerUI extends React.Component {
 
     state = {
-        data: []
+        data: {}
     }
 
     componentDidMount() {
-        axios.get('/wp-json/wpcui/v2/test')
+        axios.get('/wp-json/wpcui/v2/getOptions')
             .then(res => {
                 this.setState({data: res.data});
             });
     }
 
     render() {
-        return (
-            <ul>
-                { this.state.data.map(item => <li>{item}</li>)}
-            </ul>
-        )
+        if(this.state.data.sections) {
+            return (
+                <SectionList sections={this.state.data.sections}/>
+            )
+        } else {
+            return (
+                <p>Loading ...</p>
+            )
+        }
     }
 }
