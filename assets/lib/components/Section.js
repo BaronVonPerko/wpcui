@@ -25,9 +25,9 @@ export default class Section extends React.Component {
 
     render() {
         return (
-            <li onClick={this.click} className="accordion-section control-panel-themes wpcui-section">
-                <h3 className="accordion-section-title">{this.props.data.title}</h3>
-                {this.renderControls()}
+            <li onClick={this.click} className={this.state.open ? 'wpcui-section' : 'wpcui-section wpcui-section-closed'}>
+                <h3>{this.props.data.title}</h3>
+                <div>{this.renderControls()}</div>
             </li>
         )
     }

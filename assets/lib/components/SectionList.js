@@ -13,10 +13,8 @@ export default class SectionList extends React.Component {
 
     render() {
         return (
-            <div className="customize-sidebar-outer-content wpcui-section-list">
-                <div className="customize-pane-parent">
-                    {this.getSections()}
-                </div>
+            <div className="wpcui-section-list">
+                {this.getSections()}
             </div>
         )
     }
