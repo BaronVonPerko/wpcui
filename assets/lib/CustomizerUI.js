@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import SectionList from './components/SectionList';
+import Button from './components/Button';
 
 export default class CustomizerUI extends React.Component {
 
@@ -18,7 +19,10 @@ export default class CustomizerUI extends React.Component {
     render() {
         if(this.state.data.sections) {
             return (
-                <SectionList sections={this.state.data.sections}/>
+                <div>
+                    <Button buttonType="primary" innerText="Create New Section" />
+                    <SectionList sections={this.state.data.sections}/>
+                </div>
             )
         } else {
             return (
