@@ -7,8 +7,7 @@ export default class Button extends React.Component {
 
     render() {
         return (
-            <button onclick={this.props.click}
-                    className={this.getTypeClass()}>
+            <button onClick={() => {this.props.click()}} className={this.getTypeClass()}>
                 {this.props.innerText}
             </button>
         )
