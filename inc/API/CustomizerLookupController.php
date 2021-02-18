@@ -17,7 +17,7 @@ class CustomizerLookupController extends BaseAPI {
 			[
 				'methods'  => 'GET',
 				'callback' => function () {
-					
+
 				}
 			]
 		] );
@@ -26,11 +26,23 @@ class CustomizerLookupController extends BaseAPI {
 	function getOptions() {
 		register_rest_route( $this->base_path, "/getOptions", [
 			[
-				"methods" => "GET",
-				"callback" => function() {
+				"methods"  => "GET",
+				"callback" => function () {
 					return DataService::getSettings();
 				}
 			]
-		]);
+		] );
+	}
+
+	function save() {
+		register_rest_route( $this->base_path, "/save", [
+			[
+				"methods"  => "POST",
+				"callback" => function ($data) {
+					var_dump($data);
+					die;
+				}
+			]
+		] );
 	}
 }

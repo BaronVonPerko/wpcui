@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import SectionList from './components/SectionList';
 import Button from './elements/Button';
 import WarningBar from "./elements/WarningBar";
 import {upgrade} from './services/database';
+import {fetchData} from "./services/api";
 
 export default class CustomizerUI extends React.Component {
 
@@ -16,12 +16,8 @@ export default class CustomizerUI extends React.Component {
         this.upgradeDatabase = this.upgradeDatabase.bind(this);
     }
 
-
     componentDidMount() {
-        axios.get('/wp-json/wpcui/v2/getOptions')
-            .then(res => {
-                this.setState({data: res.data});
-            });
+        fetchData().then(data => this.setState({data}));
     }
 
     upgradeDatabase() {
