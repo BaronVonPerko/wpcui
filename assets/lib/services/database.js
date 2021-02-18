@@ -1,3 +1,5 @@
+import {saveData} from "./api";
+
 export function upgrade(data) {
     switch (data.db_version) {
         case 1:
@@ -31,5 +33,5 @@ function upgradeToVersion2(data) {
         newData.sections.push(section);
     });
 
-    return newData;
+    saveData(newData).then(res => console.log(res));
 }

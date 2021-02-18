@@ -9,6 +9,7 @@ class CustomizerLookupController extends BaseAPI {
 	function addRestEndpoints() {
 		$this->getCustomizerSections();
 		$this->getOptions();
+		$this->saveOptions();
 	}
 
 	/** Routes */
@@ -34,13 +35,12 @@ class CustomizerLookupController extends BaseAPI {
 		] );
 	}
 
-	function save() {
-		register_rest_route( $this->base_path, "/save", [
+	function saveOptions() {
+		register_rest_route( $this->base_path, "/saveOptions", [
 			[
-				"methods"  => "POST",
+				"methods"  => "PUT",
 				"callback" => function ($data) {
-					var_dump($data);
-					die;
+					return $data;
 				}
 			]
 		] );
