@@ -40,7 +40,7 @@ class CustomizerLookupController extends BaseAPI {
 			[
 				"methods"  => \WP_REST_Server::EDITABLE,
 				"callback" => function ($data) {
-					return $data;
+					DataService::setSettings($data->get_json_params()['data']);
 				}
 			]
 		] );
