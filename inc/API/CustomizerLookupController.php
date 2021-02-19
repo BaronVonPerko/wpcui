@@ -27,7 +27,7 @@ class CustomizerLookupController extends BaseAPI {
 	function getOptions() {
 		register_rest_route( $this->base_path, "/getOptions", [
 			[
-				"methods"  => "GET",
+				"methods"  => \WP_REST_Server::READABLE,
 				"callback" => function () {
 					return DataService::getSettings();
 				}
@@ -38,7 +38,7 @@ class CustomizerLookupController extends BaseAPI {
 	function saveOptions() {
 		register_rest_route( $this->base_path, "/saveOptions", [
 			[
-				"methods"  => "PUT",
+				"methods"  => \WP_REST_Server::EDITABLE,
 				"callback" => function ($data) {
 					return $data;
 				}
