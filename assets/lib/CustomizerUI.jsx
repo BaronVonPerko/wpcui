@@ -1,18 +1,18 @@
 import React from 'react';
-import SectionList from './components/SectionList';
-import Button from './elements/Button';
 import WarningBar from "./elements/WarningBar";
 import {upgrade} from './services/database';
 import {fetchData} from "./services/api";
+import CustomizerEditor from "./components/CustomizerEditor";
 
 export default class CustomizerUI extends React.Component {
 
-    state = {
-        data: {}
-    }
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            data: {}
+        }
+
         this.upgradeDatabase = this.upgradeDatabase.bind(this);
     }
 
@@ -39,10 +39,7 @@ export default class CustomizerUI extends React.Component {
             return this.databaseUpgradeWarning();
         } else if (this.state.data.sections) {
             return (
-                <div>
-                    <Button buttonType="primary" innerText="Create New Section"/>
-                    <SectionList sections={this.state.data.sections}/>
-                </div>
+                <CustomizerEditor data={this.state.data} />
             )
         } else {
             return (
