@@ -35,12 +35,21 @@ export default class CustomizerUI extends React.Component {
     );
   }
 
+  updateData(data) {
+    this.setState({ data });
+  }
+
   getTabs() {
     let tabs = [];
 
     tabs.push({
       title: "Editor",
-      content: <CustomizerEditor data={this.state.data} />,
+      content: (
+        <CustomizerEditor
+          data={this.state.data}
+          updateData={(data) => this.updateData(data)}
+        />
+      ),
     });
     tabs.push({ title: "Settings", content: <p>Settings Coming Soon...</p> });
 

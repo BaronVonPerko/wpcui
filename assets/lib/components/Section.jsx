@@ -17,14 +17,16 @@ export default class Section extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  deleteSection() {}
+  deleteSection() {
+    this.props.onSectionDelete(this.props.data);
+  }
 
   renderInner() {
     if (this.state.open) {
       return (
         <div>
           <Button innerText="Delete" click={() => this.deleteSection()} />
-          <ControlList controls={this.props.data.controls} />)
+          <ControlList controls={this.props.data.controls} />
         </div>
       );
     }
