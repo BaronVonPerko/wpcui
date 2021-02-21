@@ -16,3 +16,21 @@ li.wpcui-section-closed {
 li.wpcui-section-closed:hover {
   opacity: 0.8;
 }
+
+.wpcui-tab-pane {
+}
+
+.wpcui-tab-titles {
+  display: flex;
+}
+
+.wpcui-tab-titles .tab {
+  margin: 0 4px;
+  padding: 4px;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.wpcui-tab-content {
+  margin: 10px 4px;
+}

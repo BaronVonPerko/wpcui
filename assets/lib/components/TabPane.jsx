@@ -15,7 +15,7 @@ export default class TabPane extends React.Component {
 
   renderTabTitles() {
     return this.props.tabs.map((tab, index) => (
-      <p key={index} onClick={() => this.selectTab(tab)}>
+      <p className="tab" key={index} onClick={() => this.selectTab(tab)}>
         {tab.title}
       </p>
     ));
@@ -27,9 +27,9 @@ export default class TabPane extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>{this.renderTabTitles()}</div>
-        <div>{this.renderSelectedTab()}</div>
+      <div className="wpcui-tab-pane">
+        <div className="wpcui-tab-titles">{this.renderTabTitles()}</div>
+        <div className="wpcui-tab-content">{this.renderSelectedTab()}</div>
       </div>
     );
   }
