@@ -1,5 +1,6 @@
 import React from "react";
 import ControlList from "./ControlList";
+import Button from "./../elements/Button";
 
 export default class Section extends React.Component {
   constructor(props) {
@@ -16,9 +17,16 @@ export default class Section extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  renderControls() {
+  deleteSection() {}
+
+  renderInner() {
     if (this.state.open) {
-      return <ControlList controls={this.props.data.controls} />;
+      return (
+        <div>
+          <Button innerText="Delete" click={() => this.deleteSection()} />
+          <ControlList controls={this.props.data.controls} />)
+        </div>
+      );
     }
   }
 
@@ -33,7 +41,7 @@ export default class Section extends React.Component {
         }
       >
         <h3>{this.props.data.title}</h3>
-        <div>{this.renderControls()}</div>
+        <div>{this.renderInner()}</div>
       </li>
     );
   }

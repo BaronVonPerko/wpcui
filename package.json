@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "parcel assets/wpcui.js",
-    "pretty":  "npx prettier --write ./assets/"
+    "pretty": "npx prettier --write ./assets/"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   "homepage": "https://github.com/BaronVonPerko/wpcui#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "npm": "^7.5.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
