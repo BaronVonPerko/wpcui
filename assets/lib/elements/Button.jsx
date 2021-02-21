@@ -1,15 +1,20 @@
-import React from 'react';
+import React from "react";
 
 export default class Button extends React.Component {
-    getTypeClass() {
-        return `button-${this.props.buttonType}`;
-    }
+  getTypeClass() {
+    return `button-${this.props.buttonType}`;
+  }
 
-    render() {
-        return (
-            <button onClick={() => {this.props.click()}} className={this.getTypeClass()}>
-                {this.props.innerText}
-            </button>
-        )
-    }
+  render() {
+    return (
+      <button
+        onClick={() => {
+          this.props.click();
+        }}
+        className={this.getTypeClass()}
+      >
+        {this.props.innerText}
+      </button>
+    );
+  }
 }

@@ -1,18 +1,18 @@
 .wpcui-section-list {
-    max-width: 300px;
+  max-width: 300px;
 }
 
 li.wpcui-section {
-    list-style: none;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    padding: 2px 4px;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 2px 4px;
 }
 
 li.wpcui-section-closed {
-    opacity: 0.5;
-    transition: opacity 150ms ease-in-out;
+  opacity: 0.5;
+  transition: opacity 150ms ease-in-out;
 }
 li.wpcui-section-closed:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
