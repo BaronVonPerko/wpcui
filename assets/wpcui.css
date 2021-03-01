@@ -34,3 +34,16 @@ li.wpcui-section-closed:hover {
 .wpcui-tab-content {
   margin: 10px 4px;
 }
+
+.wpcui-modal-wrapper {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.wpcui-modal {
+  width: 600px;
+  margin: 300px auto 0;
+  background-color: #ddd;
+  padding: 20px 40px;
+}
