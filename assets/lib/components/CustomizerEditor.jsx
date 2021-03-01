@@ -82,6 +82,11 @@ export default class CustomizerEditor extends React.Component {
             innerText="Create New Section"
             click={this.createNewSection}
           />
+          <Button
+            innerText="Cancel"
+            buttonType="secondary"
+            click={this.toggleAddNewSectionFormVisible}
+          />
         </div>
       );
     } else {

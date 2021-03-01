@@ -29,7 +29,11 @@ export default class Section extends React.Component {
     if (this.state.open) {
       return (
         <div>
-          <Button innerText="Delete" click={() => this.deleteSection()} />
+          <Button
+            innerText="Delete"
+            buttonType="secondary"
+            click={() => this.deleteSection()}
+          />
           <ControlList controls={this.props.data.controls} />
         </div>
       );
