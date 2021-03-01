@@ -1,6 +1,7 @@
 import React from "react";
 import ControlList from "./ControlList";
 import Button from "./../elements/Button";
+import store, { actions } from "../redux/wpcuiReducer";
 
 export default class Section extends React.Component {
   constructor(props) {
@@ -18,7 +19,10 @@ export default class Section extends React.Component {
   }
 
   deleteSection() {
-    this.props.onSectionDelete(this.props.data);
+    store.dispatch({
+      type: actions.DELETE_SECTION,
+      sectionId: this.props.data.id,
+    });
   }
 
   renderInner() {

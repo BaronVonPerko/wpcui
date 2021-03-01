@@ -4,8 +4,10 @@ import { upgrade } from "./services/database";
 import { fetchData } from "./services/api";
 import CustomizerEditor from "./components/CustomizerEditor";
 import TabPane from "./components/TabPane";
+import { connect } from "react-redux";
+import store, { actions } from "./redux/wpcuiReducer";
 
-export default class CustomizerUI extends React.Component {
+class CustomizerUI extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +19,12 @@ export default class CustomizerUI extends React.Component {
   }
 
   componentDidMount() {
-    fetchData().then((data) => this.setState({ data }));
+    fetchData().then((data) => {
+      store.dispatch({
+        type: actions.DATA_FETCH,
+        data,
+      });
+    });
   }
 
   upgradeDatabase() {
@@ -57,9 +64,9 @@ export default class CustomizerUI extends React.Component {
   }
 
   render() {
-    if (this.state.data.db_version < 2) {
+    if (this.props.data.db_version < 2 && this.props.data.db_version > 0) {
       return this.databaseUpgradeWarning();
-    } else if (this.state.data.sections) {
+    } else if (this.props.data.sections) {
       return (
         <section>
           <TabPane tabs={this.getTabs()} />
@@ -70,3 +77,8 @@ export default class CustomizerUI extends React.Component {
     }
   }
 }
+
+const mapStateToProps = (state) => ({
+  data: state,
+});
+export default connect(mapStateToProps)(CustomizerUI);

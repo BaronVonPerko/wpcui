@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../elements/Button";
 import SectionList from "./SectionList";
-import { saveData } from "../services/api";
+import store, { actions } from "../redux/wpcuiReducer";
 
 export default class CustomizerEditor extends React.Component {
   constructor(props) {
@@ -45,25 +45,10 @@ export default class CustomizerEditor extends React.Component {
       visible: true,
     };
 
-    let data = this.state.data;
-    data.sections.push(newSection);
-    this.setState({ data });
-
-    saveData(this.state.data);
+    store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
 
     this.state.newSectionId = "";
     this.state.newSectionTitle = "";
-  }
-
-  deleteSection(sectionToDelete) {
-    const sections = this.state.data.sections.filter(
-      (section) => section.id !== sectionToDelete.id
-    );
-    let data = this.state.data;
-    data.sections = sections;
-    this.setState({ data });
-
-    saveData(this.state.data);
   }
 
   renderNewSection() {

@@ -1,18 +1,11 @@
 import React from "react";
 import Section from "./Section";
+import { connect } from "react-redux";
 
-export default class SectionList extends React.Component {
-  deleteSection(section) {
-    this.props.onSectionDelete(section);
-  }
-
+class SectionList extends React.Component {
   getSections() {
     return this.props.sections.map((section) => (
-      <Section
-        key={section.id}
-        data={section}
-        onSectionDelete={(section) => this.deleteSection(section)}
-      />
+      <Section key={section.id} data={section} />
     ));
   }
 
@@ -20,3 +13,9 @@ export default class SectionList extends React.Component {
     return <div className="wpcui-section-list">{this.getSections()}</div>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  sections: state.sections,
+});
+
+export default connect(mapStateToProps)(SectionList);
