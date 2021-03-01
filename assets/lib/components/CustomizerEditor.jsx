@@ -14,7 +14,9 @@ export default class CustomizerEditor extends React.Component {
       newSectionTitle: "",
     };
 
-    this.toggleAddNewSection = this.toggleAddNewSection.bind(this);
+    this.toggleAddNewSectionFormVisible = this.toggleAddNewSectionFormVisible.bind(
+      this
+    );
     this.createNewSection = this.createNewSection.bind(this);
     this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
     this.handleSectionIdChange = this.handleSectionIdChange.bind(this);
@@ -24,8 +26,17 @@ export default class CustomizerEditor extends React.Component {
     this.props.updateData(this.state.data);
   }
 
-  toggleAddNewSection() {
-    this.setState({ addNewSection: !this.state.addNewSection });
+  /**
+   * Toggles the new section form on and off.  If it is
+   * currently on (and being turned off), clear the inputs.
+   */
+  toggleAddNewSectionFormVisible() {
+    const clearInputs = this.state.addNewSection;
+    this.setState({
+      addNewSection: !this.state.addNewSection,
+      newSectionId: clearInputs ? "" : this.state.newSectionId,
+      newSectionTitle: clearInputs ? "" : this.state.newSectionTitle,
+    });
   }
 
   handleSectionTitleChange(event) {
@@ -36,8 +47,10 @@ export default class CustomizerEditor extends React.Component {
     this.setState({ newSectionId: event.target.value });
   }
 
+  /**
+   * Create a new section with the given id and title.
+   */
   createNewSection() {
-    this.toggleAddNewSection();
     const newSection = {
       id: this.state.newSectionId,
       title: this.state.newSectionTitle,
@@ -47,11 +60,10 @@ export default class CustomizerEditor extends React.Component {
 
     store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
 
-    this.state.newSectionId = "";
-    this.state.newSectionTitle = "";
+    this.toggleAddNewSectionFormVisible();
   }
 
-  renderNewSection() {
+  renderNewSectionForm() {
     if (this.state.addNewSection) {
       return (
         <div>
@@ -77,7 +89,7 @@ export default class CustomizerEditor extends React.Component {
         <Button
           buttonType="primary"
           innerText="Create New Section"
-          click={this.toggleAddNewSection}
+          click={this.toggleAddNewSectionFormVisible}
         />
       );
     }
@@ -86,11 +98,8 @@ export default class CustomizerEditor extends React.Component {
   render() {
     return (
       <div>
-        {this.renderNewSection()}
-        <SectionList
-          sections={this.props.data.sections}
-          onSectionDelete={(section) => this.deleteSection(section)}
-        />
+        {this.renderNewSectionForm()}
+        <SectionList />
       </div>
     );
   }
