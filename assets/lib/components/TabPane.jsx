@@ -13,9 +13,19 @@ export default class TabPane extends React.Component {
     this.setState({ selectedTab: tab });
   }
 
+  getTabClassName(tab) {
+    return tab.title === this.state.selectedTab.title
+      ? "wpcui-tab active"
+      : "wpcui-tab";
+  }
+
   renderTabTitles() {
     return this.props.tabs.map((tab, index) => (
-      <p className="tab" key={index} onClick={() => this.selectTab(tab)}>
+      <p
+        className={this.getTabClassName(tab)}
+        key={index}
+        onClick={() => this.selectTab(tab)}
+      >
         {tab.title}
       </p>
     ));

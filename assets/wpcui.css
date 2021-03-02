@@ -18,17 +18,28 @@ li.wpcui-section-closed:hover {
 }
 
 .wpcui-tab-pane {
+  margin: 24px 0;
 }
 
 .wpcui-tab-titles {
+  background-color: #ddd;
   display: flex;
+  margin-bottom: 24px;
 }
 
-.wpcui-tab-titles .tab {
-  margin: 0 4px;
-  padding: 4px;
-  background-color: #ccc;
+.wpcui-tab-titles .wpcui-tab {
+  margin: 0;
+  padding: 12px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 200ms ease-in-out;
+  border-bottom: 4px solid #ddd;
+}
+
+.wpcui-tab-titles .wpcui-tab.active {
+  border-bottom: 4px solid #0071A1;
 }
 
 .wpcui-tab-content {
