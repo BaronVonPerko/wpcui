@@ -51,6 +51,7 @@ li.wpcui-section-closed:hover {
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0,0,0,0.3);
   animation: fade-in 300ms ease-in;
+  z-index: 999;
 }
 
 .wpcui-modal {
@@ -60,7 +61,19 @@ li.wpcui-section-closed:hover {
   padding: 20px 40px;
   border-radius: 4px;
   animation: modal-slide-in 300ms ease-in;
+  z-index: 1000;
 }
+
+.wpcui-form-cancel {
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 8px;
+}
+
+.wpcui-form-cancel:hover {
+  text-decoration: underline;
+}
+
 
 /** ###############################################
  * ANIMATIONS

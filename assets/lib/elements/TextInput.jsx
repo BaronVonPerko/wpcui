@@ -5,6 +5,7 @@ export default class TextInput extends React.Component {
     super(props);
 
     this.renderLabel = this.renderLabel.bind(this);
+    this.renderInput = this.renderInput.bind(this);
   }
 
   renderLabel() {
@@ -15,19 +16,25 @@ export default class TextInput extends React.Component {
     );
   }
 
+  renderInput() {
+    return (
+      <input
+        id={this.props.inputId ? this.props.inputId : ""}
+        type="text"
+        className="form-control regular-text"
+        placeholder={this.props.placeholder}
+        onChange={this.props.onChange}
+        value={this.props.value}
+      />
+    );
+  }
+
   render() {
     return (
-      <div className="form-group">
-        {this.renderLabel()}
-        <input
-          id={this.props.inputId ? this.props.inputId : ""}
-          type="text"
-          className="form-control regular-text"
-          placeholder={this.props.placeholder}
-          onChange={this.props.onChange}
-          value={this.props.value}
-        />
-      </div>
+      <tr>
+        <th>{this.renderLabel()}</th>
+        <td>{this.renderInput()}</td>
+      </tr>
     );
   }
 }

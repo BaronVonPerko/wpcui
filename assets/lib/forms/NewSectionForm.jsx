@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import TextInput from "../elements/TextInput";
+import FormCancel from "../elements/FormCancel";
 
 export default class NewSectionForm extends React.Component {
   constructor(props) {
@@ -62,8 +63,9 @@ export default class NewSectionForm extends React.Component {
     return (
       <div className="wpcui-modal-wrapper">
         <div className="wpcui-modal">
-          <div className="container">
-            <div className="form-horizontal">
+          <h3>Create a New Customizer Section</h3>
+          <table className="form-table">
+            <tbody>
               <TextInput
                 label="Section ID"
                 inputId="newSectionId"
@@ -78,18 +80,14 @@ export default class NewSectionForm extends React.Component {
                 onChange={this.handleSectionTitleChange}
                 value={this.state.newSectionTitle}
               />
-              <Button
-                buttonType="primary"
-                innerText="Create New Section"
-                click={this.createNewSection}
-              />
-              <Button
-                innerText="Cancel"
-                buttonType="secondary"
-                click={this.closeForm}
-              />
-            </div>
-          </div>
+            </tbody>
+          </table>
+          <Button
+            buttonType="primary"
+            innerText="Create New Section"
+            click={this.createNewSection}
+          />
+          <FormCancel handleClick={this.closeForm} />
         </div>
       </div>
     );
