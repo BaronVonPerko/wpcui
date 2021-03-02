@@ -21,6 +21,7 @@ export default class TextInput extends React.Component {
       <input
         id={this.props.inputId ? this.props.inputId : ""}
         type="text"
+        disabled={this.props.disabled}
         className="form-control regular-text"
         placeholder={this.props.placeholder}
         onChange={this.props.onChange}
