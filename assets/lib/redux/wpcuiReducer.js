@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { saveData } from "../services/api";
+import { createSection, deleteSection } from "./sectionActions";
 
 const initialState = {
   db_version: -1,
@@ -19,26 +19,10 @@ function wpcuiReducer(state = initialState, action) {
       return action.data;
 
     case actions.DELETE_SECTION:
-      const deleteSectionState = {
-        ...state,
-        sections: state.sections.filter(
-          (section) => section.id !== action.sectionId
-        ),
-      };
-      saveData(deleteSectionState).then(() => {
-        // todo: modal save complete
-      });
-      return deleteSectionState;
+      return deleteSection(state, action.sectionId);
 
     case actions.CREATE_SECTION:
-      const createSectionState = {
-        ...state,
-        sections: [...state.sections, action.section],
-      };
-      saveData(createSectionState).then(() => {
-        // todo: modal save complete
-      });
-      return createSectionState;
+      return createSection(state, action.section);
 
     default:
       return state;
