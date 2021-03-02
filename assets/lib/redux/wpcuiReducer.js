@@ -19,24 +19,26 @@ function wpcuiReducer(state = initialState, action) {
       return action.data;
 
     case actions.DELETE_SECTION:
-      const sections = state.sections.filter(
-        (section) => section.id !== action.sectionId
-      );
-      state.sections = sections;
-      saveData(state).then(() => {
+      const deleteSectionState = {
+        ...state,
+        sections: state.sections.filter(
+          (section) => section.id !== action.sectionId
+        ),
+      };
+      saveData(deleteSectionState).then(() => {
         // todo: modal save complete
       });
-      return { ...state, sections };
+      return deleteSectionState;
 
     case actions.CREATE_SECTION:
-      const newState = {
+      const createSectionState = {
         ...state,
         sections: [...state.sections, action.section],
       };
-      saveData(newState).then(() => {
+      saveData(createSectionState).then(() => {
         // todo: modal save complete
       });
-      return newState;
+      return createSectionState;
 
     default:
       return state;

@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 class SectionList extends React.Component {
   getSections() {
-    console.log(this.props);
     return this.props.sections.map((section) => (
       <Section key={section.id} data={section} />
     ));
