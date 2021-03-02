@@ -26,6 +26,7 @@ export default class Section extends React.Component {
   }
 
   renderInner() {
+    console.log(this.props.data);
     if (this.state.open) {
       return (
         <div>
@@ -34,6 +35,10 @@ export default class Section extends React.Component {
             buttonType="secondary"
             click={() => this.deleteSection()}
           />
+          <p>
+            ID: <em>{this.props.data.id}</em>
+          </p>
+
           <ControlList controls={this.props.data.controls} />
         </div>
       );
