@@ -33,5 +33,9 @@ function upgradeToVersion2(data) {
     newData.sections.push(section);
   });
 
-  saveData(newData).then((res) => console.log(res));
+  saveData(newData).then((res) => {
+    if (res.status === 200) {
+      location.reload();
+    }
+  });
 }

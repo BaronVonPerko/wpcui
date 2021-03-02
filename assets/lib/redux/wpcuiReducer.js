@@ -5,15 +5,12 @@ const initialState = {
   db_version: -1,
   panels: [],
   sections: [],
-  modalOpen: false,
 };
 
 export const actions = {
   DATA_FETCH: 0,
   DELETE_SECTION: 1,
   CREATE_SECTION: 2,
-  CLOSE_MODAL: 3,
-  OPEN_MODAL: 4,
 };
 
 function wpcuiReducer(state = initialState, action) {
@@ -32,18 +29,14 @@ function wpcuiReducer(state = initialState, action) {
       return { ...state, sections };
 
     case actions.CREATE_SECTION:
-      state.sections.push(action.section);
-      saveData(state).then(() => {
+      const newState = {
+        ...state,
+        sections: [...state.sections, action.section],
+      };
+      saveData(newState).then(() => {
         // todo: modal save complete
       });
-      state.modalOpen = false;
-      return state;
-
-    case actions.CLOSE_MODAL:
-      return { ...state, modalOpen: false };
-
-    case actions.OPEN_MODAL:
-      return { ...state, modalOpen: true };
+      return newState;
 
     default:
       return state;
@@ -51,7 +44,5 @@ function wpcuiReducer(state = initialState, action) {
 }
 
 const store = createStore(wpcuiReducer);
-
-// store.subscribe(() => console.log(store.getState()));
 
 export default store;

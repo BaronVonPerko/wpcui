@@ -14,6 +14,7 @@ export default class NewSectionForm extends React.Component {
     this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
     this.handleSectionIdChange = this.handleSectionIdChange.bind(this);
     this.createNewSection = this.createNewSection.bind(this);
+    this.closeForm = this.closeForm.bind(this);
   }
 
   /**
@@ -28,10 +29,12 @@ export default class NewSectionForm extends React.Component {
     };
 
     store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
+
+    this.closeForm();
   }
 
   closeForm() {
-    store.dispatch({ type: actions.CLOSE_MODAL });
+    this.props.onClose();
   }
 
   handleSectionTitleChange(event) {
@@ -44,27 +47,29 @@ export default class NewSectionForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <input
-          placeholder="New section id"
-          value={this.state.newSectionId}
-          onChange={this.handleSectionIdChange}
-        />
-        <input
-          placeholder="New section name"
-          value={this.state.newSectionTitle}
-          onChange={this.handleSectionTitleChange}
-        />
-        <Button
-          buttonType="primary"
-          innerText="Create New Section"
-          click={this.createNewSection}
-        />
-        <Button
-          innerText="Cancel"
-          buttonType="secondary"
-          click={this.closeForm}
-        />
+      <div className="wpcui-modal-wrapper">
+        <div className="wpcui-modal">
+          <input
+            placeholder="New section id"
+            value={this.state.newSectionId}
+            onChange={this.handleSectionIdChange}
+          />
+          <input
+            placeholder="New section name"
+            value={this.state.newSectionTitle}
+            onChange={this.handleSectionTitleChange}
+          />
+          <Button
+            buttonType="primary"
+            innerText="Create New Section"
+            click={this.createNewSection}
+          />
+          <Button
+            innerText="Cancel"
+            buttonType="secondary"
+            click={this.closeForm}
+          />
+        </div>
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../elements/Button";
 import SectionList from "./SectionList";
-import Modal from "../elements/Modal";
 import NewSectionForm from "../forms/NewSectionForm";
 import { connect } from "react-redux";
 import store, { actions } from "../redux/wpcuiReducer";
@@ -12,24 +11,23 @@ class CustomizerEditor extends React.Component {
 
     this.state = {
       addNewSection: false,
-      data: this.props.data,
     };
 
     this.showNewSectionForm = this.showNewSectionForm.bind(this);
-  }
-
-  updateData() {
-    this.props.updateData(this.state.data);
+    this.hideNewSectionForm = this.hideNewSectionForm.bind(this);
   }
 
   showNewSectionForm() {
     this.setState({ addNewSection: true });
-    store.dispatch({ type: actions.OPEN_MODAL });
+  }
+
+  hideNewSectionForm() {
+    this.setState({ addNewSection: false });
   }
 
   renderNewSectionForm() {
-    if (this.state.addNewSection && this.props.modalOpen) {
-      return <Modal innerComponent={<NewSectionForm />} />;
+    if (this.state.addNewSection) {
+      return <NewSectionForm onClose={this.hideNewSectionForm} />;
     }
   }
 
@@ -48,7 +46,4 @@ class CustomizerEditor extends React.Component {
   }
 }
 
-const mapPropsToState = (state) => ({
-  modalOpen: state.modalOpen,
-});
-export default connect(mapPropsToState)(CustomizerEditor);
+export default connect()(CustomizerEditor);
