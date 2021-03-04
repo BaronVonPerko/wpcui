@@ -1,9 +1,10 @@
 import React from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
-import TextInput from "../elements/TextInput";
+import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
 import { stringToSnakeCase } from "../common";
+import FormCheckbox from "../elements/FormCheckbox";
 
 export default class NewSectionForm extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class NewSectionForm extends React.Component {
 
   renderFormField(field) {
     return (
-      <TextInput
+      <FormTextInput
         label={field.label}
         inputId={field.inputId}
         placeholder={field.placeholder}
@@ -85,30 +86,25 @@ export default class NewSectionForm extends React.Component {
           <h3>Create a New Customizer Section</h3>
           <table className="form-table">
             <tbody>
-              <tr>
-                <th>Auto-Generate ID</th>
-                <td>
-                  <input
-                    checked={this.state.autoGenerateId}
-                    type="checkbox"
-                    onChange={this.handleAutoGenerateIdChange}
-                  />
-                </td>
-              </tr>
-              <TextInput
+              <FormTextInput
+                label="Section Title"
+                inputId="newSectionTitle"
+                placeholder="New Section Name"
+                onChange={this.handleSectionTitleChange}
+                value={this.state.newSectionTitle}
+              />
+              <FormCheckbox
+                label="Auto-Generate ID"
+                checked={this.state.autoGenerateId}
+                handleChange={this.handleAutoGenerateIdChange}
+              />
+              <FormTextInput
                 label="Section ID"
                 inputId="newSectionId"
                 placeholder="New Section ID"
                 onChange={this.handleSectionIdChange}
                 value={this.state.newSectionId}
                 disabled={this.state.autoGenerateId}
-              />
-              <TextInput
-                label="Section Title"
-                inputId="newSectionTitle"
-                placeholder="New Section Name"
-                onChange={this.handleSectionTitleChange}
-                value={this.state.newSectionTitle}
               />
             </tbody>
           </table>
