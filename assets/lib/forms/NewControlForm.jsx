@@ -7,21 +7,21 @@ import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 
-export default class NewSectionForm extends React.Component {
+export default class NewControlForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      newSectionId: "",
-      newSectionTitle: "",
+      newControlId: "",
+      newControlTitle: "",
       autoGenerateId: "checked",
       errorTitle: "",
       errorMessage: "",
     };
 
-    this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
-    this.handleSectionIdChange = this.handleSectionIdChange.bind(this);
-    this.createNewSection = this.createNewSection.bind(this);
+    this.handleControlTitleChange = this.handleControlTitleChange.bind(this);
+    this.handleControlIdChange = this.handleControlIdChange.bind(this);
+    this.createNewControl = this.createNewControl.bind(this);
     this.closeForm = this.closeForm.bind(this);
     this.handleAutoGenerateIdChange = this.handleAutoGenerateIdChange.bind(
       this
@@ -31,8 +31,9 @@ export default class NewSectionForm extends React.Component {
   /**
    * Create a new section with the given id and title.
    */
-  createNewSection() {
-    if (!this.state.newSectionTitle || !this.state.newSectionId) {
+  createNewControl() {
+    ``;
+    if (!this.state.newControlTitle || !this.state.newControlId) {
       this.setState({
         errorTitle: "Missing Required Fields",
         errorMessage: "Section Title and ID are required.",
@@ -41,8 +42,8 @@ export default class NewSectionForm extends React.Component {
     }
 
     const newSection = {
-      id: this.state.newSectionId,
-      title: this.state.newSectionTitle,
+      id: this.state.newControlId,
+      title: this.state.newControlTitle,
       priority: 99,
       visible: true,
     };
@@ -56,22 +57,22 @@ export default class NewSectionForm extends React.Component {
     this.props.onClose();
   }
 
-  handleSectionTitleChange(event) {
-    this.setState({ newSectionTitle: event.target.value });
+  handleControlTitleChange(event) {
+    this.setState({ newControlTitle: event.target.value });
 
     if (this.state.autoGenerateId) {
-      this.setState({ newSectionId: stringToSnakeCase(event.target.value) });
+      this.setState({ newControlId: stringToSnakeCase(event.target.value) });
     }
   }
 
-  handleSectionIdChange(event) {
-    this.setState({ newSectionId: event.target.value });
+  handleControlIdChange(event) {
+    this.setState({ newControlId: event.target.value });
   }
 
   handleAutoGenerateIdChange() {
     if (!this.state.autoGenerateId) {
       this.setState({
-        newSectionId: stringToSnakeCase(this.state.newSectionTitle),
+        newControlId: stringToSnakeCase(this.state.newControlTitle),
       });
     }
 
@@ -82,7 +83,7 @@ export default class NewSectionForm extends React.Component {
     return (
       <div className="wpcui-modal-wrapper">
         <div className="wpcui-modal">
-          <h3>Create a New Customizer Section</h3>
+          <h3>Create a New Customizer Control</h3>
           <WarningBar
             title={this.state.errorTitle}
             innerText={this.state.errorMessage}
@@ -90,11 +91,11 @@ export default class NewSectionForm extends React.Component {
           <table className="form-table">
             <tbody>
               <FormTextInput
-                label="Section Title"
-                inputId="newSectionTitle"
-                placeholder="New Section Name"
-                onChange={this.handleSectionTitleChange}
-                value={this.state.newSectionTitle}
+                label="Control Title"
+                inputId="newControlTitle"
+                placeholder="New Control Name"
+                onChange={this.handleControlTitleChange}
+                value={this.state.newControlTitle}
               />
               <FormCheckbox
                 label="Auto-Generate ID"
@@ -102,11 +103,11 @@ export default class NewSectionForm extends React.Component {
                 handleChange={this.handleAutoGenerateIdChange}
               />
               <FormTextInput
-                label="Section ID"
-                inputId="newSectionId"
-                placeholder="New Section ID"
-                onChange={this.handleSectionIdChange}
-                value={this.state.newSectionId}
+                label="Control ID"
+                inputId="newControlId"
+                placeholder="New Control ID"
+                onChange={this.handleControlIdChange}
+                value={this.state.newControlId}
                 disabled={this.state.autoGenerateId}
               />
             </tbody>
@@ -114,7 +115,7 @@ export default class NewSectionForm extends React.Component {
           <Button
             buttonType="primary"
             innerText="Create New Section"
-            click={this.createNewSection}
+            click={this.createNewControl}
           />
           <FormCancel handleClick={this.closeForm} />
         </div>

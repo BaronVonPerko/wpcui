@@ -1,9 +1,31 @@
 import React from "react";
-import Section from "./Section";
 import Control from "./Control";
+import Button from "../elements/Button";
+import NewControlForm from "../forms/NewControlForm";
 
 export default class ControlList extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      createControlFormShown: false,
+    };
+
+    this.displayCreateControlForm = this.displayCreateControlForm.bind(this);
+    this.closeForm = this.closeForm.bind(this);
+  }
+
+  displayCreateControlForm(e) {
+    this.setState({ createControlFormShown: true });
+
+    e.stopPropagation();
+  }
+
+  closeForm() {
+    this.setState({ createControlFormShown: false });
+  }
+
+  renderControls() {
     if (this.props.controls && this.props.controls.length) {
       return this.props.controls.map((control) => (
         <Control key={control.id} data={control} />
@@ -11,5 +33,21 @@ export default class ControlList extends React.Component {
     } else {
       return <p>There are no controls for this section yet.</p>;
     }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.createControlFormShown && (
+          <NewControlForm onClose={this.closeForm} />
+        )}
+        {this.renderControls()}
+        <Button
+          innerText="Create New Control"
+          click={(e) => this.displayCreateControlForm(e)}
+        />
+        {this.state.createControlFormShown ?? <p>hello world</p>}
+      </div>
+    );
   }
 }

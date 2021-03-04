@@ -7,14 +7,14 @@ import React from "react";
  */
 export default class Button extends React.Component {
   getTypeClass() {
-    return `button-${this.props.buttonType}`;
+    return `button-${this.props.buttonType ?? "secondary"}`;
   }
 
   render() {
     return (
       <button
-        onClick={() => {
-          this.props.click();
+        onClick={(e) => {
+          this.props.click(e);
         }}
         className={this.getTypeClass()}
       >
