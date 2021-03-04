@@ -5,12 +5,15 @@ const initialState = {
   db_version: -1,
   panels: [],
   sections: [],
+  selectedSection: null,
 };
 
 export const actions = {
   DATA_FETCH: 0,
   DELETE_SECTION: 1,
   CREATE_SECTION: 2,
+  SELECT_SECTION: 3,
+  CLOSE_SECTION: 4,
 };
 
 function wpcuiReducer(state = initialState, action) {
@@ -23,6 +26,12 @@ function wpcuiReducer(state = initialState, action) {
 
     case actions.CREATE_SECTION:
       return createSection(state, action.section);
+
+    case actions.SELECT_SECTION:
+      return { ...state, selectedSection: action.section };
+
+    case actions.CLOSE_SECTION:
+      return { ...state, selectedSection: null };
 
     default:
       return state;

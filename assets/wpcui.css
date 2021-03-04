@@ -1,19 +1,23 @@
+.wpcui-editor-columns {
+  display: flex;
+}
+
 .wpcui-section-list {
   max-width: 300px;
 }
 
-li.wpcui-section {
+.wpcui-section {
   list-style: none;
   cursor: pointer;
   border: 1px solid #ccc;
   padding: 2px 4px;
 }
 
-li.wpcui-section-closed {
+.wpcui-section-closed {
   opacity: 0.5;
   transition: opacity 150ms ease-in-out;
 }
-li.wpcui-section-closed:hover {
+.wpcui-section-closed:hover {
   opacity: 0.8;
 }
 

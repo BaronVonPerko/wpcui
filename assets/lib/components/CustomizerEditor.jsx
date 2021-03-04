@@ -3,7 +3,7 @@ import Button from "../elements/Button";
 import SectionList from "./SectionList";
 import NewSectionForm from "../forms/NewSectionForm";
 import { connect } from "react-redux";
-import store, { actions } from "../redux/wpcuiReducer";
+import ControlList from "./ControlList";
 
 class CustomizerEditor extends React.Component {
   constructor(props) {
@@ -40,10 +40,19 @@ class CustomizerEditor extends React.Component {
           innerText="Create New Section"
           click={this.showNewSectionForm}
         />
-        <SectionList />
+        <div className="wpcui-editor-columns">
+          <SectionList />
+          {this.props.selectedSection && (
+            <ControlList controls={this.props.data.controls} />
+          )}
+        </div>
       </div>
     );
   }
 }
 
-export default connect()(CustomizerEditor);
+const mapStateToProps = (state) => ({
+  selectedSection: state.selectedSection,
+});
+
+export default connect(mapStateToProps)(CustomizerEditor);

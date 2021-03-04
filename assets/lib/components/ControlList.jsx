@@ -35,12 +35,16 @@ export default class ControlList extends React.Component {
     }
   }
 
+  renderNewControlForm() {
+    if (this.state.createControlFormShown) {
+      return <NewControlForm onClose={this.closeForm} />;
+    }
+  }
+
   render() {
     return (
       <div>
-        {this.state.createControlFormShown && (
-          <NewControlForm onClose={this.closeForm} />
-        )}
+        {this.renderNewControlForm()}
         {this.renderControls()}
         <Button
           innerText="Create New Control"

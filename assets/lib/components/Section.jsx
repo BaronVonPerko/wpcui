@@ -15,6 +15,14 @@ export default class Section extends React.Component {
   };
 
   click() {
+    if (!this.state.open) {
+      store.dispatch({
+        type: actions.SELECT_SECTION,
+        section: this.props.data,
+      });
+    } else {
+      store.dispatch({ type: actions.CLOSE_SECTION });
+    }
     this.setState({ open: !this.state.open });
   }
 
@@ -37,8 +45,6 @@ export default class Section extends React.Component {
           <p>
             ID: <em>{this.props.data.id}</em>
           </p>
-
-          <ControlList controls={this.props.data.controls} />
         </div>
       );
     }
@@ -46,8 +52,8 @@ export default class Section extends React.Component {
 
   render() {
     return (
-      <li
-        onClick={this.click}
+      <div
+        onClick={() => this.click()}
         className={
           this.state.open
             ? "wpcui-section"
@@ -56,7 +62,7 @@ export default class Section extends React.Component {
       >
         <h3>{this.props.data.title}</h3>
         <div>{this.renderInner()}</div>
-      </li>
+      </div>
     );
   }
 }
