@@ -26,7 +26,6 @@ export default class Section extends React.Component {
   }
 
   renderInner() {
-    console.log(this.props.data);
     if (this.state.open) {
       return (
         <div>

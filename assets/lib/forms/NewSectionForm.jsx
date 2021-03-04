@@ -5,6 +5,7 @@ import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
 import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
+import WarningBar from "../elements/WarningBar";
 
 export default class NewSectionForm extends React.Component {
   constructor(props) {
@@ -14,6 +15,8 @@ export default class NewSectionForm extends React.Component {
       newSectionId: "",
       newSectionTitle: "",
       autoGenerateId: "checked",
+      errorTitle: "",
+      errorMessage: "",
     };
 
     this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
@@ -41,6 +44,14 @@ export default class NewSectionForm extends React.Component {
    * Create a new section with the given id and title.
    */
   createNewSection() {
+    if (!this.state.newSectionTitle || !this.state.newSectionId) {
+      this.setState({
+        errorTitle: "Missing Required Fields",
+        errorMessage: "Section Title and ID are required.",
+      });
+      return;
+    }
+
     const newSection = {
       id: this.state.newSectionId,
       title: this.state.newSectionTitle,
@@ -69,7 +80,7 @@ export default class NewSectionForm extends React.Component {
     this.setState({ newSectionId: event.target.value });
   }
 
-  handleAutoGenerateIdChange(event) {
+  handleAutoGenerateIdChange() {
     if (!this.state.autoGenerateId) {
       this.setState({
         newSectionId: stringToSnakeCase(this.state.newSectionTitle),
@@ -84,6 +95,10 @@ export default class NewSectionForm extends React.Component {
       <div className="wpcui-modal-wrapper">
         <div className="wpcui-modal">
           <h3>Create a New Customizer Section</h3>
+          <WarningBar
+            title={this.state.errorTitle}
+            innerText={this.state.errorMessage}
+          />
           <table className="form-table">
             <tbody>
               <FormTextInput
