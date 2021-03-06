@@ -44,7 +44,7 @@ class ControlList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="wpcui-control-list">
         {this.renderNewControlForm()}
         {this.renderControls()}
         <Button

@@ -1,9 +1,16 @@
+:root {
+  --spacing: 24px;
+  --animation-speed: 300ms;
+}
+
 .wpcui-editor-columns {
+  margin: var(--spacing) 0;
   display: flex;
 }
 
-.wpcui-section-list {
-  max-width: 300px;
+.wpcui-section-list, .wpcui-control-list {
+  width: 300px;
+  margin-right: var(--spacing);
 }
 
 .wpcui-section {
@@ -22,13 +29,13 @@
 }
 
 .wpcui-tab-pane {
-  margin: 24px 0;
+  margin: var(--spacing) 0;
 }
 
 .wpcui-tab-titles {
   background-color: #ddd;
   display: flex;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing);
 }
 
 .wpcui-tab-titles .wpcui-tab {
@@ -54,7 +61,7 @@
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0,0,0,0.3);
-  animation: fade-in 300ms ease-in;
+  animation: fade-in var(--animation-speed) ease-in;
   z-index: 999;
 }
 
@@ -64,7 +71,7 @@
   background-color: #ddd;
   padding: 20px 40px;
   border-radius: 4px;
-  animation: modal-slide-in 300ms ease-in;
+  animation: modal-slide-in var(--animation-speed) ease-in;
   z-index: 1000;
 }
 
