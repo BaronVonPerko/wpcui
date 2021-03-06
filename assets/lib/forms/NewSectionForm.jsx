@@ -45,6 +45,7 @@ export default class NewSectionForm extends React.Component {
       title: this.state.newSectionTitle,
       priority: 99,
       visible: true,
+      controls: [],
     };
 
     store.dispatch({ type: actions.CREATE_SECTION, section: newSection });

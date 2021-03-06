@@ -1,10 +1,12 @@
 import { createStore } from "redux";
 import { createSection, deleteSection } from "./sectionActions";
+import { createControl } from "./controlActions";
 
 const initialState = {
   db_version: -1,
   panels: [],
   sections: [],
+  controls: [],
   selectedSection: null,
 };
 
@@ -14,6 +16,7 @@ export const actions = {
   CREATE_SECTION: 2,
   SELECT_SECTION: 3,
   CLOSE_SECTION: 4,
+  CREATE_CONTROl: 5,
 };
 
 function wpcuiReducer(state = initialState, action) {
@@ -32,6 +35,9 @@ function wpcuiReducer(state = initialState, action) {
 
     case actions.CLOSE_SECTION:
       return { ...state, selectedSection: null };
+
+    case actions.CREATE_CONTROl:
+      return createControl(state, action.control);
 
     default:
       return state;

@@ -1,21 +1,18 @@
 import React from "react";
-import ControlList from "./ControlList";
+
 import Button from "./../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
+import { connect } from "react-redux";
 
-export default class Section extends React.Component {
+class Section extends React.Component {
   constructor(props) {
     super(props);
 
     this.click = this.click.bind(this);
   }
 
-  state = {
-    open: false,
-  };
-
   click() {
-    if (!this.state.open) {
+    if (!this.getOpen()) {
       store.dispatch({
         type: actions.SELECT_SECTION,
         section: this.props.data,
@@ -23,7 +20,6 @@ export default class Section extends React.Component {
     } else {
       store.dispatch({ type: actions.CLOSE_SECTION });
     }
-    this.setState({ open: !this.state.open });
   }
 
   deleteSection() {
@@ -33,8 +29,12 @@ export default class Section extends React.Component {
     });
   }
 
+  getOpen() {
+    return this.props.selectedSection?.id === this.props.data.id;
+  }
+
   renderInner() {
-    if (this.state.open) {
+    if (this.getOpen()) {
       return (
         <div>
           <Button
@@ -55,7 +55,7 @@ export default class Section extends React.Component {
       <div
         onClick={() => this.click()}
         className={
-          this.state.open
+          this.getOpen()
             ? "wpcui-section"
             : "wpcui-section wpcui-section-closed"
         }
@@ -66,3 +66,9 @@ export default class Section extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  selectedSection: state.selectedSection,
+});
+
+export default connect(mapStateToProps)(Section);

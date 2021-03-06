@@ -2,8 +2,9 @@ import React from "react";
 import Control from "./Control";
 import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
+import { connect } from "react-redux";
 
-export default class ControlList extends React.Component {
+class ControlList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -55,3 +56,8 @@ export default class ControlList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  controls: state.selectedSection.controls,
+});
+export default connect(mapStateToProps)(ControlList);

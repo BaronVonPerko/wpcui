@@ -9,15 +9,16 @@ export default class WarningBar extends React.Component {
       <div className="notice notice-error">
         <h3>{this.props.title}</h3>
         <p>{this.props.innerText}</p>
-        {(this.props.buttonText !== "" && this.props.buttonClick !== null) ?? (
-          <p>
-            <Button
-              buttonType="secondary"
-              innerText={this.props.buttonText}
-              click={this.props.buttonClick}
-            />
-          </p>
-        )}
+        {this.props.hasOwnProperty("buttonText") &&
+          this.props.hasOwnProperty("buttonClick") && (
+            <p>
+              <Button
+                buttonType="secondary"
+                innerText={this.props.buttonText}
+                click={this.props.buttonClick}
+              />
+            </p>
+          )}
       </div>
     );
   }

@@ -32,23 +32,25 @@ export default class NewControlForm extends React.Component {
    * Create a new section with the given id and title.
    */
   createNewControl() {
-    ``;
     if (!this.state.newControlTitle || !this.state.newControlId) {
       this.setState({
         errorTitle: "Missing Required Fields",
-        errorMessage: "Section Title and ID are required.",
+        errorMessage: "Controls Title and ID are required.",
       });
       return;
     }
 
-    const newSection = {
+    const newControl = {
       id: this.state.newControlId,
       title: this.state.newControlTitle,
       priority: 99,
       visible: true,
     };
 
-    store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
+    store.dispatch({
+      type: actions.CREATE_CONTROl,
+      control: newControl,
+    });
 
     this.closeForm();
   }
@@ -114,7 +116,7 @@ export default class NewControlForm extends React.Component {
           </table>
           <Button
             buttonType="primary"
-            innerText="Create New Section"
+            innerText="Create New Control"
             click={this.createNewControl}
           />
           <FormCancel handleClick={this.closeForm} />

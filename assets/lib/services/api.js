@@ -7,7 +7,5 @@ export async function fetchData() {
 }
 
 export async function saveData(data) {
-  const res = await axios.put("/wp-json/wpcui/v2/saveOptions", { data });
-
-  return res;
+  return await axios.put("/wp-json/wpcui/v2/saveOptions", { data });
 }
