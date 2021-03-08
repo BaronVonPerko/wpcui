@@ -3,7 +3,7 @@ Contributors: cperko
 Tags: customizer,ui,user interface
 Donate link: https://github.com/sponsors/BaronVonPerko
 Requires at least: 5.2
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 1.1.0
 Requires PHP: 7.2.0
 License: GPLv2 or later
