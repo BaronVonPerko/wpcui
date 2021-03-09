@@ -22,7 +22,9 @@ export const actions = {
 function wpcuiReducer(state = initialState, action) {
   switch (action.type) {
     case actions.DATA_FETCH:
-      return action.data;
+      let data = action.data;
+      data.selectedSection = null;
+      return data;
 
     case actions.DELETE_SECTION:
       return deleteSection(state, action.sectionId);
