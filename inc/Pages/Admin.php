@@ -22,13 +22,13 @@ class Admin extends BaseController {
 	}
 
 	function addAdminPage() {
-		add_menu_page(
+		add_management_page(
 			'WPCUI Plugin',
 			'Customizer UI',
 			'manage_options',
 			'wpcui',
 			[ $this, 'adminIndex' ],
-			'dashicons-admin-customizer', 110
+			 110
 		);
 	}
 }
