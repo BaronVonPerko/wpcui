@@ -47,6 +47,7 @@
 
 .wpcui-section-headerbar i {
   cursor: pointer;
+  padding-left: 8px;
 }
 
 .wpcui-tab-pane {

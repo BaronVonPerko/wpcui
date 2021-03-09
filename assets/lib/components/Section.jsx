@@ -33,6 +33,14 @@ class Section extends React.Component {
     }
   }
 
+  duplicateSection() {
+    //
+  }
+
+  editSection() {
+    //
+  }
+
   getOpen() {
     return this.props.selectedSection?.id === this.props.data.id;
   }
@@ -70,6 +78,17 @@ class Section extends React.Component {
       <div className={this.getClasses()}>
         <div className="wpcui-section-headerbar">
           <i
+            title="Duplicate Section"
+            onClick={() => this.duplicateSection()}
+            className="dashicons dashicons-admin-page"
+          ></i>
+          <i
+            title="Edit Section"
+            onClick={() => this.editSection()}
+            className="dashicons dashicons-edit"
+          ></i>
+          <i
+            title="Delete Section"
             onClick={() => this.deleteSection()}
             className="dashicons dashicons-trash"
           ></i>
