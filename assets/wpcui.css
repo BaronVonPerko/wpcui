@@ -1,8 +1,22 @@
+/** ###############################################
+ * VARIABLES
+ *  ###############################################
+ */
+
 :root {
   --spacing: 24px;
   --animation-speed: 300ms;
   --color-blue: #0071A1;
+  --color-grey: #ddd;
+  --shadow-close: rgba(40, 40, 40, 0.3) 0 2px 2px;
+  --shadow-far: rgba(40, 40, 40, 0.3) 0 4px 8px;
 }
+
+
+/** ###############################################
+ * STYLES
+ *  ###############################################
+ */
 
 .wpcui-editor-columns {
   margin: var(--spacing) 0;
@@ -16,13 +30,13 @@
 
 .wpcui-section {
   list-style: none;
-  box-shadow: rgba(40, 40, 40, 0.3) 0 2px 2px;
+  box-shadow: var(--shadow-close);
   transition: all var(--animation-speed) ease-in-out;
   margin-bottom: var(--spacing);
 }
 
 .wpcui-section:hover, .wpcui-section-selected {
-  box-shadow: rgba(40, 40, 40, 0.3) 0 4px 8px;
+  box-shadow: var(--shadow-far);
 }
 
 .wpcui-section-contents {
@@ -32,17 +46,21 @@
 
 .wpcui-section-not-selected {
   opacity: 0.5;
+  transform: translateX(calc(-1 * var(--spacing)));
 }
 
 .wpcui-section-closed.wpcui-section-not-selected:hover {
   opacity: 0.8;
 }
 
-.wpcui-section-headerbar {
+.wpcui-section-headerbar, .wpcui-controllist-headerbar {
   background-color: var(--color-blue);
-  text-align: right;
   color: white;
   padding: 8px;
+}
+
+.wpcui-section-headerbar {
+  text-align: right;
 }
 
 .wpcui-section-headerbar i {
@@ -50,12 +68,25 @@
   padding-left: 8px;
 }
 
+.wpcui-control-list {
+  box-shadow: var(--shadow-close);
+  animation: fade-in var(--animation-speed) ease-in-out;
+}
+
+.wpcui-controllist-content {
+  padding: var(--spacing);
+}
+
+.wpcui-control p {
+  margin: 0 0 var(--spacing);
+}
+
 .wpcui-tab-pane {
   margin: var(--spacing) 0;
 }
 
 .wpcui-tab-titles {
-  background-color: #ddd;
+  background-color: var(--color-grey);
   display: flex;
   margin-bottom: var(--spacing);
 }
@@ -68,7 +99,7 @@
   font-weight: 600;
   text-align: center;
   transition: all 200ms ease-in-out;
-  border-bottom: 4px solid #ddd;
+  border-bottom: 4px solid var(--color-grey);
 }
 
 .wpcui-tab-titles .wpcui-tab.active {
@@ -90,7 +121,7 @@
 .wpcui-modal {
   width: 600px;
   margin: 300px auto 0;
-  background-color: #ddd;
+  background-color: var(--color-grey);
   padding: 20px 40px;
   border-radius: 4px;
   animation: modal-slide-in var(--animation-speed) ease-in;

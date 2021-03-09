@@ -45,13 +45,15 @@ class ControlList extends React.Component {
   render() {
     return (
       <div className="wpcui-control-list">
-        {this.renderNewControlForm()}
-        {this.renderControls()}
-        <Button
-          innerText="Create New Control"
-          click={(e) => this.displayCreateControlForm(e)}
-        />
-        {this.state.createControlFormShown ?? <p>hello world</p>}
+        <div className="wpcui-controllist-headerbar">Controls</div>
+        <div className="wpcui-controllist-content">
+          {this.renderNewControlForm()}
+          {this.renderControls()}
+          <Button
+            innerText="Create New Control"
+            click={(e) => this.displayCreateControlForm(e)}
+          />
+        </div>
       </div>
     );
   }
