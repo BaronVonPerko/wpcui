@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { createSection, deleteSection } from "./sectionActions";
+import { createSection, deleteSection, updateSection } from "./sectionActions";
 import { createControl } from "./controlActions";
 
 const initialState = {
@@ -17,6 +17,7 @@ export const actions = {
   SELECT_SECTION: 3,
   CLOSE_SECTION: 4,
   CREATE_CONTROl: 5,
+  UPDATE_SECTION: 6,
 };
 
 function wpcuiReducer(state = initialState, action) {
@@ -40,6 +41,9 @@ function wpcuiReducer(state = initialState, action) {
 
     case actions.CREATE_CONTROl:
       return createControl(state, action.control);
+
+    case actions.UPDATE_SECTION:
+      return updateSection(state, action.oldSectionId, action.updatedSection);
 
     default:
       return state;

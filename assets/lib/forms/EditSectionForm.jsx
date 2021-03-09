@@ -12,8 +12,8 @@ export default class EditSectionForm extends React.Component {
     super(props);
 
     this.state = {
-      sectionId: "",
-      sectionTitle: "",
+      sectionId: this.props.section.id,
+      sectionTitle: this.props.section.title,
       autoGenerateId: "checked",
       errorTitle: "",
       errorMessage: "",
@@ -48,7 +48,11 @@ export default class EditSectionForm extends React.Component {
       controls: [],
     };
 
-    store.dispatch({ type: actions.CREATE_SECTION, section: updatedSection });
+    store.dispatch({
+      type: actions.UPDATE_SECTION,
+      oldSectionId: this.props.section.id,
+      updatedSection,
+    });
 
     this.closeForm();
   }

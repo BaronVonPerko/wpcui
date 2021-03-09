@@ -21,3 +21,24 @@ export function createSection(state, section) {
   });
   return createSectionState;
 }
+
+export function updateSection(state, oldSectionId, updatedSection) {
+  let updatedSections = [...state.sections];
+
+  updatedSections.forEach((section, index) => {
+    if (section.id === oldSectionId) {
+      updatedSections[index] = updatedSection;
+    }
+  });
+
+  const updateSectionState = {
+    ...state,
+    sections: updatedSections,
+  };
+
+  saveData(updateSectionState).then(() => {
+    // todo: modal save complete
+  });
+
+  return updateSectionState;
+}

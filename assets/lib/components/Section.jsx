@@ -3,10 +3,15 @@ import React from "react";
 import Button from "./../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import { connect } from "react-redux";
+import EditSectionForm from "../forms/EditSectionForm";
 
 class Section extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      editing: false,
+    };
 
     this.click = this.click.bind(this);
     this.getClasses = this.getClasses.bind(this);
@@ -38,7 +43,7 @@ class Section extends React.Component {
   }
 
   editSection() {
-    //
+    this.setState({ editing: true });
   }
 
   getOpen() {
@@ -61,6 +66,17 @@ class Section extends React.Component {
     return classes;
   }
 
+  renderEditSectionForm() {
+    if (this.state.editing) {
+      return (
+        <EditSectionForm
+          onClose={() => this.setState({ editing: false })}
+          section={this.props.data}
+        />
+      );
+    }
+  }
+
   renderInner() {
     if (this.getOpen()) {
       return (
@@ -76,6 +92,7 @@ class Section extends React.Component {
   render() {
     return (
       <div className={this.getClasses()}>
+        {this.renderEditSectionForm()}
         <div className="wpcui-section-headerbar">
           <i
             title="Duplicate Section"
