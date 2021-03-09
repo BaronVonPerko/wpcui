@@ -33,6 +33,7 @@
   box-shadow: var(--shadow-close);
   transition: all var(--animation-speed) ease-in-out;
   margin-bottom: var(--spacing);
+  animation: fade-in var(--animation-speed) ease-in-out;
 }
 
 .wpcui-section:hover, .wpcui-section-selected {
