@@ -15,6 +15,7 @@ export function createSection(state, section) {
   const createSectionState = {
     ...state,
     sections: [...state.sections, section],
+    selectedSection: section,
   };
   saveData(createSectionState).then(() => {
     // todo: modal save complete
