@@ -18,6 +18,11 @@
  *  ###############################################
  */
 
+.wpcui-notification-box {
+  position: absolute;
+  top: 20px; right: 20px;
+}
+
 .wpcui-editor-columns {
   margin: var(--spacing) 0;
   display: flex;

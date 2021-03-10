@@ -6,6 +6,7 @@ import CustomizerEditor from "./components/CustomizerEditor";
 import TabPane from "./components/TabPane";
 import { connect } from "react-redux";
 import store, { actions } from "./redux/wpcuiReducer";
+import Notification from "./components/Notification";
 
 class CustomizerUI extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class CustomizerUI extends React.Component {
     } else if (this.props.data.sections) {
       return (
         <section>
+          <Notification />
           <TabPane tabs={this.getTabs()} />
         </section>
       );

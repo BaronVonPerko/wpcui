@@ -1,4 +1,6 @@
 import { saveData } from "../services/api";
+import store, { actions } from "./wpcuiReducer";
+import { messages } from "./../components/Notification";
 
 export function deleteSection(state, sectionId) {
   const deleteSectionState = {
@@ -6,7 +8,10 @@ export function deleteSection(state, sectionId) {
     sections: state.sections.filter((section) => section.id !== sectionId),
   };
   saveData(deleteSectionState).then(() => {
-    // todo: modal save complete
+    store.dispatch({
+      type: actions.NOTIFY,
+      notification: { message: messages.SAVE_SUCCESS },
+    });
   });
   return deleteSectionState;
 }
@@ -18,7 +23,10 @@ export function createSection(state, section) {
     selectedSection: section,
   };
   saveData(createSectionState).then(() => {
-    // todo: modal save complete
+    store.dispatch({
+      type: actions.NOTIFY,
+      notification: { message: messages.SAVE_SUCCESS },
+    });
   });
   return createSectionState;
 }
@@ -38,7 +46,10 @@ export function updateSection(state, oldSectionId, updatedSection) {
   };
 
   saveData(updateSectionState).then(() => {
-    // todo: modal save complete
+    store.dispatch({
+      type: actions.NOTIFY,
+      notification: { message: messages.SAVE_SUCCESS },
+    });
   });
 
   return updateSectionState;

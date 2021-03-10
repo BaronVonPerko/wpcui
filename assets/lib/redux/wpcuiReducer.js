@@ -13,6 +13,7 @@ const initialState = {
   sections: [],
   controls: [],
   selectedSection: null,
+  notification: {},
 };
 
 export const actions = {
@@ -24,14 +25,14 @@ export const actions = {
   CREATE_CONTROl: 5,
   UPDATE_SECTION: 6,
   TOGGLE_SECTION_VISIBILITY: 7,
+  NOTIFY: 8,
+  CLEAR_NOTIFICATION: 9,
 };
 
 function wpcuiReducer(state = initialState, action) {
   switch (action.type) {
     case actions.DATA_FETCH:
-      let data = action.data;
-      data.selectedSection = null;
-      return data;
+      return { ...state, ...action.data };
 
     case actions.DELETE_SECTION:
       return deleteSection(state, action.sectionId);
@@ -53,6 +54,18 @@ function wpcuiReducer(state = initialState, action) {
 
     case actions.TOGGLE_SECTION_VISIBILITY:
       return toggleSectionVisibility(state, action.sectionId);
+
+    case actions.NOTIFY:
+      return {
+        ...state,
+        notification: {
+          type: actions.type ?? "success",
+          message: actions.message,
+        },
+      };
+
+    case actions.CLEAR_NOTIFICATION:
+      return { ...state, notification: {} };
 
     default:
       return state;
