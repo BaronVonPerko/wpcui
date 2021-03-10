@@ -8,11 +8,10 @@ export function deleteSection(state, sectionId) {
     sections: state.sections.filter((section) => section.id !== sectionId),
   };
   saveData(deleteSectionState).then(() => {
-    store.dispatch({
-      type: actions.NOTIFY,
-      notification: { message: messages.SAVE_SUCCESS },
-    });
+    showSuccessMessage();
   });
+
+  console.log(deleteSectionState);
   return deleteSectionState;
 }
 
@@ -23,10 +22,7 @@ export function createSection(state, section) {
     selectedSection: section,
   };
   saveData(createSectionState).then(() => {
-    store.dispatch({
-      type: actions.NOTIFY,
-      notification: { message: messages.SAVE_SUCCESS },
-    });
+    showSuccessMessage();
   });
   return createSectionState;
 }
@@ -46,10 +42,7 @@ export function updateSection(state, oldSectionId, updatedSection) {
   };
 
   saveData(updateSectionState).then(() => {
-    store.dispatch({
-      type: actions.NOTIFY,
-      notification: { message: messages.SAVE_SUCCESS },
-    });
+    showSuccessMessage();
   });
 
   return updateSectionState;
@@ -61,4 +54,11 @@ export function toggleSectionVisibility(state, sectionId) {
   section.visible = !section.visible;
 
   return updateSection(state, sectionId, section);
+}
+
+function showSuccessMessage() {
+  store.dispatch({
+    type: actions.NOTIFY,
+    message: messages.SAVE_SUCCESS,
+  });
 }

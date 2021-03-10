@@ -7,17 +7,34 @@ export const messages = {
 };
 
 class Notification extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { fade: false };
+  }
+
   startTimer() {
     setTimeout(() => {
-      store.dispatch({ type: actions.NOTIFY });
+      this.setState({ fade: true });
     }, 3000);
+
+    setTimeout(() => {
+      store.dispatch({ type: actions.CLEAR_NOTIFICATION });
+    }, 4000);
+  }
+
+  getClass() {
+    return `wpcui-notification-box ${this.state.fade ? "wpcui-invisible" : ""}`;
   }
 
   render() {
     if (this.props.notification?.message) {
       this.startTimer();
-      return <div className="wpcui-notification-box">ALERT ALERT</div>;
-    } else return null;
+      return (
+        <div className={this.getClass()}>{this.props.notification.message}</div>
+      );
+    }
+    return null;
   }
 }
 

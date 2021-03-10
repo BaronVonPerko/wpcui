@@ -7,8 +7,11 @@ export async function fetchData() {
 }
 
 export async function saveData(data) {
-  data = scrubData(data);
-  return await axios.put("/wp-json/wpcui/v2/saveOptions", { data });
+  const scrubbedData = scrubData(data);
+  console.log(scrubbedData);
+  return await axios.put("/wp-json/wpcui/v2/saveOptions", {
+    data: scrubbedData,
+  });
 }
 
 /**

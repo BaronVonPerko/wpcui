@@ -6,12 +6,12 @@ import {
   updateSection,
 } from "./sectionActions";
 import { createControl } from "./controlActions";
+import { messages } from "../components/Notification";
 
 const initialState = {
   db_version: -1,
   panels: [],
   sections: [],
-  controls: [],
   selectedSection: null,
   notification: {},
 };
@@ -59,8 +59,8 @@ function wpcuiReducer(state = initialState, action) {
       return {
         ...state,
         notification: {
-          type: actions.type ?? "success",
-          message: actions.message,
+          type: action.type ?? "success",
+          message: action.message,
         },
       };
 
