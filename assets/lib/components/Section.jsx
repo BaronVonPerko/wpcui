@@ -11,6 +11,7 @@ class Section extends React.Component {
 
     this.state = {
       editing: false,
+      visible: this.props.data.visible,
     };
 
     this.click = this.click.bind(this);
@@ -53,6 +54,8 @@ class Section extends React.Component {
       type: actions.TOGGLE_SECTION_VISIBILITY,
       sectionId: this.props.data.id,
     });
+
+    this.setState({ visible: !this.state.visible });
   }
 
   getOpen() {
@@ -77,7 +80,7 @@ class Section extends React.Component {
 
   getVisibilityClasses() {
     return `dashicons dashicons-visibility wpcui-visibility ${
-      this.props.data.visible ? "wpcui-is-visible" : "wpcui-is-not-visible"
+      this.state.visible ? "wpcui-is-visible" : "wpcui-is-not-visible"
     }`;
   }
 
