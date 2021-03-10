@@ -43,3 +43,11 @@ export function updateSection(state, oldSectionId, updatedSection) {
 
   return updateSectionState;
 }
+
+export function toggleSectionVisibility(state, sectionId) {
+  let section = state.sections.find((section) => section.id === sectionId);
+
+  section.visible = !section.visible;
+
+  return updateSection(state, sectionId, section);
+}

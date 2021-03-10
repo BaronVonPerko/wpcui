@@ -36,6 +36,28 @@
   animation: fade-in var(--animation-speed) ease-in-out;
 }
 
+.wpcui-section-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wpcui-section-title-section h3 {
+  display: inline-block;
+}
+
+.wpcui-section-title-section i.wpcui-visibility {
+  transition: opacity var(--animation-speed) ease-in-out;
+}
+
+.wpcui-section-title-section i.wpcui-is-visible {
+  opacity: 1;
+}
+
+.wpcui-section-title-section i.wpcui-is-not-visible {
+  opacity: 0.3;
+}
+
 .wpcui-section:hover, .wpcui-section-selected {
   box-shadow: var(--shadow-far);
 }

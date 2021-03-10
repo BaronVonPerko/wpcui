@@ -14,7 +14,8 @@ class Section extends React.Component {
     };
 
     this.click = this.click.bind(this);
-    this.getClasses = this.getClasses.bind(this);
+    this.getSectionClasses = this.getSectionClasses.bind(this);
+    this.getVisibilityClasses = this.getVisibilityClasses.bind(this);
   }
 
   click() {
@@ -46,11 +47,19 @@ class Section extends React.Component {
     this.setState({ editing: true });
   }
 
+  toggleVisibility(e) {
+    e.stopPropagation();
+    store.dispatch({
+      type: actions.TOGGLE_SECTION_VISIBILITY,
+      sectionId: this.props.data.id,
+    });
+  }
+
   getOpen() {
     return this.props.selectedSection?.id === this.props.data.id;
   }
 
-  getClasses() {
+  getSectionClasses() {
     let classes = "wpcui-section";
 
     if (!this.getOpen()) {
@@ -64,6 +73,12 @@ class Section extends React.Component {
     }
 
     return classes;
+  }
+
+  getVisibilityClasses() {
+    return `dashicons dashicons-visibility wpcui-visibility ${
+      this.props.data.visible ? "wpcui-is-visible" : "wpcui-is-not-visible"
+    }`;
   }
 
   renderEditSectionForm() {
@@ -91,7 +106,7 @@ class Section extends React.Component {
 
   render() {
     return (
-      <div className={this.getClasses()}>
+      <div className={this.getSectionClasses()}>
         {this.renderEditSectionForm()}
         <div className="wpcui-section-headerbar">
           <i
@@ -111,7 +126,13 @@ class Section extends React.Component {
           ></i>
         </div>
         <div onClick={() => this.click()} className="wpcui-section-contents">
-          <h3>{this.props.data.title}</h3>
+          <div className="wpcui-section-title-section">
+            <h3>{this.props.data.title}</h3>
+            <i
+              onClick={(e) => this.toggleVisibility(e)}
+              className={this.getVisibilityClasses()}
+            ></i>
+          </div>
           <div>{this.renderInner()}</div>
         </div>
       </div>
