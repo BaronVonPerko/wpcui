@@ -7,10 +7,8 @@ export async function fetchData() {
 }
 
 export async function saveData(data) {
-  const scrubbedData = scrubData(data);
-  console.log(scrubbedData);
   return await axios.put("/wp-json/wpcui/v2/saveOptions", {
-    data: scrubbedData,
+    data: scrubData(data),
   });
 }
 

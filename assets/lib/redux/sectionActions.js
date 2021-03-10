@@ -6,12 +6,12 @@ export function deleteSection(state, sectionId) {
   const deleteSectionState = {
     ...state,
     sections: state.sections.filter((section) => section.id !== sectionId),
+    selectedSection: null,
   };
-  saveData(deleteSectionState).then(() => {
+  saveData({ ...deleteSectionState }).then(() => {
     showSuccessMessage();
   });
 
-  console.log(deleteSectionState);
   return deleteSectionState;
 }
 
@@ -21,7 +21,7 @@ export function createSection(state, section) {
     sections: [...state.sections, section],
     selectedSection: section,
   };
-  saveData(createSectionState).then(() => {
+  saveData({ ...createSectionState }).then(() => {
     showSuccessMessage();
   });
   return createSectionState;
@@ -39,9 +39,10 @@ export function updateSection(state, oldSectionId, updatedSection) {
   const updateSectionState = {
     ...state,
     sections: updatedSections,
+    selectedSection: updatedSection,
   };
 
-  saveData(updateSectionState).then(() => {
+  saveData({ ...updateSectionState }).then(() => {
     showSuccessMessage();
   });
 
