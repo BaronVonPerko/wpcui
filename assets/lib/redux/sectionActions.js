@@ -39,7 +39,7 @@ export function updateSection(state, oldSectionId, updatedSection) {
   const updateSectionState = {
     ...state,
     sections: updatedSections,
-    selectedSection: updatedSection,
+    selectedSection: null,
   };
 
   saveData({ ...updateSectionState }).then(() => {
