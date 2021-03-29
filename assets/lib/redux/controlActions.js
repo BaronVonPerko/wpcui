@@ -1,4 +1,5 @@
 import { saveData } from "../services/api";
+import { notify, messages } from "../components/Notification";
 
 export function createControl(state, control) {
   let updatedSectionControls = state.selectedSection.controls;
@@ -18,7 +19,8 @@ export function createControl(state, control) {
     sections: newSections,
   };
   saveData(createControlState).then(() => {
-    // todo: modal save complete
+    notify(messages.SAVE_SUCCESS);
   });
-  return createControlState;
+
+  return { ...createControlState, selectedSection: state.selectedSection };
 }

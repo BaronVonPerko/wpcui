@@ -1,6 +1,6 @@
 import { saveData } from "../services/api";
 import store, { actions } from "./wpcuiReducer";
-import { messages } from "./../components/Notification";
+import { messages, notify } from "../components/Notification";
 
 export function deleteSection(state, sectionId) {
   const deleteSectionState = {
@@ -9,7 +9,7 @@ export function deleteSection(state, sectionId) {
     selectedSection: null,
   };
   saveData({ ...deleteSectionState }).then(() => {
-    showSuccessMessage();
+    notify(messages.SAVE_SUCCESS);
   });
 
   return deleteSectionState;
@@ -22,7 +22,7 @@ export function createSection(state, section) {
     selectedSection: section,
   };
   saveData({ ...createSectionState }).then(() => {
-    showSuccessMessage();
+    notify(messages.SAVE_SUCCESS);
   });
   return createSectionState;
 }
@@ -43,7 +43,7 @@ export function updateSection(state, oldSectionId, updatedSection) {
   };
 
   saveData({ ...updateSectionState }).then(() => {
-    showSuccessMessage();
+    notify(messages.SAVE_SUCCESS);
   });
 
   return updateSectionState;
@@ -55,11 +55,4 @@ export function toggleSectionVisibility(state, sectionId) {
   section.visible = !section.visible;
 
   return updateSection(state, sectionId, section);
-}
-
-function showSuccessMessage() {
-  store.dispatch({
-    type: actions.NOTIFY,
-    message: messages.SAVE_SUCCESS,
-  });
 }

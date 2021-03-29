@@ -20,6 +20,7 @@ export async function saveData(data) {
 function scrubData(data) {
   delete data.selectedSection;
   delete data.notification;
+  delete data.modalContent;
 
   return data;
 }

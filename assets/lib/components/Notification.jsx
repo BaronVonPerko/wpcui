@@ -2,6 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import store, { actions } from "../redux/wpcuiReducer";
 
+export function notify(message) {
+  store.dispatch({
+    type: actions.NOTIFY,
+    message: messages.SAVE_SUCCESS,
+  });
+}
+
 export const messages = {
   SAVE_SUCCESS: "Changes saved successfully!",
 };
