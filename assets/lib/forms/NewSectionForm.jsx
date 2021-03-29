@@ -6,6 +6,7 @@ import FormCancel from "../elements/FormCancel";
 import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
+import { hideModal } from "../components/Modal";
 
 export default class NewSectionForm extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export default class NewSectionForm extends React.Component {
     this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
     this.handleSectionIdChange = this.handleSectionIdChange.bind(this);
     this.createNewSection = this.createNewSection.bind(this);
-    this.closeForm = this.closeForm.bind(this);
     this.handleAutoGenerateIdChange = this.handleAutoGenerateIdChange.bind(
       this
     );
@@ -50,11 +50,7 @@ export default class NewSectionForm extends React.Component {
 
     store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
 
-    this.closeForm();
-  }
-
-  closeForm() {
-    this.props.onClose();
+    hideModal();
   }
 
   handleSectionTitleChange(event) {
@@ -117,7 +113,7 @@ export default class NewSectionForm extends React.Component {
             innerText="Create New Section"
             click={this.createNewSection}
           />
-          <FormCancel handleClick={this.closeForm} />
+          <FormCancel handleClick={hideModal} />
         </div>
       </div>
     );

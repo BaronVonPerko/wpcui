@@ -3,27 +3,15 @@ import Control from "./Control";
 import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
 import { connect } from "react-redux";
+import { modal } from "./Modal";
 
 class ControlList extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      createControlFormShown: false,
-    };
-
-    this.displayCreateControlForm = this.displayCreateControlForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
   }
 
   displayCreateControlForm(e) {
-    this.setState({ createControlFormShown: true });
-
-    e.stopPropagation();
-  }
-
-  closeForm() {
-    this.setState({ createControlFormShown: false });
+    modal(<NewControlForm />);
   }
 
   renderControls() {
@@ -36,18 +24,11 @@ class ControlList extends React.Component {
     }
   }
 
-  renderNewControlForm() {
-    if (this.state.createControlFormShown) {
-      return <NewControlForm onClose={this.closeForm} />;
-    }
-  }
-
   render() {
     return (
       <div className="wpcui-control-list">
         <div className="wpcui-controllist-headerbar">Controls</div>
         <div className="wpcui-controllist-content">
-          {this.renderNewControlForm()}
           {this.renderControls()}
           <Button
             innerText="Create New Control"

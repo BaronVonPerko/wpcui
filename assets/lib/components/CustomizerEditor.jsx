@@ -15,15 +15,10 @@ class CustomizerEditor extends React.Component {
     };
 
     this.showNewSectionForm = this.showNewSectionForm.bind(this);
-    this.hideNewSectionForm = this.hideNewSectionForm.bind(this);
   }
 
   showNewSectionForm() {
-    modal(<NewSectionForm onClose={this.hideNewSectionForm} />);
-  }
-
-  hideNewSectionForm() {
-    hideModal();
+    modal(<NewSectionForm />);
   }
 
   render() {

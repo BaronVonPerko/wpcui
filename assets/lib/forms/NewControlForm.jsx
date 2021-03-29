@@ -6,6 +6,7 @@ import FormCancel from "../elements/FormCancel";
 import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
+import { hideModal } from "../components/Modal";
 
 export default class NewControlForm extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export default class NewControlForm extends React.Component {
     this.handleControlTitleChange = this.handleControlTitleChange.bind(this);
     this.handleControlIdChange = this.handleControlIdChange.bind(this);
     this.createNewControl = this.createNewControl.bind(this);
-    this.closeForm = this.closeForm.bind(this);
     this.handleAutoGenerateIdChange = this.handleAutoGenerateIdChange.bind(
       this
     );
@@ -52,11 +52,7 @@ export default class NewControlForm extends React.Component {
       control: newControl,
     });
 
-    this.closeForm();
-  }
-
-  closeForm() {
-    this.props.onClose();
+    hideModal();
   }
 
   handleControlTitleChange(event) {
@@ -119,7 +115,7 @@ export default class NewControlForm extends React.Component {
             innerText="Create New Control"
             click={this.createNewControl}
           />
-          <FormCancel handleClick={this.closeForm} />
+          <FormCancel handleClick={hideModal} />
         </div>
       </div>
     );
