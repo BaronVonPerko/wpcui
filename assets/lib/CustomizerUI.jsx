@@ -7,6 +7,7 @@ import TabPane from "./components/TabPane";
 import { connect } from "react-redux";
 import store, { actions } from "./redux/wpcuiReducer";
 import Notification from "./components/Notification";
+import Modal from "./components/Modal";
 
 class CustomizerUI extends React.Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class CustomizerUI extends React.Component {
       return (
         <section>
           <Notification />
+          <Modal />
           <TabPane tabs={this.getTabs()} />
         </section>
       );

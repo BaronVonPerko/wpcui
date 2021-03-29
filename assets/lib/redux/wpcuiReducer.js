@@ -6,7 +6,6 @@ import {
   updateSection,
 } from "./sectionActions";
 import { createControl } from "./controlActions";
-import { messages } from "../components/Notification";
 
 const initialState = {
   db_version: -1,
@@ -14,6 +13,7 @@ const initialState = {
   sections: [],
   selectedSection: null,
   notification: {},
+  modalContent: null,
 };
 
 export const actions = {
@@ -27,6 +27,8 @@ export const actions = {
   TOGGLE_SECTION_VISIBILITY: 7,
   NOTIFY: 8,
   CLEAR_NOTIFICATION: 9,
+  SHOW_MODAL: 10,
+  HIDE_MODAL: 11,
 };
 
 function wpcuiReducer(state = initialState, action) {
@@ -66,6 +68,12 @@ function wpcuiReducer(state = initialState, action) {
 
     case actions.CLEAR_NOTIFICATION:
       return { ...state, notification: {} };
+
+    case actions.SHOW_MODAL:
+      return { ...state, modalContent: action.content };
+
+    case actions.HIDE_MODAL:
+      return { ...state, modalContent: null };
 
     default:
       return state;

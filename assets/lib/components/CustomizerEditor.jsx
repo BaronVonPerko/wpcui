@@ -4,6 +4,7 @@ import SectionList from "./SectionList";
 import NewSectionForm from "../forms/NewSectionForm";
 import { connect } from "react-redux";
 import ControlList from "./ControlList";
+import { hideModal, modal } from "./Modal";
 
 class CustomizerEditor extends React.Component {
   constructor(props) {
@@ -18,23 +19,16 @@ class CustomizerEditor extends React.Component {
   }
 
   showNewSectionForm() {
-    this.setState({ addNewSection: true });
+    modal(<NewSectionForm onClose={this.hideNewSectionForm} />);
   }
 
   hideNewSectionForm() {
-    this.setState({ addNewSection: false });
-  }
-
-  renderNewSectionForm() {
-    if (this.state.addNewSection) {
-      return <NewSectionForm onClose={this.hideNewSectionForm} />;
-    }
+    hideModal();
   }
 
   render() {
     return (
       <div>
-        {this.renderNewSectionForm()}
         <Button
           buttonType="primary"
           innerText="Create New Section"
