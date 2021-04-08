@@ -1,8 +1,8 @@
 import { saveData } from "../services/api";
-import store, { actions } from "./wpcuiReducer";
 import { messages, notify } from "../components/Notification";
+import { ApplicationState } from "../models/models";
 
-export function deleteSection(state, sectionId) {
+export function deleteSection(state, sectionId): ApplicationState {
   const deleteSectionState = {
     ...state,
     sections: state.sections.filter((section) => section.id !== sectionId),
@@ -15,8 +15,8 @@ export function deleteSection(state, sectionId) {
   return deleteSectionState;
 }
 
-export function createSection(state, section) {
-  const createSectionState = {
+export function createSection(state, section): ApplicationState {
+  const createSectionState: ApplicationState = {
     ...state,
     sections: [...state.sections, section],
     selectedSection: section,
@@ -27,7 +27,11 @@ export function createSection(state, section) {
   return createSectionState;
 }
 
-export function updateSection(state, oldSectionId, updatedSection) {
+export function updateSection(
+  state,
+  oldSectionId,
+  updatedSection
+): ApplicationState {
   let updatedSections = [...state.sections];
 
   updatedSections.forEach((section, index) => {
@@ -36,7 +40,7 @@ export function updateSection(state, oldSectionId, updatedSection) {
     }
   });
 
-  const updateSectionState = {
+  const updateSectionState: ApplicationState = {
     ...state,
     sections: updatedSections,
     selectedSection: null,
@@ -49,7 +53,7 @@ export function updateSection(state, oldSectionId, updatedSection) {
   return updateSectionState;
 }
 
-export function toggleSectionVisibility(state, sectionId) {
+export function toggleSectionVisibility(state, sectionId): ApplicationState {
   let section = state.sections.find((section) => section.id === sectionId);
 
   section.visible = !section.visible;

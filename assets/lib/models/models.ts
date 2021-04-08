@@ -28,3 +28,12 @@ export interface NavigationTab {
   title: string;
   content: any; // can be a component or simply some HTML
 }
+
+export interface ApplicationState {
+  db_version: number;
+  panels: any[]; // todo : map out panel interface
+  sections: Section[];
+  selectedSection?: Section;
+  notification?: Notification;
+  modalContent?: any;
+}

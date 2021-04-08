@@ -1,7 +1,8 @@
 import { saveData } from "../services/api";
 import { notify, messages } from "../components/Notification";
+import { ApplicationState } from "../models/models";
 
-export function createControl(state, control) {
+export function createControl(state, control): ApplicationState {
   let updatedSectionControls = state.selectedSection.controls;
   updatedSectionControls.push(control);
 
@@ -14,7 +15,7 @@ export function createControl(state, control) {
     controls: updatedSectionControls,
   };
 
-  const createControlState = {
+  const createControlState: ApplicationState = {
     ...state,
     sections: newSections,
   };

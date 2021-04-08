@@ -6,32 +6,33 @@ import {
   updateSection,
 } from "./sectionActions";
 import { createControl } from "./controlActions";
+import { ApplicationState } from "../models/models";
 
-const initialState = {
+const initialState: ApplicationState = {
   db_version: -1,
   panels: [],
   sections: [],
   selectedSection: null,
-  notification: {},
+  notification: null,
   modalContent: null,
 };
 
-export const actions = {
-  DATA_FETCH: 0,
-  DELETE_SECTION: 1,
-  CREATE_SECTION: 2,
-  SELECT_SECTION: 3,
-  CLOSE_SECTION: 4,
-  CREATE_CONTROl: 5,
-  UPDATE_SECTION: 6,
-  TOGGLE_SECTION_VISIBILITY: 7,
-  NOTIFY: 8,
-  CLEAR_NOTIFICATION: 9,
-  SHOW_MODAL: 10,
-  HIDE_MODAL: 11,
-};
+export enum actions {
+  DATA_FETCH = 0,
+  DELETE_SECTION,
+  CREATE_SECTION,
+  SELECT_SECTION,
+  CLOSE_SECTION,
+  CREATE_CONTROl,
+  UPDATE_SECTION,
+  TOGGLE_SECTION_VISIBILITY,
+  NOTIFY,
+  CLEAR_NOTIFICATION,
+  SHOW_MODAL,
+  HIDE_MODAL,
+}
 
-function wpcuiReducer(state = initialState, action) {
+function wpcuiReducer(state = initialState, action): ApplicationState {
   switch (action.type) {
     case actions.DATA_FETCH:
       return { ...state, ...action.data };
@@ -61,14 +62,13 @@ function wpcuiReducer(state = initialState, action) {
       return {
         ...state,
         notification: {
-          // todo: use Notification model
           type: action.type ?? "success",
           message: action.message,
         },
       };
 
     case actions.CLEAR_NOTIFICATION:
-      return { ...state, notification: {} };
+      return { ...state, notification: null };
 
     case actions.SHOW_MODAL:
       return { ...state, modalContent: action.content };
