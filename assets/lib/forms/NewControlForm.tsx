@@ -3,14 +3,14 @@ import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
-import { stringToSnakeCase } from "../common";
+import { controlIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
-import { Control } from "../models/models";
+import { Control, DatabaseObject } from "../models/models";
 import React = require("react");
+import { connect } from "react-redux";
 
-interface IProps {}
 interface IState {
   newControlId: string;
   newControlTitle: string;
@@ -19,7 +19,11 @@ interface IState {
   errorMessage: string;
 }
 
-export default class NewControlForm extends Component<IProps, IState> {
+interface IProps {
+  data: DatabaseObject;
+}
+
+class NewControlForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -47,6 +51,15 @@ export default class NewControlForm extends Component<IProps, IState> {
       this.setState({
         errorTitle: "Missing Required Fields",
         errorMessage: "Controls Title and ID are required.",
+      });
+      return;
+    }
+
+    console.log(this.props.data);
+    if (controlIdExists(this.state.newControlId, this.props.data)) {
+      this.setState({
+        errorTitle: "Control Id Exists",
+        errorMessage: "Control IDs must be unique across all sections.",
       });
       return;
     }
@@ -110,7 +123,7 @@ export default class NewControlForm extends Component<IProps, IState> {
               />
               <FormCheckbox
                 label="Auto-Generate ID"
-                checked={this.state.autoGenerateId ? true : false}
+                checked={!!this.state.autoGenerateId}
                 handleChange={this.handleAutoGenerateIdChange}
               />
               <FormTextInput
@@ -134,3 +147,8 @@ export default class NewControlForm extends Component<IProps, IState> {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  data: state,
+});
+export default connect(mapStateToProps)(NewControlForm);
