@@ -1,6 +1,6 @@
 import { Component, MouseEventHandler } from "react";
+import React = require("react");
 
-interface IState {}
 interface IProps {
   buttonType?: "primary" | "secondary";
   click: MouseEventHandler;
@@ -10,7 +10,7 @@ interface IProps {
 /**
  * Simple button component.
  */
-export default class Button extends Component<IProps, IState> {
+export default class Button extends Component<IProps, null> {
   getTypeClass() {
     return `button-${this.props.buttonType ?? "secondary"}`;
   }

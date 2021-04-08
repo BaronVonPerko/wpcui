@@ -7,6 +7,7 @@ import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { Section } from "../models/models";
+import React = require("react");
 
 interface IProps {
   section: Section;

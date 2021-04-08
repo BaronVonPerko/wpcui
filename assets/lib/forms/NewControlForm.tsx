@@ -8,6 +8,7 @@ import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
 import { Control } from "../models/models";
+import React = require("react");
 
 interface IProps {}
 interface IState {

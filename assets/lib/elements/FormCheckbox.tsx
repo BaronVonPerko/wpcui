@@ -1,4 +1,5 @@
 import { ChangeEventHandler, Component } from "react";
+import React = require("react");
 
 interface IProps {
   label: string;

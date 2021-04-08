@@ -7,6 +7,7 @@ import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
+import React = require("react");
 
 interface IState {
   newSectionId: string;

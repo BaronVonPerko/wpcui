@@ -1,5 +1,3 @@
-import { Component } from "react";
-
 export interface DatabaseObject {
   db_version: number;
   panels: any[]; // todo : map out panel interface

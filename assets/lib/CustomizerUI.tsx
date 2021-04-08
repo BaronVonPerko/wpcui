@@ -1,4 +1,5 @@
 import { Component } from "react";
+import React = require("react");
 import WarningBar from "./elements/WarningBar";
 import { upgrade } from "./services/database";
 import { fetchData } from "./services/api";

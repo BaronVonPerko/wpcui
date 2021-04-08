@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Control as CustomizerControl } from "../models/models";
+import React = require("react");
 
 interface IProps {
   data: CustomizerControl;

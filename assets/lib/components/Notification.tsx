@@ -2,6 +2,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import store, { actions } from "../redux/wpcuiReducer";
 import { Notification as NotificationModel } from "../models/models";
+import React = require("react");
 
 export function notify(message) {
   store.dispatch({

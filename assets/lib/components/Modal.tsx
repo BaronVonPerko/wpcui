@@ -1,6 +1,7 @@
 import { Component } from "react";
 import store, { actions } from "../redux/wpcuiReducer";
 import { connect } from "react-redux";
+import React = require("react");
 
 export function modal(content) {
   store.dispatch({ type: actions.SHOW_MODAL, content });

@@ -5,6 +5,7 @@ import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
 import { connect } from "react-redux";
 import { modal } from "./Modal";
+import React = require("react");
 
 interface IProps {
   controls: CustomizerControl[];

@@ -2,6 +2,7 @@ import { Component } from "react";
 import Section from "./Section";
 import { Section as CustomizerSection } from "../models/models";
 import { connect } from "react-redux";
+import React = require("react");
 
 interface IProps {
   sections: CustomizerSection[];

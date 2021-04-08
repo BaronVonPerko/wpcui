@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { NavigationTab } from "../models/models";
+import React = require("react");
 
 interface IProps {
   tabs: NavigationTab[];

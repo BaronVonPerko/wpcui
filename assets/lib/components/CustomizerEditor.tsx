@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import ControlList from "./ControlList";
 import { modal } from "./Modal";
 import { DatabaseObject, Section } from "../models/models";
+import React = require("react");
 
 interface IProps {
   selectedSection: Section;

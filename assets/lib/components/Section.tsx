@@ -1,9 +1,9 @@
 import { Component } from "react";
-
 import store, { actions } from "../redux/wpcuiReducer";
 import { connect } from "react-redux";
 import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
+import React = require("react");
 
 interface IProps {
   data: CustomizerSection;

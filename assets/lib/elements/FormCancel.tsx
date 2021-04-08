@@ -1,4 +1,5 @@
 import { Component, MouseEventHandler } from "react";
+import React = require("react");
 
 interface IProps {
   handleClick: MouseEventHandler;
