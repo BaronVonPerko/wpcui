@@ -1,6 +1,7 @@
-import React from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 import store, { actions } from "../redux/wpcuiReducer";
+import { Notification as NotificationModel } from "../models/models";
 
 export function notify(message) {
   store.dispatch({
@@ -13,7 +14,15 @@ export const messages = {
   SAVE_SUCCESS: "Changes saved successfully!",
 };
 
-class Notification extends React.Component {
+interface IProps {
+  notification: NotificationModel;
+}
+
+interface IState {
+  fade: boolean;
+}
+
+class Notification extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

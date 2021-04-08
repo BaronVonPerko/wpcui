@@ -61,6 +61,7 @@ function wpcuiReducer(state = initialState, action) {
       return {
         ...state,
         notification: {
+          // todo: use Notification model
           type: action.type ?? "success",
           message: action.message,
         },

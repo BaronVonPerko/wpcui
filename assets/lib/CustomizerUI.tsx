@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import store, { actions } from "./redux/wpcuiReducer";
 import Notification from "./components/Notification";
 import Modal from "./components/Modal";
-import { DatabaseObject } from "./models/models";
+import { DatabaseObject, NavigationTab } from "./models/models";
 
 interface IProps {
   data: DatabaseObject;
@@ -45,7 +45,7 @@ class CustomizerUI extends Component<IProps, null> {
   }
 
   getTabs() {
-    let tabs = [];
+    let tabs: NavigationTab[] = [];
 
     tabs.push({
       title: "Editor",

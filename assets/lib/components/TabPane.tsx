@@ -1,6 +1,14 @@
-import React from "react";
+import { Component } from "react";
+import { NavigationTab } from "../models/models";
 
-export default class TabPane extends React.Component {
+interface IProps {
+  tabs: NavigationTab[];
+}
+interface IState {
+  selectedTab: NavigationTab;
+}
+
+export default class TabPane extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
