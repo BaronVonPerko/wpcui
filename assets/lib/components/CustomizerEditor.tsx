@@ -33,9 +33,7 @@ class CustomizerEditor extends Component<IProps, null> {
         />
         <div className="wpcui-editor-columns">
           <SectionList />
-          {this.props.selectedSection && (
-            <ControlList controls={this.props.selectedSection.controls} />
-          )}
+          {this.props.selectedSection && <ControlList />}
         </div>
       </div>
     );

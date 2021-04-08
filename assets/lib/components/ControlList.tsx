@@ -45,7 +45,7 @@ class ControlList extends Component<IProps, null> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): IProps => ({
   controls: state.selectedSection.controls,
 });
 export default connect(mapStateToProps)(ControlList);
