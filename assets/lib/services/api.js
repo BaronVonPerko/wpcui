@@ -8,7 +8,7 @@ export async function fetchData() {
 
 export async function saveData(data) {
   return await axios.put("/wp-json/wpcui/v2/saveOptions", {
-    data: scrubData(data),
+    data: prepareData(data),
   });
 }
 
@@ -17,10 +17,10 @@ export async function saveData(data) {
  *
  * @param data
  */
-function scrubData(data) {
-  delete data.selectedSection;
-  delete data.notification;
-  delete data.modalContent;
-
-  return data;
+function prepareData(data) {
+  return {
+    db_version: data.db_version,
+    panels: data.panels,
+    sections: data.sections,
+  };
 }
