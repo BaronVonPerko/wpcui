@@ -2,7 +2,7 @@ import { Component, MouseEventHandler } from "react";
 
 interface IState {}
 interface IProps {
-  buttonType: "primary" | "secondary";
+  buttonType?: "primary" | "secondary";
   click: MouseEventHandler;
   innerText: string;
 }

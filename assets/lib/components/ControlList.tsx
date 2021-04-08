@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Control as CustomizerControl } from "../models/models";
 import Control from "./Control";
 import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
@@ -6,7 +7,7 @@ import { connect } from "react-redux";
 import { modal } from "./Modal";
 
 interface IProps {
-  controls: Control[];
+  controls: CustomizerControl[];
 }
 
 class ControlList extends Component<IProps, null> {
@@ -14,7 +15,7 @@ class ControlList extends Component<IProps, null> {
     super(props);
   }
 
-  displayCreateControlForm(e) {
+  displayCreateControlForm() {
     modal(<NewControlForm />);
   }
 
@@ -36,7 +37,7 @@ class ControlList extends Component<IProps, null> {
           {this.renderControls()}
           <Button
             innerText="Create New Control"
-            click={(e) => this.displayCreateControlForm(e)}
+            click={() => this.displayCreateControlForm()}
           />
         </div>
       </div>

@@ -16,15 +16,10 @@ class CustomizerEditor extends Component<IProps, null> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      addNewSection: false,
-    };
-
     this.showNewSectionForm = this.showNewSectionForm.bind(this);
   }
 
   showNewSectionForm() {
-    // @ts-ignore
     modal(<NewSectionForm />);
   }
 
@@ -39,7 +34,7 @@ class CustomizerEditor extends Component<IProps, null> {
         <div className="wpcui-editor-columns">
           <SectionList />
           {this.props.selectedSection && (
-            <ControlList controls={this.props.data.controls} />
+            <ControlList controls={this.props.selectedSection.controls} />
           )}
         </div>
       </div>

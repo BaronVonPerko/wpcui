@@ -15,7 +15,7 @@ interface IState {
   errorTitle: string;
   errorMessage: string;
 }
-export default class NewSectionForm extends Component<null, IState> {
+export default class NewSectionForm extends Component<{}, IState> {
   constructor(props) {
     super(props);
 

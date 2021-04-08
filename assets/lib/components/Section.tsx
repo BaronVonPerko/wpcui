@@ -1,11 +1,20 @@
-import React from "react";
+import { Component } from "react";
 
-import Button from "./../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import { connect } from "react-redux";
 import EditSectionForm from "../forms/EditSectionForm";
+import { Section as CustomizerSection } from "../models/models";
 
-class Section extends React.Component {
+interface IProps {
+  data: CustomizerSection;
+  selectedSection: CustomizerSection;
+}
+interface IState {
+  editing: boolean;
+  visible: boolean;
+}
+
+class Section extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

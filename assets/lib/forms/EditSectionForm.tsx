@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
@@ -6,8 +6,22 @@ import FormCancel from "../elements/FormCancel";
 import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
+import { Section } from "../models/models";
 
-export default class EditSectionForm extends React.Component {
+interface IProps {
+  section: Section;
+  onClose: Function;
+}
+interface IState {
+  sectionId: string;
+  newSectionId?: string;
+  sectionTitle: string;
+  autoGenerateId: "checked" | "";
+  errorTitle: string;
+  errorMessage: string;
+}
+
+export default class EditSectionForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -80,7 +94,9 @@ export default class EditSectionForm extends React.Component {
       });
     }
 
-    this.setState({ autoGenerateId: !this.state.autoGenerateId });
+    this.setState({
+      autoGenerateId: this.state.autoGenerateId == "checked" ? "" : "checked",
+    });
   }
 
   render() {
@@ -103,7 +119,7 @@ export default class EditSectionForm extends React.Component {
               />
               <FormCheckbox
                 label="Auto-Generate ID"
-                checked={this.state.autoGenerateId}
+                checked={this.state.autoGenerateId == "checked"}
                 handleChange={this.handleAutoGenerateIdChange}
               />
               <FormTextInput
@@ -112,7 +128,7 @@ export default class EditSectionForm extends React.Component {
                 placeholder="Section ID"
                 onChange={this.handleSectionIdChange}
                 value={this.state.sectionId}
-                disabled={this.state.autoGenerateId}
+                disabled={this.state.autoGenerateId == "checked"}
               />
             </tbody>
           </table>

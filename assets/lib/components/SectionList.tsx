@@ -1,8 +1,13 @@
-import React from "react";
+import { Component } from "react";
 import Section from "./Section";
+import { Section as CustomizerSection } from "../models/models";
 import { connect } from "react-redux";
 
-class SectionList extends React.Component {
+interface IProps {
+  sections: CustomizerSection[];
+}
+
+class SectionList extends Component<IProps, null> {
   getSections() {
     return this.props.sections.map((section) => (
       <Section key={section.id} data={section} />

@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import store, { actions } from "../redux/wpcuiReducer";
 import { connect } from "react-redux";
 
@@ -10,7 +10,11 @@ export function hideModal() {
   store.dispatch({ type: actions.HIDE_MODAL });
 }
 
-class Modal extends React.Component {
+interface IProps {
+  content: Component;
+}
+
+class Modal extends Component<IProps, null> {
   render() {
     if (this.props.content) {
       return this.props.content;
