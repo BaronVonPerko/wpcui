@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
@@ -7,8 +7,18 @@ import { stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
+import { Control } from "../models/models";
 
-export default class NewControlForm extends React.Component {
+interface IProps {}
+interface IState {
+  newControlId: string;
+  newControlTitle: string;
+  autoGenerateId: string;
+  errorTitle: string;
+  errorMessage: string;
+}
+
+export default class NewControlForm extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -40,7 +50,7 @@ export default class NewControlForm extends React.Component {
       return;
     }
 
-    const newControl = {
+    const newControl: Control = {
       id: this.state.newControlId,
       title: this.state.newControlTitle,
       priority: 99,

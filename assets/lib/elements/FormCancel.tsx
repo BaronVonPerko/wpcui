@@ -1,6 +1,11 @@
 import React from "react";
 
-export default class FormCancel extends React.Component {
+interface IProps {
+  handleClick: Function;
+}
+interface IState {}
+
+export default class FormCancel extends React.Component<IProps, IState> {
   render() {
     return (
       <p onClick={this.props.handleClick} className="wpcui-form-cancel">
