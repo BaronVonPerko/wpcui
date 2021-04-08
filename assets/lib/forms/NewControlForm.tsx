@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
@@ -18,7 +18,7 @@ interface IState {
   errorMessage: string;
 }
 
-export default class NewControlForm extends React.Component<IProps, IState> {
+export default class NewControlForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -84,7 +84,9 @@ export default class NewControlForm extends React.Component<IProps, IState> {
       });
     }
 
-    this.setState({ autoGenerateId: !this.state.autoGenerateId });
+    this.setState({
+      autoGenerateId: this.state.autoGenerateId == "checked" ? "" : "checked",
+    });
   }
 
   render() {
@@ -107,7 +109,7 @@ export default class NewControlForm extends React.Component<IProps, IState> {
               />
               <FormCheckbox
                 label="Auto-Generate ID"
-                checked={this.state.autoGenerateId}
+                checked={this.state.autoGenerateId ? true : false}
                 handleChange={this.handleAutoGenerateIdChange}
               />
               <FormTextInput
@@ -116,7 +118,7 @@ export default class NewControlForm extends React.Component<IProps, IState> {
                 placeholder="New Control ID"
                 onChange={this.handleControlIdChange}
                 value={this.state.newControlId}
-                disabled={this.state.autoGenerateId}
+                disabled={this.state.autoGenerateId != null}
               />
             </tbody>
           </table>

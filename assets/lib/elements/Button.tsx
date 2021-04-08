@@ -1,11 +1,18 @@
-import React from "react";
+import { Component, MouseEventHandler } from "react";
+
+interface IState {}
+interface IProps {
+  buttonType: string;
+  click: MouseEventHandler;
+  innerText: string;
+}
 
 /**
  * Simple button component.
  *
  * buttonType prop can be either 'primary' or 'secondary'
  */
-export default class Button extends React.Component {
+export default class Button extends Component<IProps, IState> {
   getTypeClass() {
     return `button-${this.props.buttonType ?? "secondary"}`;
   }

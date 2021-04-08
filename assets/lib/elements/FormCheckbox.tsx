@@ -1,6 +1,12 @@
-import React from "react";
+import { ChangeEventHandler, Component } from "react";
 
-export default class FormCheckbox extends React.Component {
+interface IProps {
+  label: string;
+  checked?: boolean;
+  handleChange: ChangeEventHandler;
+}
+
+export default class FormCheckbox extends Component<IProps, null> {
   render() {
     return (
       <tr>

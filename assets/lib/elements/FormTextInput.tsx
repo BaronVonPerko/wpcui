@@ -1,6 +1,16 @@
-import React from "react";
+import { ChangeEventHandler, Component } from "react";
 
-export default class FormTextInput extends React.Component {
+interface IProps {
+  inputId: string;
+  label: string;
+  disabled?: boolean;
+  placeholder: string;
+  onChange: ChangeEventHandler;
+  value: string;
+}
+interface IState {}
+
+export default class FormTextInput extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

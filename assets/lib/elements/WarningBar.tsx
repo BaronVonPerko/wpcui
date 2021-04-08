@@ -1,7 +1,15 @@
-import React from "react";
+import { Component, MouseEventHandler } from "react";
 import Button from "./Button";
 
-export default class WarningBar extends React.Component {
+interface IProps {
+  title: string;
+  innerText: string;
+  buttonText?: string;
+  buttonClick?: MouseEventHandler;
+}
+interface IState {}
+
+export default class WarningBar extends Component<IProps, IState> {
   render() {
     if (!this.props.title || !this.props.innerText) return null;
 

@@ -1,11 +1,11 @@
-import React from "react";
+import { Component, MouseEventHandler } from "react";
 
 interface IProps {
-  handleClick: Function;
+  handleClick: MouseEventHandler;
 }
 interface IState {}
 
-export default class FormCancel extends React.Component<IProps, IState> {
+export default class FormCancel extends Component<IProps, IState> {
   render() {
     return (
       <p onClick={this.props.handleClick} className="wpcui-form-cancel">
