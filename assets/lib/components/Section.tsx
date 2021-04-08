@@ -50,7 +50,8 @@ class Section extends Component<IProps, IState> {
   }
 
   duplicateSection() {
-    //
+    // TODO: implement duplicate section
+    alert("DUPLICATE SECTION - NOT YET IMPLEMENTED");
   }
 
   editSection() {
