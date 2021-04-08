@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DatabaseObject } from "../models/models";
 
 export async function fetchData() {
   const res = await axios.get("/wp-json/wpcui/v2/getOptions");
@@ -17,7 +18,7 @@ export async function saveData(data) {
  *
  * @param data
  */
-function prepareData(data) {
+function prepareData(data): DatabaseObject {
   return {
     db_version: data.db_version,
     panels: data.panels,
