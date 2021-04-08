@@ -1,12 +1,18 @@
-import React from "react";
+import { Component } from "react";
 import Button from "../elements/Button";
 import SectionList from "./SectionList";
 import NewSectionForm from "../forms/NewSectionForm";
 import { connect } from "react-redux";
 import ControlList from "./ControlList";
-import { hideModal, modal } from "./Modal";
+import { modal } from "./Modal";
+import { DatabaseObject, Section } from "../models/models";
 
-class CustomizerEditor extends React.Component {
+interface IProps {
+  selectedSection: Section;
+  data: DatabaseObject;
+}
+
+class CustomizerEditor extends Component<IProps, null> {
   constructor(props) {
     super(props);
 
@@ -18,6 +24,7 @@ class CustomizerEditor extends React.Component {
   }
 
   showNewSectionForm() {
+    // @ts-ignore
     modal(<NewSectionForm />);
   }
 

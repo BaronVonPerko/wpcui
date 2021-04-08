@@ -2,15 +2,13 @@ import { Component, MouseEventHandler } from "react";
 
 interface IState {}
 interface IProps {
-  buttonType: string;
+  buttonType: "primary" | "secondary";
   click: MouseEventHandler;
   innerText: string;
 }
 
 /**
  * Simple button component.
- *
- * buttonType prop can be either 'primary' or 'secondary'
  */
 export default class Button extends Component<IProps, IState> {
   getTypeClass() {

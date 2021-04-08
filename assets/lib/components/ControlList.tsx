@@ -1,11 +1,15 @@
-import React from "react";
+import { Component } from "react";
 import Control from "./Control";
 import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
 import { connect } from "react-redux";
 import { modal } from "./Modal";
 
-class ControlList extends React.Component {
+interface IProps {
+  controls: Control[];
+}
+
+class ControlList extends Component<IProps, null> {
   constructor(props) {
     super(props);
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import WarningBar from "./elements/WarningBar";
 import { upgrade } from "./services/database";
 import { fetchData } from "./services/api";
@@ -8,8 +8,12 @@ import { connect } from "react-redux";
 import store, { actions } from "./redux/wpcuiReducer";
 import Notification from "./components/Notification";
 import Modal from "./components/Modal";
+import { DatabaseObject } from "./models/models";
 
-class CustomizerUI extends React.Component {
+interface IProps {
+  data: DatabaseObject;
+}
+class CustomizerUI extends Component<IProps, null> {
   constructor(props) {
     super(props);
 
