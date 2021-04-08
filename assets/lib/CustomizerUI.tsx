@@ -10,6 +10,7 @@ import store, { actions } from "./redux/wpcuiReducer";
 import Notification from "./components/Notification";
 import Modal from "./components/Modal";
 import { DatabaseObject, NavigationTab } from "./models/models";
+import { getNavigationTabs } from "./services/navigation";
 
 interface IProps {
   data: DatabaseObject;
@@ -45,18 +46,6 @@ class CustomizerUI extends Component<IProps, null> {
     );
   }
 
-  getTabs() {
-    let tabs: NavigationTab[] = [];
-
-    tabs.push({
-      title: "Editor",
-      content: <CustomizerEditor data={this.props.data} />,
-    });
-    tabs.push({ title: "Settings", content: <p>Settings Coming Soon...</p> });
-
-    return tabs;
-  }
-
   render() {
     if (this.props.data.db_version < 2 && this.props.data.db_version > 0) {
       return this.databaseUpgradeWarning();
@@ -65,7 +54,7 @@ class CustomizerUI extends Component<IProps, null> {
         <section>
           <Notification />
           <Modal />
-          <TabPane tabs={this.getTabs()} />
+          <TabPane tabs={getNavigationTabs(this.props.data)} />
         </section>
       );
     } else {
