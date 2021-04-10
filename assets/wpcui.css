@@ -117,6 +117,12 @@
   padding: var(--spacing);
 }
 
+.wpcui-control {
+  border-bottom: 2px solid var(--color-blue);
+  margin-bottom: var(--spacing);
+  padding-bottom: 4px;
+}
+
 .wpcui-control p {
   margin: 0 0 var(--spacing);
 }

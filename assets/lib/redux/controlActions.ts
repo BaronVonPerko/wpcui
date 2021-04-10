@@ -25,3 +25,22 @@ export function createControl(state, control): ApplicationState {
 
   return { ...createControlState, selectedSection: state.selectedSection };
 }
+
+export function deleteControl(state, controlId: string): ApplicationState {
+  let sections = state.sections;
+  sections.forEach((section) => {
+    section.controls = section.controls.filter(
+      (control) => control.id !== controlId
+    );
+  });
+  const deleteControlState = {
+    ...state,
+    sections,
+  };
+
+  saveData({ ...deleteControlState }).then(() => {
+    notify(messages.SAVE_SUCCESS);
+  });
+
+  return deleteControlState;
+}
