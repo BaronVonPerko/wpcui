@@ -9,11 +9,10 @@ import { DatabaseObject, Section } from "../models/models";
 import React = require("react");
 
 interface IProps {
-  selectedSection: Section;
   data: DatabaseObject;
 }
 
-class CustomizerEditor extends Component<IProps, null> {
+export default class CustomizerEditor extends Component<IProps, null> {
   constructor(props) {
     super(props);
 
@@ -34,15 +33,9 @@ class CustomizerEditor extends Component<IProps, null> {
         />
         <div className="wpcui-editor-columns">
           <SectionList />
-          {this.props.selectedSection && <ControlList />}
+          <ControlList />
         </div>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  selectedSection: state.selectedSection,
-});
-
-export default connect(mapStateToProps)(CustomizerEditor);

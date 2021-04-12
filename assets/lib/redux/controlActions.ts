@@ -1,12 +1,13 @@
 import { saveData } from "../services/api";
 import { notify, messages } from "../components/Notification";
-import { ApplicationState } from "../models/models";
+import { ApplicationState, Control } from "../models/models";
 
-export function createControl(state, control): ApplicationState {
+export function createControl(
+  state: ApplicationState,
+  control: Control
+): ApplicationState {
   // Find the selected section index to add the control to
-  const selectedSectionIndex = state.sections.findIndex(
-    (section) => section.id === state.selectedSection.id
-  );
+  const selectedSectionIndex = getSelectedSectionIndex(state);
 
   // Add new control to the section
   let controls = state.sections[selectedSectionIndex].controls;
@@ -20,8 +21,7 @@ export function createControl(state, control): ApplicationState {
   };
 
   // Update the selected section controls so that the UI is updated
-  let selectedSection = state.selectedSection;
-  selectedSection.controls = controls;
+  const selectedSection = { ...sections[selectedSectionIndex] };
 
   // Create the new State
   const createControlState: ApplicationState = {
@@ -38,21 +38,36 @@ export function createControl(state, control): ApplicationState {
   return { ...createControlState };
 }
 
-export function deleteControl(state, controlId: string): ApplicationState {
+export function deleteControl(
+  state: ApplicationState,
+  controlId: string
+): ApplicationState {
+  const selectedSectionIndex = getSelectedSectionIndex(state);
+
   let sections = state.sections;
   sections.forEach((section) => {
     section.controls = section.controls.filter(
       (control) => control.id !== controlId
     );
   });
+
+  const selectedSection = { ...sections[selectedSectionIndex] };
+
   const deleteControlState = {
     ...state,
     sections,
+    selectedSection,
   };
 
   saveData({ ...deleteControlState }).then(() => {
     notify(messages.SAVE_SUCCESS);
   });
 
-  return deleteControlState;
+  return { ...deleteControlState };
+}
+
+function getSelectedSectionIndex(state: ApplicationState): number {
+  return state.sections.findIndex(
+    (section) => section.id === state.selectedSection.id
+  );
 }

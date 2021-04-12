@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Control as CustomizerControl } from "../models/models";
+import { Control as CustomizerControl, Section } from "../models/models";
 import Control from "./Control";
 import Button from "../elements/Button";
 import NewControlForm from "../forms/NewControlForm";
@@ -8,7 +8,7 @@ import { modal } from "./Modal";
 import React = require("react");
 
 interface IProps {
-  controls: CustomizerControl[];
+  selectedSection: Section;
 }
 
 class ControlList extends Component<IProps, null> {
@@ -21,8 +21,9 @@ class ControlList extends Component<IProps, null> {
   }
 
   renderControls() {
-    if (this.props.controls && this.props.controls.length) {
-      return this.props.controls.map((control) => (
+    const controls = this.props.selectedSection.controls;
+    if (controls && controls.length) {
+      return controls.map((control) => (
         <Control key={control.id} data={control} />
       ));
     } else {
@@ -31,7 +32,10 @@ class ControlList extends Component<IProps, null> {
   }
 
   render() {
-    console.log("ControlList controls", this.props.controls);
+    if (!this.props.selectedSection) {
+      return null;
+    }
+
     return (
       <div className="wpcui-control-list">
         <div className="wpcui-controllist-headerbar">Controls</div>
@@ -48,6 +52,6 @@ class ControlList extends Component<IProps, null> {
 }
 
 const mapStateToProps = (state): IProps => ({
-  controls: state.selectedSection.controls,
+  selectedSection: state.selectedSection,
 });
 export default connect(mapStateToProps)(ControlList);

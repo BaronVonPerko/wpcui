@@ -4,7 +4,8 @@ import store, { actions } from "../redux/wpcuiReducer";
 import { Notification as NotificationModel } from "../models/models";
 import React = require("react");
 
-export function notify(message) {
+export function notify(message: any) {
+  // todo: fix type
   store.dispatch({
     type: actions.NOTIFY,
     message: messages.SAVE_SUCCESS,
