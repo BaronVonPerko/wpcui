@@ -38,6 +38,10 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
     case actions.DATA_FETCH:
       return { ...state, ...action.data };
 
+    /**
+     * SECTION ACTIONS
+     * */
+
     case actions.DELETE_SECTION:
       return deleteSection(state, action.sectionId);
 
@@ -45,19 +49,33 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
       return createSection(state, action.section);
 
     case actions.SELECT_SECTION:
-      return { ...state, selectedSection: action.section };
+      return {
+        ...state,
+        selectedSection: action.section,
+      };
 
     case actions.CLOSE_SECTION:
       return { ...state, selectedSection: null };
-
-    case actions.CREATE_CONTROl:
-      return createControl(state, action.control);
 
     case actions.UPDATE_SECTION:
       return updateSection(state, action.oldSectionId, action.updatedSection);
 
     case actions.TOGGLE_SECTION_VISIBILITY:
       return toggleSectionVisibility(state, action.sectionId);
+
+    /**
+     * CONTROL ACTIONS
+     * */
+
+    case actions.CREATE_CONTROl:
+      return createControl(state, action.control);
+
+    case actions.DELETE_CONTROL:
+      return deleteControl(state, action.controlId);
+
+    /**
+     * NOTIFICATION AND MODAL ACTIONS
+     * */
 
     case actions.NOTIFY:
       return {
@@ -76,9 +94,6 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
 
     case actions.HIDE_MODAL:
       return { ...state, modalContent: null };
-
-    case actions.DELETE_CONTROL:
-      return deleteControl(state, action.controlId);
 
     default:
       return state;

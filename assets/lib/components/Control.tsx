@@ -15,7 +15,7 @@ export default class Control extends Component<IProps, null> {
   }
 
   delete() {
-    var res = confirm(
+    let res = confirm(
       `Are you sure that you want to delete the control with ID of ${this.props.data.id}`
     );
 

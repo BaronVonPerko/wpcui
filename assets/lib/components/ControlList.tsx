@@ -31,6 +31,7 @@ class ControlList extends Component<IProps, null> {
   }
 
   render() {
+    console.log("ControlList controls", this.props.controls);
     return (
       <div className="wpcui-control-list">
         <div className="wpcui-controllist-headerbar">Controls</div>
