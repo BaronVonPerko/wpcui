@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
+import ItemPanelHeader from "./ItemPanelHeader";
 
 interface IProps {
   data: CustomizerSection;
@@ -26,6 +27,8 @@ class Section extends Component<IProps, IState> {
     this.click = this.click.bind(this);
     this.getSectionClasses = this.getSectionClasses.bind(this);
     this.getVisibilityClasses = this.getVisibilityClasses.bind(this);
+    this.deleteSection = this.deleteSection.bind(this);
+    this.editSection = this.editSection.bind(this);
   }
 
   click() {
@@ -121,23 +124,12 @@ class Section extends Component<IProps, IState> {
     return (
       <div className={this.getSectionClasses()}>
         {this.renderEditSectionForm()}
-        <div className="wpcui-section-headerbar">
-          <i
-            title="Duplicate Section"
-            onClick={() => this.duplicateSection()}
-            className="dashicons dashicons-admin-page"
-          ></i>
-          <i
-            title="Edit Section"
-            onClick={() => this.editSection()}
-            className="dashicons dashicons-edit"
-          ></i>
-          <i
-            title="Delete Section"
-            onClick={() => this.deleteSection()}
-            className="dashicons dashicons-trash"
-          ></i>
-        </div>
+        <ItemPanelHeader
+          onDelete={{ title: "Delete Section", function: this.deleteSection }}
+          onEdit={{ title: "Edit Section", function: this.editSection }}
+          // onDuplicate={{title: "Duplicate Section", function: this.duplicateSection}}
+        />
+
         <div onClick={() => this.click()} className="wpcui-section-contents">
           <div className="wpcui-section-title-section">
             <h3>{this.props.data.title}</h3>
