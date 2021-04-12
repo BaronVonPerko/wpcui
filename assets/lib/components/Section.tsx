@@ -136,7 +136,7 @@ class Section extends Component<IProps, IState> {
             <i
               onClick={(e) => this.toggleVisibility(e)}
               className={this.getVisibilityClasses()}
-            ></i>
+            />
           </div>
           <div>{this.renderInner()}</div>
         </div>

@@ -22,7 +22,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
           title="Duplicate Section"
           onClick={() => this.props.onDuplicate.function}
           className="dashicons dashicons-admin-page"
-        ></i>
+        />
       );
     }
     if (this.props.onEdit) {
@@ -32,7 +32,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
           title="Edit Section"
           onClick={() => this.props.onEdit.function()}
           className="dashicons dashicons-edit"
-        ></i>
+        />
       );
     }
     if (this.props.onDelete) {
@@ -42,7 +42,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
           title="Delete Section"
           onClick={() => this.props.onDelete.function()}
           className="dashicons dashicons-trash"
-        ></i>
+        />
       );
     }
 
