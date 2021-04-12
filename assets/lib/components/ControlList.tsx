@@ -38,7 +38,6 @@ class ControlList extends Component<IProps, null> {
 
     return (
       <div className="wpcui-control-list">
-        <div className="wpcui-controllist-headerbar">Controls</div>
         <div className="wpcui-controllist-content">
           {this.renderControls()}
           <Button

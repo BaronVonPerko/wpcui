@@ -19,7 +19,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
       buttons.push(
         <i
           key="duplicateIcon"
-          title="Duplicate Section"
+          title={this.props.onDuplicate.title}
           onClick={() => this.props.onDuplicate.function}
           className="dashicons dashicons-admin-page"
         />
@@ -29,7 +29,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
       buttons.push(
         <i
           key="editIcon"
-          title="Edit Section"
+          title={this.props.onEdit.title}
           onClick={() => this.props.onEdit.function()}
           className="dashicons dashicons-edit"
         />
@@ -39,7 +39,7 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
       buttons.push(
         <i
           key="deleteIcon"
-          title="Delete Section"
+          title={this.props.onDelete.title}
           onClick={() => this.props.onDelete.function()}
           className="dashicons dashicons-trash"
         />

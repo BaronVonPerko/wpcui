@@ -3,6 +3,7 @@ import { Control as CustomizerControl } from "../models/models";
 import React = require("react");
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
+import ItemPanelHeader from "./ItemPanelHeader";
 
 interface IProps {
   data: CustomizerControl;
@@ -30,10 +31,10 @@ export default class Control extends Component<IProps, null> {
   render() {
     return (
       <div className="wpcui-control">
+        <ItemPanelHeader
+          onDelete={{ title: "Delete Control", function: this.delete }}
+        />
         <p className="wpcui-control-title">{this.props.data.title}</p>
-        <div className="wpcui-control-buttons">
-          <Button click={this.delete} innerText="Delete" />
-        </div>
       </div>
     );
   }
