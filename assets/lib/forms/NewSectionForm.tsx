@@ -3,11 +3,13 @@ import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
-import { stringToSnakeCase } from "../common";
+import { sectionIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
 import React = require("react");
+import { connect } from "react-redux";
+import { DatabaseObject } from "../models/models";
 
 interface IState {
   newSectionId: string;
@@ -16,7 +18,12 @@ interface IState {
   errorTitle: string;
   errorMessage: string;
 }
-export default class NewSectionForm extends Component<{}, IState> {
+
+interface IProps {
+  data: DatabaseObject;
+}
+
+class NewSectionForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -44,6 +51,14 @@ export default class NewSectionForm extends Component<{}, IState> {
       this.setState({
         errorTitle: "Missing Required Fields",
         errorMessage: "Section Title and ID are required.",
+      });
+      return;
+    }
+
+    if (sectionIdExists(this.state.newSectionId, this.props.data)) {
+      this.setState({
+        errorTitle: "Section Id Exists",
+        errorMessage: "Section IDs must be unique across all sections.",
       });
       return;
     }
@@ -129,3 +144,8 @@ export default class NewSectionForm extends Component<{}, IState> {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  data: state,
+});
+export default connect(mapStateToProps)(NewSectionForm);

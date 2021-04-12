@@ -55,7 +55,6 @@ class NewControlForm extends Component<IProps, IState> {
       return;
     }
 
-    console.log(this.props.data);
     if (controlIdExists(this.state.newControlId, this.props.data)) {
       this.setState({
         errorTitle: "Control Id Exists",
