@@ -30,7 +30,6 @@ class Section extends Component<IProps, IState> {
     this.getVisibilityClasses = this.getVisibilityClasses.bind(this);
     this.deleteSection = this.deleteSection.bind(this);
     this.editSection = this.editSection.bind(this);
-    this.toggleCode = this.toggleCode.bind(this);
   }
 
   click() {
@@ -61,10 +60,6 @@ class Section extends Component<IProps, IState> {
 
   editSection() {
     this.setState({ editing: true });
-  }
-
-  toggleCode() {
-    alert("SHOW CODE IN MODAL COMING SOON"); // todo: create a modal with the sample code in it
   }
 
   toggleVisibility(e) {
@@ -122,7 +117,6 @@ class Section extends Component<IProps, IState> {
           title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}
           onEdit={{ title: "Edit Section", function: this.editSection }}
-          onCode={{ title: "View Sample Code", function: this.toggleCode }}
           // onDuplicate={{title: "Duplicate Section", function: this.duplicateSection}}
         />
 
