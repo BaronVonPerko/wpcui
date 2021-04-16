@@ -28,13 +28,21 @@ export default class Control extends Component<IProps, null> {
     }
   }
 
+  showCode() {
+    // TODO: show the example code in a modal
+  }
+
   render() {
     return (
       <div className="wpcui-control">
         <ItemPanelHeader
+          title="Control"
           onDelete={{ title: "Delete Control", function: this.delete }}
+          onCode={{ title: "Show Code", function: this.showCode }}
         />
-        <p className="wpcui-control-title">{this.props.data.title}</p>
+        <div className="wpcui-section-contents">
+          <p className="wpcui-control-title">{this.props.data.title}</p>
+        </div>
       </div>
     );
   }
