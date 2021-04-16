@@ -103,6 +103,22 @@
   justify-content: space-between;
 }
 
+.wpcui-section-controlstats {
+  text-align: center;
+  margin-top: var(--spacing);
+}
+
+.wpcui-section-controlstats h5 {
+  font-size: 24pt;
+  font-weight: bold;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.wpcui-section-controlstats p {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .wpcui-section-headerbar {
   text-align: right;
 }

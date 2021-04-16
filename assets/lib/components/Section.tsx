@@ -109,18 +109,6 @@ class Section extends Component<IProps, IState> {
     }
   }
 
-  renderInner() {
-    if (this.getOpen()) {
-      return (
-        <div>
-          <p>
-            ID: <em>{this.props.data.id}</em>
-          </p>
-        </div>
-      );
-    }
-  }
-
   render() {
     return (
       <div className={this.getSectionClasses()}>
@@ -140,7 +128,13 @@ class Section extends Component<IProps, IState> {
               className={this.getVisibilityClasses()}
             />
           </div>
-          <div>{this.renderInner()}</div>
+          <p>
+            ID: <em>{this.props.data.id}</em>
+          </p>
+          <div className="wpcui-section-controlstats">
+            <h5>{this.props.data.controls.length}</h5>
+            <p>controls</p>
+          </div>
         </div>
       </div>
     );
