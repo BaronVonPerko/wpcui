@@ -10,12 +10,23 @@ interface IProps {
   onDuplicate?: IconButton;
   onEdit?: IconButton;
   onDelete?: IconButton;
+  onCode?: IconButton;
   title?: string;
 }
 
 export default class ItemPanelHeader extends Component<IProps, {}> {
   renderHeaderButtons() {
     const buttons = [];
+    if (this.props.onCode) {
+      buttons.push(
+          <i
+              key="codeIcon"
+              title={this.props.onCode.title}
+              onClick={() => this.props.onCode.function()}
+              className="dashicons dashicons-editor-code"
+          />
+      );
+    }
     if (this.props.onDuplicate) {
       buttons.push(
         <i
