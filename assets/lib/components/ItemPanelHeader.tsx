@@ -10,6 +10,7 @@ interface IProps {
   onDuplicate?: IconButton;
   onEdit?: IconButton;
   onDelete?: IconButton;
+  title?: string;
 }
 
 export default class ItemPanelHeader extends Component<IProps, {}> {
@@ -52,7 +53,8 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
   render() {
     return (
       <div className="wpcui-section-headerbar">
-        {this.renderHeaderButtons()}
+        <div>{this.props.title}</div>
+        <div>{this.renderHeaderButtons()}</div>
       </div>
     );
   }

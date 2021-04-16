@@ -10,6 +10,7 @@ interface IProps {
   data: CustomizerSection;
   selectedSection: CustomizerSection;
 }
+
 interface IState {
   editing: boolean;
   visible: boolean;
@@ -125,6 +126,7 @@ class Section extends Component<IProps, IState> {
       <div className={this.getSectionClasses()}>
         {this.renderEditSectionForm()}
         <ItemPanelHeader
+          title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}
           onEdit={{ title: "Edit Section", function: this.editSection }}
           // onDuplicate={{title: "Duplicate Section", function: this.duplicateSection}}

@@ -6,12 +6,11 @@
 :root {
   --spacing: 24px;
   --animation-speed: 300ms;
-  --color-blue: #0071A1;
+  --color-blue: #0071a1;
   --color-grey: #ddd;
   --shadow-close: rgba(40, 40, 40, 0.3) 0 2px 2px;
   --shadow-far: rgba(40, 40, 40, 0.3) 0 4px 8px;
 }
-
 
 /** ###############################################
  * STYLES
@@ -40,12 +39,14 @@
   display: flex;
 }
 
-.wpcui-section-list, .wpcui-control-list {
+.wpcui-section-list,
+.wpcui-control-list {
   width: 300px;
   margin-right: var(--spacing);
 }
 
-.wpcui-section, .wpcui-control {
+.wpcui-section,
+.wpcui-control {
   list-style: none;
   box-shadow: var(--shadow-close);
   transition: all var(--animation-speed) ease-in-out;
@@ -75,7 +76,8 @@
   opacity: 0.3;
 }
 
-.wpcui-section:hover, .wpcui-section-selected {
+.wpcui-section:hover,
+.wpcui-section-selected {
   box-shadow: var(--shadow-far);
 }
 
@@ -97,6 +99,8 @@
   background-color: var(--color-blue);
   color: white;
   padding: 8px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .wpcui-section-headerbar {
@@ -143,8 +147,11 @@
 
 .wpcui-modal-wrapper {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.3);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
   animation: fade-in var(--animation-speed) ease-in;
   z-index: 999;
 }
@@ -168,7 +175,6 @@
 .wpcui-form-cancel:hover {
   text-decoration: underline;
 }
-
 
 /** ###############################################
  * ANIMATIONS
