@@ -19,12 +19,12 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
     const buttons = [];
     if (this.props.onCode) {
       buttons.push(
-          <i
-              key="codeIcon"
-              title={this.props.onCode.title}
-              onClick={() => this.props.onCode.function()}
-              className="dashicons dashicons-editor-code"
-          />
+        <i
+          key="codeIcon"
+          title={this.props.onCode.title}
+          onClick={() => this.props.onCode.function()}
+          className="dashicons dashicons-editor-code"
+        />
       );
     }
     if (this.props.onDuplicate) {
