@@ -14,9 +14,27 @@ export interface Section {
 
 export interface Control {
   id: string;
-  title: string;
+  label: string;
+  type: ControlType;
   priority: number;
   visible: boolean;
+  default?: string;
+  choices?: string[];
+}
+
+export enum ControlType {
+  TEXT = 0,
+  TEXT_AREA,
+  DROPDOWN_PAGES,
+  EMAIL,
+  URL,
+  NUMBER,
+  DATE,
+  SELECT,
+  RADIO,
+  COLOR_PICKER,
+  UPLOAD,
+  IMAGE,
 }
 
 export interface Notification {

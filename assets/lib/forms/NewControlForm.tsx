@@ -7,13 +7,14 @@ import { controlIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
-import { Control, DatabaseObject } from "../models/models";
+import { Control, ControlType, DatabaseObject } from "../models/models";
 import React = require("react");
 import { connect } from "react-redux";
 
 interface IState {
   newControlId: string;
-  newControlTitle: string;
+  newControlLabel: string;
+  newDefault: string;
   autoGenerateId: string;
   errorTitle: string;
   errorMessage: string;
@@ -29,7 +30,8 @@ class NewControlForm extends Component<IProps, IState> {
 
     this.state = {
       newControlId: "",
-      newControlTitle: "",
+      newControlLabel: "",
+      newDefault: "",
       autoGenerateId: "checked",
       errorTitle: "",
       errorMessage: "",
@@ -37,17 +39,20 @@ class NewControlForm extends Component<IProps, IState> {
 
     this.handleControlTitleChange = this.handleControlTitleChange.bind(this);
     this.handleControlIdChange = this.handleControlIdChange.bind(this);
-    this.createNewControl = this.createNewControl.bind(this);
     this.handleAutoGenerateIdChange = this.handleAutoGenerateIdChange.bind(
       this
     );
+    this.handleControlDefaultChange = this.handleControlDefaultChange.bind(
+      this
+    );
+    this.createNewControl = this.createNewControl.bind(this);
   }
 
   /**
    * Create a new section with the given id and title.
    */
   createNewControl() {
-    if (!this.state.newControlTitle || !this.state.newControlId) {
+    if (!this.state.newControlLabel || !this.state.newControlId) {
       this.setState({
         errorTitle: "Missing Required Fields",
         errorMessage: "Controls Title and ID are required.",
@@ -65,9 +70,12 @@ class NewControlForm extends Component<IProps, IState> {
 
     const newControl: Control = {
       id: this.state.newControlId,
-      title: this.state.newControlTitle,
+      type: ControlType.TEXT,
+      label: this.state.newControlLabel,
       priority: 99,
       visible: true,
+      choices: null,
+      default: this.state.newDefault,
     };
 
     store.dispatch({
@@ -79,7 +87,7 @@ class NewControlForm extends Component<IProps, IState> {
   }
 
   handleControlTitleChange(event) {
-    this.setState({ newControlTitle: event.target.value });
+    this.setState({ newControlLabel: event.target.value });
 
     if (this.state.autoGenerateId) {
       this.setState({ newControlId: stringToSnakeCase(event.target.value) });
@@ -93,13 +101,17 @@ class NewControlForm extends Component<IProps, IState> {
   handleAutoGenerateIdChange() {
     if (!this.state.autoGenerateId) {
       this.setState({
-        newControlId: stringToSnakeCase(this.state.newControlTitle),
+        newControlId: stringToSnakeCase(this.state.newControlLabel),
       });
     }
 
     this.setState({
       autoGenerateId: this.state.autoGenerateId == "checked" ? "" : "checked",
     });
+  }
+
+  handleControlDefaultChange(event) {
+    this.setState({ newDefault: event.target.value });
   }
 
   render() {
@@ -118,7 +130,7 @@ class NewControlForm extends Component<IProps, IState> {
                 inputId="newControlTitle"
                 placeholder="New Control Name"
                 onChange={this.handleControlTitleChange}
-                value={this.state.newControlTitle}
+                value={this.state.newControlLabel}
               />
               <FormCheckbox
                 label="Auto-Generate ID"
@@ -132,6 +144,12 @@ class NewControlForm extends Component<IProps, IState> {
                 onChange={this.handleControlIdChange}
                 value={this.state.newControlId}
                 disabled={this.state.autoGenerateId != null}
+              />
+              <FormTextInput
+                label="Default Value"
+                inputId="newDefault"
+                placeholder="Default Value"
+                onChange={this.handleControlDefaultChange}
               />
             </tbody>
           </table>

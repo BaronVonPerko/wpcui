@@ -8,6 +8,7 @@ import ItemPanelHeader from "./ItemPanelHeader";
 interface IProps {
   data: CustomizerControl;
 }
+
 export default class Control extends Component<IProps, null> {
   constructor(props) {
     super(props);
