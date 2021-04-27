@@ -150,6 +150,7 @@ class NewControlForm extends Component<IProps, IState> {
                 inputId="newDefault"
                 placeholder="Default Value"
                 onChange={this.handleControlDefaultChange}
+                value={this.state.newDefault}
               />
             </tbody>
           </table>

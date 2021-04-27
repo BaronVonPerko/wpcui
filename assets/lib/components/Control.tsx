@@ -42,7 +42,8 @@ export default class Control extends Component<IProps, null> {
           onCode={{ title: "Show Code", function: this.showCode }}
         />
         <div className="wpcui-section-contents">
-          <p className="wpcui-control-title">{this.props.data.title}</p>
+          <p className="wpcui-control-title">{this.props.data.label}</p>
+          <p>Default Value: {this.props.data.default}</p>
         </div>
       </div>
     );
