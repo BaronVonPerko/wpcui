@@ -8,14 +8,16 @@ import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
 import { Control, ControlType, DatabaseObject } from "../models/models";
-import React = require("react");
 import { connect } from "react-redux";
+import React = require("react");
+import FormSelect from "../elements/FormSelect";
 
 interface IState {
   newControlId: string;
   newControlLabel: string;
   newDefault: string;
   autoGenerateId: string;
+  newControlType: ControlType;
   errorTitle: string;
   errorMessage: string;
 }
@@ -32,6 +34,7 @@ class NewControlForm extends Component<IProps, IState> {
       newControlId: "",
       newControlLabel: "",
       newDefault: "",
+      newControlType: ControlType.TEXT,
       autoGenerateId: "checked",
       errorTitle: "",
       errorMessage: "",
@@ -114,6 +117,10 @@ class NewControlForm extends Component<IProps, IState> {
     this.setState({ newDefault: event.target.value });
   }
 
+  handleControlTypeChange(event) {
+    // todo
+  }
+
   render() {
     return (
       <div className="wpcui-modal-wrapper">
@@ -151,6 +158,15 @@ class NewControlForm extends Component<IProps, IState> {
                 placeholder="Default Value"
                 onChange={this.handleControlDefaultChange}
                 value={this.state.newDefault}
+              />
+              <FormSelect
+                inputId="newType"
+                label="Control Type"
+                onChange={this.handleControlTypeChange}
+                options={[
+                  { text: "Hello", value: 0 },
+                  { text: "World", value: 1 },
+                ]}
               />
             </tbody>
           </table>
