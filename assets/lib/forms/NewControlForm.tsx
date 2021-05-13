@@ -11,7 +11,10 @@ import { Control, ControlType, DatabaseObject } from "../models/models";
 import { connect } from "react-redux";
 import React = require("react");
 import FormSelect from "../elements/FormSelect";
-import { ControlTypeSelectOptions } from "../models/selectOptions";
+import {
+  ControlTypeSelectOptions,
+  ControlTypesWithOptions,
+} from "../models/selectOptions";
 
 interface IState {
   newControlId: string;
@@ -19,6 +22,7 @@ interface IState {
   newDefault: string;
   autoGenerateId: string;
   newControlType: ControlType;
+  newChoices: string;
   errorTitle: string;
   errorMessage: string;
 }
@@ -37,6 +41,7 @@ class NewControlForm extends Component<IProps, IState> {
       newDefault: "",
       newControlType: ControlType.TEXT,
       autoGenerateId: "checked",
+      newChoices: "",
       errorTitle: "",
       errorMessage: "",
     };
@@ -51,6 +56,9 @@ class NewControlForm extends Component<IProps, IState> {
     );
     this.createNewControl = this.createNewControl.bind(this);
     this.handleControlTypeChange = this.handleControlTypeChange.bind(this);
+    this.handleControlChoicesChange = this.handleControlChoicesChange.bind(
+      this
+    );
   }
 
   /**
@@ -123,6 +131,29 @@ class NewControlForm extends Component<IProps, IState> {
     this.setState({ newControlType: event.target.value });
   }
 
+  handleControlChoicesChange(event) {
+    this.setState({ newChoices: event.target.value });
+  }
+
+  renderChoices() {
+    const selectedType = Number.parseInt(this.state.newControlType.toString());
+    const hasOptions = ControlTypesWithOptions.includes(selectedType);
+
+    if (!hasOptions) {
+      return null;
+    }
+
+    return (
+      <FormTextInput
+        label="Choices"
+        inputId="newChoices"
+        placeholder="Comma separated list of choices to display"
+        onChange={this.handleControlChoicesChange}
+        value={this.state.newChoices}
+      />
+    );
+  }
+
   render() {
     return (
       <div className="wpcui-modal-wrapper">
@@ -167,6 +198,7 @@ class NewControlForm extends Component<IProps, IState> {
                 onChange={this.handleControlTypeChange}
                 options={ControlTypeSelectOptions}
               />
+              {this.renderChoices()}
             </tbody>
           </table>
           <Button

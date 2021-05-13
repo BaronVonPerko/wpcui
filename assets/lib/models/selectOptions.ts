@@ -19,3 +19,8 @@ export const ControlTypeSelectOptions: SelectOption[] = [
   { text: "Upload", value: ControlType.UPLOAD },
   { text: "Image", value: ControlType.IMAGE },
 ];
+
+export const ControlTypesWithOptions: ControlType[] = [
+  ControlType.SELECT,
+  ControlType.RADIO,
+];
