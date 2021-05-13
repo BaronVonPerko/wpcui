@@ -11,6 +11,7 @@ import { Control, ControlType, DatabaseObject } from "../models/models";
 import { connect } from "react-redux";
 import React = require("react");
 import FormSelect from "../elements/FormSelect";
+import { ControlTypeSelectOptions } from "../models/selectOptions";
 
 interface IState {
   newControlId: string;
@@ -163,10 +164,7 @@ class NewControlForm extends Component<IProps, IState> {
                 inputId="newType"
                 label="Control Type"
                 onChange={this.handleControlTypeChange}
-                options={[
-                  { text: "Hello", value: 0 },
-                  { text: "World", value: 1 },
-                ]}
+                options={ControlTypeSelectOptions}
               />
             </tbody>
           </table>

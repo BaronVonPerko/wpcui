@@ -1,10 +1,6 @@
 import { ChangeEventHandler, Component } from "react";
 import React = require("react");
-
-interface SelectOption {
-  text: string;
-  value: number | string;
-}
+import { SelectOption } from "../models/selectOptions";
 
 interface IProps {
   inputId: string;
