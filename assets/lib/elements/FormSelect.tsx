@@ -28,7 +28,9 @@ export default class FormSelect extends Component<IProps, IState> {
   }
 
   renderInput() {
-    return <select>{this.getOptionItems()}</select>;
+    return (
+      <select onChange={this.props.onChange}>{this.getOptionItems()}</select>
+    );
   }
 
   getOptionItems() {

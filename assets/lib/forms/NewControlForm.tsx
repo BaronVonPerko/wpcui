@@ -50,6 +50,7 @@ class NewControlForm extends Component<IProps, IState> {
       this
     );
     this.createNewControl = this.createNewControl.bind(this);
+    this.handleControlTypeChange = this.handleControlTypeChange.bind(this);
   }
 
   /**
@@ -119,7 +120,7 @@ class NewControlForm extends Component<IProps, IState> {
   }
 
   handleControlTypeChange(event) {
-    // todo
+    this.setState({ newControlType: event.target.value });
   }
 
   render() {
