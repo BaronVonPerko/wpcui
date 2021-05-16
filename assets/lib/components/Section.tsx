@@ -5,6 +5,7 @@ import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
 import ItemPanelHeader from "./ItemPanelHeader";
+import { CardTitleSection, CardStats } from "../styled";
 
 interface IProps {
   data: CustomizerSection;
@@ -121,20 +122,20 @@ class Section extends Component<IProps, IState> {
         />
 
         <div onClick={() => this.click()} className="wpcui-section-contents">
-          <div className="wpcui-section-title-section">
+          <CardTitleSection>
             <h3>{this.props.data.title}</h3>
             <i
               onClick={(e) => this.toggleVisibility(e)}
               className={this.getVisibilityClasses()}
             />
-          </div>
+          </CardTitleSection>
           <p>
             ID: <em>{this.props.data.id}</em>
           </p>
-          <div className="wpcui-section-controlstats">
+          <CardStats>
             <h5>{this.props.data.controls.length}</h5>
             <p>controls</p>
-          </div>
+          </CardStats>
         </div>
       </div>
     );

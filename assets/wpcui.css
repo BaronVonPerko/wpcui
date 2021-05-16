@@ -54,16 +54,6 @@
   animation: fade-in var(--animation-speed) ease-in-out;
 }
 
-.wpcui-section-title-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.wpcui-section-title-section h3 {
-  display: inline-block;
-}
-
 .wpcui-section-title-section i.wpcui-visibility {
   transition: opacity var(--animation-speed) ease-in-out;
 }
@@ -103,22 +93,6 @@
   justify-content: space-between;
 }
 
-.wpcui-section-controlstats {
-  text-align: center;
-  margin-top: var(--spacing);
-}
-
-.wpcui-section-controlstats h5 {
-  font-size: 24pt;
-  font-weight: bold;
-  margin: 0;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.wpcui-section-controlstats p {
-  color: rgba(0, 0, 0, 0.6);
-}
-
 .wpcui-section-headerbar {
   text-align: right;
 }
@@ -132,30 +106,7 @@
   animation: fade-in var(--animation-speed) ease-in-out;
 }
 
-.wpcui-tab-pane {
-  margin: var(--spacing) 0;
-}
 
-.wpcui-tab-titles {
-  background-color: var(--color-grey);
-  display: flex;
-  margin-bottom: var(--spacing);
-}
-
-.wpcui-tab-titles .wpcui-tab {
-  margin: 0;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  transition: all 200ms ease-in-out;
-  border-bottom: 4px solid var(--color-grey);
-}
-
-.wpcui-tab-titles .wpcui-tab.active {
-  border-bottom: 4px solid var(--color-blue);
-}
 
 .wpcui-tab-content {
   margin: 10px 4px;

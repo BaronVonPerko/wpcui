@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { NavigationTab } from "../models/models";
 import React = require("react");
+import { TabPaneWrapper, TabPaneTitles, TabPaneTitle } from "../styled";
 
 interface IProps {
   tabs: NavigationTab[];
@@ -22,21 +23,15 @@ export default class TabPane extends Component<IProps, IState> {
     this.setState({ selectedTab: tab });
   }
 
-  getTabClassName(tab) {
-    return tab.title === this.state.selectedTab.title
-      ? "wpcui-tab active"
-      : "wpcui-tab";
-  }
-
   renderTabTitles() {
     return this.props.tabs.map((tab, index) => (
-      <p
-        className={this.getTabClassName(tab)}
+      <TabPaneTitle
+        active={this.state.selectedTab.title === tab.title}
         key={index}
         onClick={() => this.selectTab(tab)}
       >
         {tab.title}
-      </p>
+      </TabPaneTitle>
     ));
   }
 
@@ -46,10 +41,10 @@ export default class TabPane extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className="wpcui-tab-pane">
-        <div className="wpcui-tab-titles">{this.renderTabTitles()}</div>
+      <TabPaneWrapper>
+        <TabPaneTitles>{this.renderTabTitles()}</TabPaneTitles>
         <div className="wpcui-tab-content">{this.renderSelectedTab()}</div>
-      </div>
+      </TabPaneWrapper>
     );
   }
 }
