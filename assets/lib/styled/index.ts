@@ -12,6 +12,7 @@ export const NotificationBox = styled.div`
   animation: fade-in ${WordPressTheme.animationSpeed} ease-in-out;
   box-shadow: ${WordPressTheme.shadows.close};
   transition: opacity ${WordPressTheme.animationSpeed} ease-in-out;
+  opacity: ${(props) => (props.fade ? 0 : 1)};
 `;
 
 export const Card = styled.div`
@@ -77,4 +78,28 @@ export const TabPaneTitle = styled.div`
   transition: all 200ms ease-in-out;
   border-bottom: ${(props) =>
     props.active ? TabPaneTitleActiveBorder : TabPaneTitleBorder};
+`;
+
+export const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  animation: fade-in ${WordPressTheme.animationSpeed} ease-in;
+  z-index: 999;
+
+  &div {
+  }
+`;
+
+export const ModalContent = styled.div`
+  width: 600px;
+  margin: 300px auto 0;
+  background-color: ${WordPressTheme.colors.secondary};
+  padding: 20px 40px;
+  border-radius: 4px;
+  animation: modal-slide-in ${WordPressTheme.animationSpeed} ease-in;
+  z-index: 1000;
 `;

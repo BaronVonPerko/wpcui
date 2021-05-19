@@ -10,6 +10,7 @@ import { hideModal } from "../components/Modal";
 import React = require("react");
 import { connect } from "react-redux";
 import { DatabaseObject } from "../models/models";
+import { ModalWrapper, ModalContent } from "../styled";
 
 interface IState {
   newSectionId: string;
@@ -102,8 +103,8 @@ class NewSectionForm extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className="wpcui-modal-wrapper">
-        <div className="wpcui-modal">
+      <ModalWrapper>
+        <ModalContent>
           <h3>Create a New Customizer Section</h3>
           <WarningBar
             title={this.state.errorTitle}
@@ -139,8 +140,8 @@ class NewSectionForm extends Component<IProps, IState> {
             click={this.createNewSection}
           />
           <FormCancel handleClick={hideModal} />
-        </div>
-      </div>
+        </ModalContent>
+      </ModalWrapper>
     );
   }
 }

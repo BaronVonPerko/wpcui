@@ -8,6 +8,7 @@ import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { Section } from "../models/models";
 import React = require("react");
+import { ModalWrapper, ModalContent } from "../styled";
 
 interface IProps {
   section: Section;
@@ -102,8 +103,8 @@ export default class EditSectionForm extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className="wpcui-modal-wrapper">
-        <div className="wpcui-modal">
+      <ModalWrapper>
+        <ModalContent>
           <h3>Edit Customizer Section</h3>
           <WarningBar
             title={this.state.errorTitle}
@@ -139,8 +140,8 @@ export default class EditSectionForm extends Component<IProps, IState> {
             click={this.updateSection}
           />
           <FormCancel handleClick={this.closeForm} />
-        </div>
-      </div>
+        </ModalContent>
+      </ModalWrapper>
     );
   }
 }
