@@ -2,11 +2,11 @@ import { Component } from "react";
 import Button from "../elements/Button";
 import SectionList from "./SectionList";
 import NewSectionForm from "../forms/NewSectionForm";
-import { connect } from "react-redux";
 import ControlList from "./ControlList";
 import { modal } from "./Modal";
 import { DatabaseObject, Section } from "../models/models";
 import React = require("react");
+import { EditorColumns } from "../styled";
 
 interface IProps {
   data: DatabaseObject;
@@ -31,10 +31,10 @@ export default class CustomizerEditor extends Component<IProps, null> {
           innerText="Create New Section"
           click={this.showNewSectionForm}
         />
-        <div className="wpcui-editor-columns">
+        <EditorColumns>
           <SectionList />
           <ControlList />
-        </div>
+        </EditorColumns>
       </div>
     );
   }

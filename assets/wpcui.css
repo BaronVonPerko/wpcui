@@ -18,11 +18,6 @@
  */
 
 
-.wpcui-editor-columns {
-  margin: var(--spacing) 0;
-  display: flex;
-}
-
 .wpcui-section-list,
 .wpcui-control-list {
   width: 300px;
@@ -55,11 +50,6 @@
   box-shadow: var(--shadow-far);
 }
 
-.wpcui-section-contents {
-  padding: 2px 4px;
-  cursor: pointer;
-}
-
 .wpcui-section-not-selected {
   opacity: 0.5;
   transform: translateX(calc(-1 * var(--spacing)));
@@ -67,23 +57,6 @@
 
 .wpcui-section-closed.wpcui-section-not-selected:hover {
   opacity: 0.8;
-}
-
-.wpcui-section-headerbar {
-  background-color: var(--color-blue);
-  color: white;
-  padding: 8px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.wpcui-section-headerbar {
-  text-align: right;
-}
-
-.wpcui-section-headerbar i {
-  cursor: pointer;
-  padding-left: 8px;
 }
 
 .wpcui-control-list {
@@ -96,15 +69,6 @@
   margin: 10px 4px;
 }
 
-.wpcui-form-cancel {
-  cursor: pointer;
-  display: inline-block;
-  margin: 0 8px;
-}
-
-.wpcui-form-cancel:hover {
-  text-decoration: underline;
-}
 
 /** ###############################################
  * ANIMATIONS

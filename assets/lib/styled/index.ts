@@ -103,3 +103,36 @@ export const ModalContent = styled.div`
   animation: modal-slide-in ${WordPressTheme.animationSpeed} ease-in;
   z-index: 1000;
 `;
+
+export const FormCancelButton = styled.p`
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 8px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const EditorColumns = styled.div`
+  margin: ${WordPressTheme.spacing} 0;
+  display: flex;
+`;
+
+export const CardContents = styled.div`
+  padding: 2px 4px;
+  cursor: pointer;
+`;
+
+export const CardHeaderBar = styled.div`
+  background-color: ${WordPressTheme.colors.primary};
+  color: white;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+
+  i {
+    cursor: pointer;
+    padding-left: 8px;
+  }
+`;

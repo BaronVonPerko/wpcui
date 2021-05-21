@@ -1,5 +1,6 @@
 import { Component } from "react";
 import React = require("react");
+import { CardHeaderBar } from "../styled";
 
 interface IconButton {
   function: Function;
@@ -14,7 +15,7 @@ interface IProps {
   title?: string;
 }
 
-export default class ItemPanelHeader extends Component<IProps, {}> {
+export default class CardHeader extends Component<IProps, {}> {
   renderHeaderButtons() {
     const buttons = [];
     if (this.props.onCode) {
@@ -63,10 +64,10 @@ export default class ItemPanelHeader extends Component<IProps, {}> {
 
   render() {
     return (
-      <div className="wpcui-section-headerbar">
+      <CardHeaderBar>
         <div>{this.props.title}</div>
         <div>{this.renderHeaderButtons()}</div>
-      </div>
+      </CardHeaderBar>
     );
   }
 }

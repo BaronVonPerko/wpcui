@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
-import ItemPanelHeader from "./ItemPanelHeader";
-import { CardTitleSection, CardStats } from "../styled";
+import CardHeader from "./CardHeader";
+import { CardTitleSection, CardStats, CardContents } from "../styled";
 
 interface IProps {
   data: CustomizerSection;
@@ -114,14 +114,17 @@ class Section extends Component<IProps, IState> {
     return (
       <div className={this.getSectionClasses()}>
         {this.renderEditSectionForm()}
-        <ItemPanelHeader
+        <CardHeader
           title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}
           onEdit={{ title: "Edit Section", function: this.editSection }}
           // onDuplicate={{title: "Duplicate Section", function: this.duplicateSection}}
         />
 
-        <div onClick={() => this.click()} className="wpcui-section-contents">
+        <CardContents
+          onClick={() => this.click()}
+          className="wpcui-section-contents"
+        >
           <CardTitleSection>
             <h3>{this.props.data.title}</h3>
             <i
@@ -136,7 +139,7 @@ class Section extends Component<IProps, IState> {
             <h5>{this.props.data.controls.length}</h5>
             <p>controls</p>
           </CardStats>
-        </div>
+        </CardContents>
       </div>
     );
   }
