@@ -18,12 +18,6 @@
  */
 
 
-.wpcui-section-list,
-.wpcui-control-list {
-  width: 300px;
-  margin-right: var(--spacing);
-}
-
 .wpcui-section,
 .wpcui-control {
   list-style: none;
@@ -59,15 +53,6 @@
   opacity: 0.8;
 }
 
-.wpcui-control-list {
-  animation: fade-in var(--animation-speed) ease-in-out;
-}
-
-
-
-.wpcui-tab-content {
-  margin: 10px 4px;
-}
 
 
 /** ###############################################

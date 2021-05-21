@@ -6,6 +6,7 @@ import NewControlForm from "../forms/NewControlForm";
 import { connect } from "react-redux";
 import { modal } from "./Modal";
 import React = require("react");
+import { CardListWrapper } from "../styled";
 
 interface IProps {
   selectedSection: Section;
@@ -37,15 +38,13 @@ class ControlList extends Component<IProps, null> {
     }
 
     return (
-      <div className="wpcui-control-list">
-        <div className="wpcui-controllist-content">
-          {this.renderControls()}
-          <Button
-            innerText="Create New Control"
-            click={() => this.displayCreateControlForm()}
-          />
-        </div>
-      </div>
+      <CardListWrapper>
+        {this.renderControls()}
+        <Button
+          innerText="Create New Control"
+          click={() => this.displayCreateControlForm()}
+        />
+      </CardListWrapper>
     );
   }
 }

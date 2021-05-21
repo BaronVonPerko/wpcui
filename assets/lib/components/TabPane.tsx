@@ -1,7 +1,12 @@
 import { Component } from "react";
 import { NavigationTab } from "../models/models";
 import React = require("react");
-import { TabPaneWrapper, TabPaneTitles, TabPaneTitle } from "../styled";
+import {
+  TabPaneWrapper,
+  TabPaneTitles,
+  TabPaneTitle,
+  TabPaneContent,
+} from "../styled";
 
 interface IProps {
   tabs: NavigationTab[];
@@ -43,7 +48,7 @@ export default class TabPane extends Component<IProps, IState> {
     return (
       <TabPaneWrapper>
         <TabPaneTitles>{this.renderTabTitles()}</TabPaneTitles>
-        <div className="wpcui-tab-content">{this.renderSelectedTab()}</div>
+        <TabPaneContent>{this.renderSelectedTab()}</TabPaneContent>
       </TabPaneWrapper>
     );
   }

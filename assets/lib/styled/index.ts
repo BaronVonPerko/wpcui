@@ -80,6 +80,10 @@ export const TabPaneTitle = styled.div`
     props.active ? TabPaneTitleActiveBorder : TabPaneTitleBorder};
 `;
 
+export const TabPaneContent = styled.div`
+  margin: 10px 4px;
+`;
+
 export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -135,4 +139,10 @@ export const CardHeaderBar = styled.div`
     cursor: pointer;
     padding-left: 8px;
   }
+`;
+
+export const CardListWrapper = styled.div`
+  animation: fade-in ${WordPressTheme.animationSpeed} ease-in-out;
+  width: 300px;
+  margin-right: var(--spacing);
 `;
