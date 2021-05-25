@@ -5,7 +5,7 @@ import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
 import CardHeader from "./CardHeader";
-import { CardTitleSection, CardStats, CardContents } from "../styled";
+import { CardTitleSection, CardStats, CardContents, Card } from "../styled";
 
 interface IProps {
   data: CustomizerSection;
@@ -27,7 +27,6 @@ class Section extends Component<IProps, IState> {
     };
 
     this.click = this.click.bind(this);
-    this.getSectionClasses = this.getSectionClasses.bind(this);
     this.getVisibilityClasses = this.getVisibilityClasses.bind(this);
     this.deleteSection = this.deleteSection.bind(this);
     this.editSection = this.editSection.bind(this);
@@ -77,20 +76,8 @@ class Section extends Component<IProps, IState> {
     return this.props.selectedSection?.id === this.props.data.id;
   }
 
-  getSectionClasses() {
-    let classes = "wpcui-section";
-
-    if (!this.getOpen()) {
-      classes += " wpcui-section-closed";
-    } else {
-      classes += " wpcui-section-selected";
-    }
-
-    if (!this.getOpen() && this.props.selectedSection !== null) {
-      classes += " wpcui-section-not-selected";
-    }
-
-    return classes;
+  getDisabled() {
+    return !this.getOpen() && this.props.selectedSection !== null;
   }
 
   getVisibilityClasses() {
@@ -112,7 +99,7 @@ class Section extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className={this.getSectionClasses()}>
+      <Card selected={this.getOpen()}>
         {this.renderEditSectionForm()}
         <CardHeader
           title="Section"
@@ -140,7 +127,7 @@ class Section extends Component<IProps, IState> {
             <p>controls</p>
           </CardStats>
         </CardContents>
-      </div>
+      </Card>
     );
   }
 }

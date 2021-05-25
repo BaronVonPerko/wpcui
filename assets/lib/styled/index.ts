@@ -17,10 +17,15 @@ export const NotificationBox = styled.div`
 
 export const Card = styled.div`
   list-style: none;
-  box-shadow: ${WordPressTheme.shadows.close};
+  box-shadow: ${(props) =>
+    props.selected ? WordPressTheme.shadows.far : WordPressTheme.shadows.close};
   transition: all ${WordPressTheme.animationSpeed} ease-in-out;
   margin-bottom: ${WordPressTheme.spacing};
   animation: fade-in ${WordPressTheme.animationSpeed} ease-in-out;
+
+  &:hover {
+    box-shadow: ${WordPressTheme.shadows.far};
+  }
 `;
 
 export const CardTitleSection = styled.div`

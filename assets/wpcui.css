@@ -1,31 +1,8 @@
 /** ###############################################
- * VARIABLES
- *  ###############################################
- */
-
-:root {
-  --spacing: 24px;
-  --animation-speed: 300ms;
-  --color-blue: #0071a1;
-  --color-grey: #ddd;
-  --shadow-close: rgba(40, 40, 40, 0.3) 0 2px 2px;
-  --shadow-far: rgba(40, 40, 40, 0.3) 0 4px 8px;
-}
-
-/** ###############################################
  * STYLES
  *  ###############################################
  */
 
-
-.wpcui-section,
-.wpcui-control {
-  list-style: none;
-  box-shadow: var(--shadow-close);
-  transition: all var(--animation-speed) ease-in-out;
-  margin-bottom: var(--spacing);
-  animation: fade-in var(--animation-speed) ease-in-out;
-}
 
 .wpcui-section-title-section i.wpcui-visibility {
   transition: opacity var(--animation-speed) ease-in-out;
@@ -39,19 +16,6 @@
   opacity: 0.3;
 }
 
-.wpcui-section:hover,
-.wpcui-section-selected {
-  box-shadow: var(--shadow-far);
-}
-
-.wpcui-section-not-selected {
-  opacity: 0.5;
-  transform: translateX(calc(-1 * var(--spacing)));
-}
-
-.wpcui-section-closed.wpcui-section-not-selected:hover {
-  opacity: 0.8;
-}
 
 
 
