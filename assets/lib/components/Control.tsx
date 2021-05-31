@@ -3,7 +3,7 @@ import { Control as CustomizerControl } from "../models/models";
 import React = require("react");
 import store, { actions } from "../redux/wpcuiReducer";
 import CardHeader from "./CardHeader";
-import { Card, CardContents } from "./../styled";
+import { Card, CardContents } from "../styled";
 
 interface IProps {
   data: CustomizerControl;
@@ -14,6 +14,8 @@ export default class Control extends Component<IProps, null> {
     super(props);
 
     this.delete = this.delete.bind(this);
+    this.edit = this.edit.bind(this);
+    this.showCode = this.showCode.bind(this);
   }
 
   delete() {
@@ -33,6 +35,10 @@ export default class Control extends Component<IProps, null> {
     // TODO: show the example code in a modal
   }
 
+  edit() {
+    // todo
+  }
+
   render() {
     return (
       <Card>
@@ -40,6 +46,7 @@ export default class Control extends Component<IProps, null> {
           title="Control"
           onDelete={{ title: "Delete Control", function: this.delete }}
           onCode={{ title: "Show Code", function: this.showCode }}
+          onEdit={{title: "Edit", function: this.edit}}
         />
         <CardContents>
           <p className="wpcui-control-title">{this.props.data.label}</p>
