@@ -84,11 +84,11 @@ class NewControlForm extends Component<IProps, IState> {
 
     const newControl: Control = {
       id: this.state.newControlId,
-      type: ControlType.TEXT,
+      type: this.state.newControlType,
       label: this.state.newControlLabel,
       priority: 99,
       visible: true,
-      choices: null,
+      choices: this.state.newChoices.split(','),
       default: this.state.newDefault,
     };
 

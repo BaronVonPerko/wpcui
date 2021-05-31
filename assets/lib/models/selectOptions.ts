@@ -17,10 +17,14 @@ export const ControlTypeSelectOptions: SelectOption[] = [
   { text: "Radio", value: ControlType.RADIO },
   { text: "Color Picker", value: ControlType.COLOR_PICKER },
   { text: "Upload", value: ControlType.UPLOAD },
-  { text: "Image", value: ControlType.IMAGE },
+  { text: "Image", value: ControlType.IMAGE }
 ];
 
 export const ControlTypesWithOptions: ControlType[] = [
   ControlType.SELECT,
-  ControlType.RADIO,
+  ControlType.RADIO
 ];
+
+export function GetControlTypeById(id: number) {
+  return ControlTypeSelectOptions[id]?.text;
+}
