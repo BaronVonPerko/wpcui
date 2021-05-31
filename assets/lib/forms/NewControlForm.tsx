@@ -7,18 +7,19 @@ import { controlIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
-import { Control, ControlType, DatabaseObject } from "../models/models";
+import { Control as CustomizerControl, ControlType, DatabaseObject } from "../models/models";
 import { connect } from "react-redux";
 import React = require("react");
 import FormSelect from "../elements/FormSelect";
 import {
   ControlTypeSelectOptions,
-  ControlTypesWithOptions,
+  ControlTypesWithOptions, GetControlTypeById
 } from "../models/selectOptions";
 import { ModalWrapper, ModalContent } from "../styled";
 
 interface IState {
   newControlId: string;
+  oldControlId: string; // only used for updates
   newControlLabel: string;
   newDefault: string;
   autoGenerateId: string;
@@ -30,6 +31,7 @@ interface IState {
 
 interface IProps {
   data: DatabaseObject;
+  control?: CustomizerControl;
 }
 
 class NewControlForm extends Component<IProps, IState> {
@@ -37,12 +39,13 @@ class NewControlForm extends Component<IProps, IState> {
     super(props);
 
     this.state = {
-      newControlId: "",
-      newControlLabel: "",
-      newDefault: "",
-      newControlType: ControlType.TEXT,
-      autoGenerateId: "checked",
-      newChoices: "",
+      newControlId: this.props.control ? this.props.control.id : "",
+      oldControlId: this.props.control ? this.props.control.id : "",
+      newControlLabel: this.props.control ? this.props.control.label : "",
+      newDefault: this.props.control ? this.props.control.default : "",
+      newControlType: this.props.control ? GetControlTypeById(this.props.control.type).value : ControlType.TEXT,
+      autoGenerateId: this.props.control ? (this.props.control.autoGenerateId ? "checked" : "") : "checked",
+      newChoices: this.props.control ? this.props.control.choices.join(',') : "",
       errorTitle: "",
       errorMessage: "",
     };
@@ -74,7 +77,7 @@ class NewControlForm extends Component<IProps, IState> {
       return;
     }
 
-    if (controlIdExists(this.state.newControlId, this.props.data)) {
+    if (!this.props.control && controlIdExists(this.state.newControlId, this.props.data)) {
       this.setState({
         errorTitle: "Control Id Exists",
         errorMessage: "Control IDs must be unique across all sections.",
@@ -82,7 +85,7 @@ class NewControlForm extends Component<IProps, IState> {
       return;
     }
 
-    const newControl: Control = {
+    const newControl: CustomizerControl = {
       id: this.state.newControlId,
       type: this.state.newControlType,
       label: this.state.newControlLabel,
@@ -90,11 +93,13 @@ class NewControlForm extends Component<IProps, IState> {
       visible: true,
       choices: this.state.newChoices.split(','),
       default: this.state.newDefault,
+      autoGenerateId: this.state.autoGenerateId === "checked"
     };
 
     store.dispatch({
-      type: actions.CREATE_CONTROl,
+      type: this.props.control ? actions.UPDATE_CONTROL : actions.CREATE_CONTROl,
       control: newControl,
+      oldId: this.props.control?.id
     });
 
     hideModal();
@@ -198,13 +203,14 @@ class NewControlForm extends Component<IProps, IState> {
                 label="Control Type"
                 onChange={this.handleControlTypeChange}
                 options={ControlTypeSelectOptions}
+                value={this.state.newControlType}
               />
               {this.renderChoices()}
             </tbody>
           </table>
           <Button
             buttonType="primary"
-            innerText="Create New Control"
+            innerText={this.props.control ? "Update Control" : "Create New Control"}
             click={this.createNewControl}
           />
           <FormCancel handleClick={hideModal} />

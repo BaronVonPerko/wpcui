@@ -2,7 +2,7 @@ import { ControlType } from "./models";
 
 export interface SelectOption {
   text: string;
-  value: number | string;
+  value: ControlType
 }
 
 export const ControlTypeSelectOptions: SelectOption[] = [
@@ -25,6 +25,6 @@ export const ControlTypesWithOptions: ControlType[] = [
   ControlType.RADIO
 ];
 
-export function GetControlTypeById(id: number) {
-  return ControlTypeSelectOptions[id]?.text;
+export function GetControlTypeById(id: number) : SelectOption {
+  return ControlTypeSelectOptions[id];
 }

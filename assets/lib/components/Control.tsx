@@ -5,6 +5,8 @@ import store, { actions } from "../redux/wpcuiReducer";
 import CardHeader from "./CardHeader";
 import { Card, CardContents } from "../styled";
 import { GetControlTypeById } from "../models/selectOptions";
+import { modal } from "./Modal";
+import NewControlForm from "../forms/NewControlForm";
 
 interface IProps {
   data: CustomizerControl;
@@ -13,8 +15,6 @@ interface IProps {
 export default class Control extends Component<IProps, null> {
   constructor(props: IProps) {
     super(props);
-
-    console.log(props.data)
 
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
@@ -39,7 +39,7 @@ export default class Control extends Component<IProps, null> {
   }
 
   edit() {
-    // todo
+    modal(<NewControlForm control={this.props.data} />)
   }
 
   render() {
@@ -53,7 +53,7 @@ export default class Control extends Component<IProps, null> {
         />
         <CardContents>
           <p className="wpcui-control-title">{this.props.data.label}</p>
-          <p>Type: {GetControlTypeById(this.props.data.type)}</p>
+          <p>Type: {GetControlTypeById(this.props.data.type).text}</p>
           <p>Default Value: {this.props.data.default}</p>
         </CardContents>
       </Card>

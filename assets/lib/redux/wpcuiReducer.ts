@@ -5,7 +5,7 @@ import {
   toggleSectionVisibility,
   updateSection,
 } from "./sectionActions";
-import { createControl, deleteControl } from "./controlActions";
+import { createControl, deleteControl, updateControl } from "./controlActions";
 import { ApplicationState } from "../models/models";
 
 const initialState: ApplicationState = {
@@ -24,13 +24,14 @@ export enum actions {
   SELECT_SECTION,
   CLOSE_SECTION,
   CREATE_CONTROl,
+  DELETE_CONTROL,
+  UPDATE_CONTROL,
   UPDATE_SECTION,
   TOGGLE_SECTION_VISIBILITY,
   NOTIFY,
   CLEAR_NOTIFICATION,
   SHOW_MODAL,
   HIDE_MODAL,
-  DELETE_CONTROL,
 }
 
 function wpcuiReducer(state = initialState, action): ApplicationState {
@@ -72,6 +73,9 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
 
     case actions.DELETE_CONTROL:
       return deleteControl(state, action.controlId);
+
+    case actions.UPDATE_CONTROL:
+      return updateControl(state, action.oldId, action.control);
 
     /**
      * NOTIFICATION AND MODAL ACTIONS

@@ -6,7 +6,7 @@ interface IProps {
   inputId: string;
   label: string;
   onChange: ChangeEventHandler;
-  value?: string;
+  value?: number;
   options: SelectOption[];
 }
 interface IState {}
@@ -29,7 +29,7 @@ export default class FormSelect extends Component<IProps, IState> {
 
   renderInput() {
     return (
-      <select onChange={this.props.onChange}>{this.getOptionItems()}</select>
+      <select value={this.props.value} onChange={this.props.onChange}>{this.getOptionItems()}</select>
     );
   }
 

@@ -14,6 +14,7 @@ export interface Section {
 
 export interface Control {
   id: string;
+  autoGenerateId: boolean;
   label: string;
   type: ControlType;
   priority: number;
