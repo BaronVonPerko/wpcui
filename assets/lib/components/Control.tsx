@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { Control as CustomizerControl } from "../models/models";
 import React = require("react");
-import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
-import ItemPanelHeader from "./ItemPanelHeader";
+import CardHeader from "./CardHeader";
+import { Card, CardContents } from "./../styled";
 
 interface IProps {
   data: CustomizerControl;
@@ -35,17 +35,17 @@ export default class Control extends Component<IProps, null> {
 
   render() {
     return (
-      <div className="wpcui-control">
-        <ItemPanelHeader
+      <Card>
+        <CardHeader
           title="Control"
           onDelete={{ title: "Delete Control", function: this.delete }}
           onCode={{ title: "Show Code", function: this.showCode }}
         />
-        <div className="wpcui-section-contents">
+        <CardContents>
           <p className="wpcui-control-title">{this.props.data.label}</p>
           <p>Default Value: {this.props.data.default}</p>
-        </div>
-      </div>
+        </CardContents>
+      </Card>
     );
   }
 }

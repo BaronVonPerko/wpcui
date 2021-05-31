@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import store, { actions } from "../redux/wpcuiReducer";
 import { Notification as NotificationModel } from "../models/models";
 import React = require("react");
+import { NotificationBox } from "../styled";
 
 export function notify(message: any) {
   // todo: fix type
@@ -41,15 +42,13 @@ class Notification extends Component<IProps, IState> {
     }, 4000);
   }
 
-  getClass() {
-    return `wpcui-notification-box ${this.state.fade ? "wpcui-invisible" : ""}`;
-  }
-
   render() {
     if (this.props.notification?.message) {
       this.startTimer();
       return (
-        <div className={this.getClass()}>{this.props.notification.message}</div>
+        <NotificationBox fade={this.state.fade}>
+          {this.props.notification.message}
+        </NotificationBox>
       );
     }
     return null;

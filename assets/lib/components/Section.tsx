@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import EditSectionForm from "../forms/EditSectionForm";
 import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
-import ItemPanelHeader from "./ItemPanelHeader";
+import CardHeader from "./CardHeader";
+import { CardTitleSection, CardStats, CardContents, Card } from "../styled";
 
 interface IProps {
   data: CustomizerSection;
@@ -26,7 +27,6 @@ class Section extends Component<IProps, IState> {
     };
 
     this.click = this.click.bind(this);
-    this.getSectionClasses = this.getSectionClasses.bind(this);
     this.getVisibilityClasses = this.getVisibilityClasses.bind(this);
     this.deleteSection = this.deleteSection.bind(this);
     this.editSection = this.editSection.bind(this);
@@ -76,20 +76,8 @@ class Section extends Component<IProps, IState> {
     return this.props.selectedSection?.id === this.props.data.id;
   }
 
-  getSectionClasses() {
-    let classes = "wpcui-section";
-
-    if (!this.getOpen()) {
-      classes += " wpcui-section-closed";
-    } else {
-      classes += " wpcui-section-selected";
-    }
-
-    if (!this.getOpen() && this.props.selectedSection !== null) {
-      classes += " wpcui-section-not-selected";
-    }
-
-    return classes;
+  getDisabled() {
+    return !this.getOpen() && this.props.selectedSection !== null;
   }
 
   getVisibilityClasses() {
@@ -111,32 +99,35 @@ class Section extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className={this.getSectionClasses()}>
+      <Card selected={this.getOpen()}>
         {this.renderEditSectionForm()}
-        <ItemPanelHeader
+        <CardHeader
           title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}
           onEdit={{ title: "Edit Section", function: this.editSection }}
           // onDuplicate={{title: "Duplicate Section", function: this.duplicateSection}}
         />
 
-        <div onClick={() => this.click()} className="wpcui-section-contents">
-          <div className="wpcui-section-title-section">
+        <CardContents
+          onClick={() => this.click()}
+          className="wpcui-section-contents"
+        >
+          <CardTitleSection>
             <h3>{this.props.data.title}</h3>
             <i
               onClick={(e) => this.toggleVisibility(e)}
               className={this.getVisibilityClasses()}
             />
-          </div>
+          </CardTitleSection>
           <p>
             ID: <em>{this.props.data.id}</em>
           </p>
-          <div className="wpcui-section-controlstats">
+          <CardStats>
             <h5>{this.props.data.controls.length}</h5>
             <p>controls</p>
-          </div>
-        </div>
-      </div>
+          </CardStats>
+        </CardContents>
+      </Card>
     );
   }
 }

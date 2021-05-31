@@ -15,6 +15,7 @@ import {
   ControlTypeSelectOptions,
   ControlTypesWithOptions,
 } from "../models/selectOptions";
+import { ModalWrapper, ModalContent } from "../styled";
 
 interface IState {
   newControlId: string;
@@ -156,8 +157,8 @@ class NewControlForm extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className="wpcui-modal-wrapper">
-        <div className="wpcui-modal">
+      <ModalWrapper>
+        <ModalContent>
           <h3>Create a New Customizer Control</h3>
           <WarningBar
             title={this.state.errorTitle}
@@ -207,8 +208,8 @@ class NewControlForm extends Component<IProps, IState> {
             click={this.createNewControl}
           />
           <FormCancel handleClick={hideModal} />
-        </div>
-      </div>
+        </ModalContent>
+      </ModalWrapper>
     );
   }
 }

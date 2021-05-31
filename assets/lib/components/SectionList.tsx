@@ -3,6 +3,7 @@ import Section from "./Section";
 import { Section as CustomizerSection } from "../models/models";
 import { connect } from "react-redux";
 import React = require("react");
+import { CardListWrapper } from "../styled";
 
 interface IProps {
   sections: CustomizerSection[];
@@ -16,7 +17,7 @@ class SectionList extends Component<IProps, null> {
   }
 
   render() {
-    return <div className="wpcui-section-list">{this.getSections()}</div>;
+    return <CardListWrapper>{this.getSections()}</CardListWrapper>;
   }
 }
 

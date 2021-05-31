@@ -18,10 +18,12 @@
   "dependencies": {
     "@types/react": "^17.0.3",
     "axios": "^0.21.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-is": "^16.13.1",
     "react-redux": "^7.2.2",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@wordpress/env": "^4.0.0",
