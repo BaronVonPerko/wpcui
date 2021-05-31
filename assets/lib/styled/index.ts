@@ -149,5 +149,5 @@ export const CardHeaderBar = styled.div`
 export const CardListWrapper = styled.div`
   animation: fade-in ${WordPressTheme.animationSpeed} ease-in-out;
   width: 300px;
-  margin-right: var(--spacing);
+  margin-right: ${WordPressTheme.spacing};
 `;
