@@ -15,6 +15,7 @@ final class Init
     {
         return [
             Pages\Admin::class,
+            Pages\Customizer::class,
             Base\SettingsLinks::class,
             Base\Enqueue::class,
 	        Forms\AdminPageForms::class,
