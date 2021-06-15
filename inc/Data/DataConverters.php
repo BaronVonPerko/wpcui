@@ -41,7 +41,7 @@ class DataConverters {
         return new CustomizerControl(
             $control['id'],
             $control['label'],
-            $control['type'],
+            self::ConvertControlType($control['type']),
             $control['default'],
             $control['choices']
         );
@@ -55,6 +55,41 @@ class DataConverters {
         }
 
         return $controls;
+    }
+
+    /**
+     * MUST MATCH ControlType.ts enum
+     *
+     * @param $typeVal
+     * @return string
+     */
+    public static function ConvertControlType($typeVal): string {
+        switch($typeVal) {
+            case 0:
+                return "Text";
+            case 1:
+                return "Text_Area";
+            case 2:
+                return "Dropdown_Pages";
+            case 3:
+                return "Email";
+            case 4:
+                return "URL";
+            case 5:
+                return "Number";
+            case 6:
+                return "Date";
+            case 7:
+                return "Select";
+            case 8:
+                return "Radio";
+            case 9:
+                return "Color_Picker";
+            case 10:
+                return "Upload";
+            case 11:
+                return "Image";
+        }
     }
 
 }

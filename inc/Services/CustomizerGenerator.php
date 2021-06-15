@@ -107,7 +107,6 @@ class CustomizerGenerator {
 	 * @param $control_id_prefix
 	 */
 	private static function registerControl( $wp_customize, $control, $section, $validator, $control_id_prefix ) {
-
 		if ( ! empty( $control_id_prefix ) ) {
 			$control->id         = $control_id_prefix . '_' . $control->id;
 		}
@@ -168,11 +167,6 @@ class CustomizerGenerator {
 	}
 
 	private static function registerChoicesControl( $wp_customize, $control, $section, $type ) {
-		$choices = [];
-		foreach ( explode( ',', $control->choices ) as $choice ) {
-			$choices[ $choice ] = $choice;
-		}
-
 		$wp_customize->add_control( new WP_Customize_Control(
 			$wp_customize,
 			$control->id,
@@ -181,7 +175,7 @@ class CustomizerGenerator {
 				'section'  => $section->id,
 				'settings' => $control->id,
 				'type'     => $type,
-				'choices'  => $choices
+				'choices'  => $control->choices
 			]
 		) );
 	}
