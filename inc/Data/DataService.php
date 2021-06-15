@@ -19,7 +19,8 @@ class DataService {
 
 	public static function getSections() {
 	    if(array_key_exists('sections', self::getSettings())) {
-            return self::getSettings()['sections'];
+            $sectionsArr = self::getSettings()['sections'];
+            return DataConverters::ConvertSections($sectionsArr);
         } else {
 	        return [];
         }
