@@ -2,14 +2,15 @@ import { sectionIdExists, stringToSnakeCase } from "../common";
 import { useState } from "react";
 import store, { actions } from "../redux/wpcuiReducer";
 import { hideModal } from "../components/Modal";
-import { DatabaseObject } from "../models/models";
+import { DatabaseObject, Section } from "../models/models";
 
-export default function useSectionForm(data: DatabaseObject) {
-  const [sectionId, setSectionId] = useState("");
-  const [sectionTitle, setSectionTitle] = useState("");
+export default function useSectionForm(data: DatabaseObject, section: Section) {
+  const [sectionId, setSectionId] = useState(section?.id || "");
+  const [sectionTitle, setSectionTitle] = useState(section?.title || "");
   const [autoGenerateId, setAutoGenerateId] = useState("checked");
   const [errorTitle, setErrorTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const oldSectionId = section?.id;
 
   const sectionTitleChange = (e) => {
     setSectionTitle(e.target.value);
@@ -58,7 +59,15 @@ export default function useSectionForm(data: DatabaseObject) {
       controls: [],
     };
 
-    store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
+    if (section) {
+      store.dispatch({
+        type: actions.UPDATE_SECTION,
+        updatedSection: newSection,
+        oldSectionId,
+      });
+    } else {
+      store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
+    }
 
     hideModal();
   };
@@ -72,7 +81,6 @@ export default function useSectionForm(data: DatabaseObject) {
     autoGenerateId,
     errorMessage,
     errorTitle,
-    setError,
     save,
   };
 }

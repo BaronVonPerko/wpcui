@@ -6,12 +6,13 @@ import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
 import React = require("react");
 import { connect } from "react-redux";
-import { DatabaseObject } from "../models/models";
+import { DatabaseObject, Section } from "../models/models";
 import { ModalWrapper, ModalContent } from "../styled";
 import useSectionForm from "../hooks/useSectionForm";
 
 interface IProps {
   data: DatabaseObject;
+  section?: Section;
 }
 
 const SectionForm = (props: IProps) => {
@@ -20,13 +21,12 @@ const SectionForm = (props: IProps) => {
     sectionTitle,
     errorTitle,
     errorMessage,
-    setError,
     sectionIdChange,
     sectionTitleChange,
     autoGenerateIdChange,
     autoGenerateId,
     save,
-  } = useSectionForm(props.data);
+  } = useSectionForm(props.data, props.section);
 
   return (
     <ModalWrapper>
@@ -59,7 +59,7 @@ const SectionForm = (props: IProps) => {
         </table>
         <Button
           buttonType="primary"
-          innerText="Create New Section"
+          innerText={props.section ? "Update Section" : "Create New Section"}
           click={save}
         />
         <FormCancel handleClick={hideModal} />

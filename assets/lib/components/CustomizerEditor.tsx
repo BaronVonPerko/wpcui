@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Button from "../elements/Button";
 import SectionList from "./SectionList";
-import NewSectionForm from "../forms/NewSectionForm";
+import SectionForm from "../forms/SectionForm";
 import ControlList from "./ControlList";
 import { modal } from "./Modal";
 import { DatabaseObject, Section } from "../models/models";
@@ -20,7 +20,7 @@ export default class CustomizerEditor extends Component<IProps, null> {
   }
 
   showNewSectionForm() {
-    modal(<NewSectionForm />);
+    modal(<SectionForm />);
   }
 
   render() {

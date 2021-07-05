@@ -6,6 +6,8 @@ import { Section as CustomizerSection } from "../models/models";
 import React = require("react");
 import CardHeader from "./CardHeader";
 import { CardTitleSection, CardStats, CardContents, Card } from "../styled";
+import SectionForm from "../forms/SectionForm";
+import { modal } from "./Modal";
 
 interface IProps {
   data: CustomizerSection;
@@ -13,7 +15,6 @@ interface IProps {
 }
 
 interface IState {
-  editing: boolean;
   visible: boolean;
 }
 
@@ -22,7 +23,6 @@ class Section extends Component<IProps, IState> {
     super(props);
 
     this.state = {
-      editing: false,
       visible: this.props.data.visible,
     };
 
@@ -59,7 +59,7 @@ class Section extends Component<IProps, IState> {
   }
 
   editSection() {
-    this.setState({ editing: true });
+    modal(<SectionForm section={this.props.data} />);
   }
 
   toggleVisibility(e) {
@@ -86,21 +86,9 @@ class Section extends Component<IProps, IState> {
     }`;
   }
 
-  renderEditSectionForm() {
-    if (this.state.editing) {
-      return (
-        <EditSectionForm
-          onClose={() => this.setState({ editing: false })}
-          section={this.props.data}
-        />
-      );
-    }
-  }
-
   render() {
     return (
       <Card selected={this.getOpen()}>
-        {this.renderEditSectionForm()}
         <CardHeader
           title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}
