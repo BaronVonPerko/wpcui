@@ -1,9 +1,6 @@
-import { useState } from "react";
 import Button from "../elements/Button";
-import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
-import { sectionIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
@@ -11,63 +8,25 @@ import React = require("react");
 import { connect } from "react-redux";
 import { DatabaseObject } from "../models/models";
 import { ModalWrapper, ModalContent } from "../styled";
+import useSectionForm from "../hooks/useSectionForm";
 
 interface IProps {
   data: DatabaseObject;
 }
 
 const SectionForm = (props: IProps) => {
-  const [sectionId, setSectionId] = useState("");
-  const [sectionTitle, setSectionTitle] = useState("");
-  const [autoGenerateId, setAutoGenerateId] = useState("checked");
-  const [errorTitle, setErrorTitle] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const save = () => {
-    if (!sectionTitle || !sectionId) {
-      setErrorTitle("Missing Required Fields");
-      setErrorMessage("Section Title and ID are required.");
-      return;
-    }
-
-    if (sectionIdExists(sectionId, props.data)) {
-      setErrorTitle("Section Id Exists");
-      setErrorMessage("Section IDs must be unique across all sections.");
-      return;
-    }
-
-    const newSection = {
-      id: sectionId,
-      title: sectionTitle,
-      priority: 99,
-      visible: true,
-      controls: [],
-    };
-
-    store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
-
-    hideModal();
-  };
-
-  const sectionTitleChange = (e) => {
-    setSectionTitle(e.target.value);
-
-    if (autoGenerateId) {
-      setSectionId(stringToSnakeCase(e.target.value));
-    }
-  };
-
-  const sectionIdChange = (e) => {
-    setSectionId(e.target.value);
-  };
-
-  const autoGenerateIdChange = () => {
-    if (!autoGenerateId) {
-      setSectionId(stringToSnakeCase(sectionTitle));
-    }
-
-    setAutoGenerateId(autoGenerateId == "checked" ? "" : "checked");
-  };
+  const {
+    sectionId,
+    sectionTitle,
+    errorTitle,
+    errorMessage,
+    setError,
+    sectionIdChange,
+    sectionTitleChange,
+    autoGenerateIdChange,
+    autoGenerateId,
+    save,
+  } = useSectionForm(props.data);
 
   return (
     <ModalWrapper>
