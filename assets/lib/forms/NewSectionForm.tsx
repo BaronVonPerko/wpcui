@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import Button from "../elements/Button";
 import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
@@ -12,61 +12,33 @@ import { connect } from "react-redux";
 import { DatabaseObject } from "../models/models";
 import { ModalWrapper, ModalContent } from "../styled";
 
-interface IState {
-  newSectionId: string;
-  newSectionTitle: string;
-  autoGenerateId: "checked" | "";
-  errorTitle: string;
-  errorMessage: string;
-}
-
 interface IProps {
   data: DatabaseObject;
 }
 
-class NewSectionForm extends Component<IProps, IState> {
-  constructor(props) {
-    super(props);
+const SectionForm = (props: IProps) => {
+  const [sectionId, setSectionId] = useState("");
+  const [sectionTitle, setSectionTitle] = useState("");
+  const [autoGenerateId, setAutoGenerateId] = useState("checked");
+  const [errorTitle, setErrorTitle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-    this.state = {
-      newSectionId: "",
-      newSectionTitle: "",
-      autoGenerateId: "checked",
-      errorTitle: "",
-      errorMessage: "",
-    };
-
-    this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
-    this.handleSectionIdChange = this.handleSectionIdChange.bind(this);
-    this.createNewSection = this.createNewSection.bind(this);
-    this.handleAutoGenerateIdChange = this.handleAutoGenerateIdChange.bind(
-      this
-    );
-  }
-
-  /**
-   * Create a new section with the given id and title.
-   */
-  createNewSection() {
-    if (!this.state.newSectionTitle || !this.state.newSectionId) {
-      this.setState({
-        errorTitle: "Missing Required Fields",
-        errorMessage: "Section Title and ID are required.",
-      });
+  const save = () => {
+    if (!sectionTitle || !sectionId) {
+      setErrorTitle("Missing Required Fields");
+      setErrorMessage("Section Title and ID are required.");
       return;
     }
 
-    if (sectionIdExists(this.state.newSectionId, this.props.data)) {
-      this.setState({
-        errorTitle: "Section Id Exists",
-        errorMessage: "Section IDs must be unique across all sections.",
-      });
+    if (sectionIdExists(sectionId, props.data)) {
+      setErrorTitle("Section Id Exists");
+      setErrorMessage("Section IDs must be unique across all sections.");
       return;
     }
 
     const newSection = {
-      id: this.state.newSectionId,
-      title: this.state.newSectionTitle,
+      id: sectionId,
+      title: sectionTitle,
       priority: 99,
       visible: true,
       controls: [],
@@ -75,78 +47,69 @@ class NewSectionForm extends Component<IProps, IState> {
     store.dispatch({ type: actions.CREATE_SECTION, section: newSection });
 
     hideModal();
-  }
+  };
 
-  handleSectionTitleChange(event) {
-    this.setState({ newSectionTitle: event.target.value });
+  const sectionTitleChange = (e) => {
+    setSectionTitle(e.target.value);
 
-    if (this.state.autoGenerateId) {
-      this.setState({ newSectionId: stringToSnakeCase(event.target.value) });
+    if (autoGenerateId) {
+      setSectionId(stringToSnakeCase(e.target.value));
     }
-  }
+  };
 
-  handleSectionIdChange(event) {
-    this.setState({ newSectionId: event.target.value });
-  }
+  const sectionIdChange = (e) => {
+    setSectionId(e.target.value);
+  };
 
-  handleAutoGenerateIdChange() {
-    if (!this.state.autoGenerateId) {
-      this.setState({
-        newSectionId: stringToSnakeCase(this.state.newSectionTitle),
-      });
+  const autoGenerateIdChange = () => {
+    if (!autoGenerateId) {
+      setSectionId(stringToSnakeCase(sectionTitle));
     }
 
-    this.setState({
-      autoGenerateId: this.state.autoGenerateId == "checked" ? "" : "checked",
-    });
-  }
+    setAutoGenerateId(autoGenerateId == "checked" ? "" : "checked");
+  };
 
-  render() {
-    return (
-      <ModalWrapper>
-        <ModalContent>
-          <h3>Create a New Customizer Section</h3>
-          <WarningBar
-            title={this.state.errorTitle}
-            innerText={this.state.errorMessage}
-          />
-          <table className="form-table">
-            <tbody>
-              <FormTextInput
-                label="Section Title"
-                inputId="newSectionTitle"
-                placeholder="New Section Name"
-                onChange={this.handleSectionTitleChange}
-                value={this.state.newSectionTitle}
-              />
-              <FormCheckbox
-                label="Auto-Generate ID"
-                checked={this.state.autoGenerateId == "checked"}
-                handleChange={this.handleAutoGenerateIdChange}
-              />
-              <FormTextInput
-                label="Section ID"
-                inputId="newSectionId"
-                placeholder="New Section ID"
-                onChange={this.handleSectionIdChange}
-                value={this.state.newSectionId}
-                disabled={this.state.autoGenerateId == "checked"}
-              />
-            </tbody>
-          </table>
-          <Button
-            buttonType="primary"
-            innerText="Create New Section"
-            click={this.createNewSection}
-          />
-          <FormCancel handleClick={hideModal} />
-        </ModalContent>
-      </ModalWrapper>
-    );
-  }
-}
+  return (
+    <ModalWrapper>
+      <ModalContent>
+        <h3>Create a New Customizer Section</h3>
+        <WarningBar title={errorTitle} innerText={errorMessage} />
+        <table className="form-table">
+          <tbody>
+            <FormTextInput
+              label="Section Title"
+              inputId="newSectionTitle"
+              placeholder="New Section Name"
+              onChange={sectionTitleChange}
+              value={sectionTitle}
+            />
+            <FormCheckbox
+              label="Auto-Generate ID"
+              checked={autoGenerateId == "checked"}
+              handleChange={autoGenerateIdChange}
+            />
+            <FormTextInput
+              label="Section ID"
+              inputId="newSectionId"
+              placeholder="New Section ID"
+              onChange={sectionIdChange}
+              value={sectionId}
+              disabled={autoGenerateId == "checked"}
+            />
+          </tbody>
+        </table>
+        <Button
+          buttonType="primary"
+          innerText="Create New Section"
+          click={save}
+        />
+        <FormCancel handleClick={hideModal} />
+      </ModalContent>
+    </ModalWrapper>
+  );
+};
 
 const mapStateToProps = (state) => ({
   data: state,
 });
-export default connect(mapStateToProps)(NewSectionForm);
+export default connect(mapStateToProps)(SectionForm);
