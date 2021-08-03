@@ -173,7 +173,7 @@ class DataService {
 	 * @return mixed
 	 */
 	private static function getCoreSectionsData() {
-		return self::getSettings()["core_sections"];
+//		return self::getSettings()["core_sections"];
 	}
 
 
