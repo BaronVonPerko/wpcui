@@ -1,12 +1,12 @@
 import { Component } from "react";
-import { Control as CustomizerControl, Section } from "../models/models";
 import Control from "./Control";
 import Button from "../elements/Button";
-import NewControlForm from "../forms/NewControlForm";
+import ControlForm from "../forms/ControlForm";
 import { connect } from "react-redux";
 import { modal } from "./Modal";
 import React = require("react");
 import { CardListWrapper } from "../styled";
+import { Section } from "../models/models";
 
 interface IProps {
   selectedSection: Section;
@@ -18,7 +18,7 @@ class ControlList extends Component<IProps, null> {
   }
 
   displayCreateControlForm() {
-    modal(<NewControlForm />);
+    modal(<ControlForm />);
   }
 
   renderControls() {
