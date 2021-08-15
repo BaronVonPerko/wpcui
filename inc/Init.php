@@ -2,7 +2,6 @@
 
 namespace PerkoCustomizerUI;
 
-use PerkoCustomizerUI\Data\DatabaseUpgrades;
 
 /**
  * Class Init
@@ -19,7 +18,6 @@ final class Init
             Base\SettingsLinks::class,
             Base\Enqueue::class,
 	        Forms\AdminPageForms::class,
-	        DatabaseUpgrades::class,
 	        API\CustomizerLookupController::class
         ];
     }

@@ -16,13 +16,10 @@ class CustomizerValidationService {
 		switch ( $setting->type ) {
 			case 'Number':
 				return [ $this, 'validate_number' ];
-				break;
 			case 'URL':
 				return [ $this, 'validate_url' ];
-				break;
 			case 'Email':
 				return [$this, 'validate_email'];
-				break;
 		}
 	}
 
