@@ -3,6 +3,7 @@
 namespace PerkoCustomizerUI\API;
 
 use PerkoCustomizerUI\Data\DataService;
+use WP_REST_Server;
 
 class CustomizerLookupController extends BaseAPI {
 
@@ -16,7 +17,7 @@ class CustomizerLookupController extends BaseAPI {
 	function getOptions() {
 		register_rest_route( $this->base_path, "/getOptions", [
 			[
-				"methods"  => \WP_REST_Server::READABLE,
+				"methods"  => WP_REST_Server::READABLE,
 				"callback" => function () {
 					return DataService::getSettings();
 				}
@@ -27,9 +28,9 @@ class CustomizerLookupController extends BaseAPI {
 	function saveOptions() {
 		register_rest_route( $this->base_path, "/saveOptions", [
 			[
-				"methods"  => \WP_REST_Server::EDITABLE,
-				"callback" => function ($data) {
-					DataService::setSettings($data->get_json_params()['data']);
+				"methods"  => WP_REST_Server::EDITABLE,
+				"callback" => function ( $data ) {
+					DataService::setSettings( $data->get_json_params()['data'] );
 				}
 			]
 		] );

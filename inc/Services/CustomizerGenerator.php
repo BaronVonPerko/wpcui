@@ -43,46 +43,6 @@ class CustomizerGenerator {
 		}
 	}
 
-
-	/**
-	 * Update the core sections
-	 *
-	 * @param $wp_customize
-	 * @param $sections
-	 */
-	public static function UpdateCoreSections( $wp_customize, $sections ) {
-		foreach ( $sections as $section ) {
-			$wp_customize->get_section( $section->id )->priority = $section->priority;
-
-			if ( ! $section->visible ) {
-				$wp_customize->remove_section( $section->id );
-			}
-		}
-	}
-
-	/**
-	 * Register the customizer setting
-	 *
-	 * @param $wp_customize
-	 * @param $setting
-	 * @param $validator
-	 * $id_prefix
-	 */
-	private static function registerSetting( $wp_customize, $setting, $validator ) {
-		$args = [
-			'default'   => $setting->default,
-			'transport' => 'refresh',
-		];
-
-		$validation = $validator->getValidation( $setting );
-		if ( ! empty( $validation ) ) {
-			$args['validate_callback'] = $validation;
-		}
-
-		$wp_customize->add_setting( $setting->id, $args );
-	}
-
-
 	/**
 	 * Register a customizer section.
 	 *
@@ -96,7 +56,6 @@ class CustomizerGenerator {
 		) );
 	}
 
-
 	/**
 	 * Register a customizer control.
 	 *
@@ -108,7 +67,7 @@ class CustomizerGenerator {
 	 */
 	private static function registerControl( $wp_customize, $control, $section, $validator, $control_id_prefix ) {
 		if ( ! empty( $control_id_prefix ) ) {
-			$control->id         = $control_id_prefix . '_' . $control->id;
+			$control->id = $control_id_prefix . '_' . $control->id;
 		}
 
 		self::registerSetting( $wp_customize, $control, $validator );
@@ -151,6 +110,28 @@ class CustomizerGenerator {
 				self::registerImageControl( $wp_customize, $control, $section );
 				break;
 		}
+	}
+
+	/**
+	 * Register the customizer setting
+	 *
+	 * @param $wp_customize
+	 * @param $setting
+	 * @param $validator
+	 * $id_prefix
+	 */
+	private static function registerSetting( $wp_customize, $setting, $validator ) {
+		$args = [
+			'default'   => $setting->default,
+			'transport' => 'refresh',
+		];
+
+		$validation = $validator->getValidation( $setting );
+		if ( ! empty( $validation ) ) {
+			$args['validate_callback'] = $validation;
+		}
+
+		$wp_customize->add_setting( $setting->id, $args );
 	}
 
 	private static function registerStandardControl( $wp_customize, $control, $section, $type ) {
@@ -214,5 +195,21 @@ class CustomizerGenerator {
 				'settings' => $control->id,
 			]
 		) );
+	}
+
+	/**
+	 * Update the core sections
+	 *
+	 * @param $wp_customize
+	 * @param $sections
+	 */
+	public static function UpdateCoreSections( $wp_customize, $sections ) {
+		foreach ( $sections as $section ) {
+			$wp_customize->get_section( $section->id )->priority = $section->priority;
+
+			if ( ! $section->visible ) {
+				$wp_customize->remove_section( $section->id );
+			}
+		}
 	}
 }

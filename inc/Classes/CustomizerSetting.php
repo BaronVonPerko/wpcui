@@ -6,12 +6,12 @@ namespace PerkoCustomizerUI\Classes;
  * Class CustomizerSetting
  * @package PerkoCustomizerUI\Classes
  */
-class CustomizerSetting{
+class CustomizerSetting {
 	public $id;
 	public $default;
 
-	public function __construct($id, $default) {
-		$this->id = $id;
+	public function __construct( $id, $default ) {
+		$this->id      = $id;
 		$this->default = $default;
 	}
 }

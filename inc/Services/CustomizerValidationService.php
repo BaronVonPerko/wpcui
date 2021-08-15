@@ -19,7 +19,7 @@ class CustomizerValidationService {
 			case 'URL':
 				return [ $this, 'validate_url' ];
 			case 'Email':
-				return [$this, 'validate_email'];
+				return [ $this, 'validate_email' ];
 		}
 	}
 

@@ -28,7 +28,7 @@ class Admin extends BaseController {
 			'manage_options',
 			'wpcui',
 			[ $this, 'adminIndex' ],
-			 110
+			110
 		);
 	}
 }

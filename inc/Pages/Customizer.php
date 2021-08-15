@@ -2,10 +2,8 @@
 
 namespace PerkoCustomizerUI\Pages;
 
-use PerkoCustomizerUI\Classes\CustomizerControl;
-use PerkoCustomizerUI\Classes\CustomizerSection;
-use PerkoCustomizerUI\Services\CustomizerGenerator;
 use PerkoCustomizerUI\Data\DataService;
+use PerkoCustomizerUI\Services\CustomizerGenerator;
 
 /**
  * Class Customizer
@@ -18,27 +16,27 @@ use PerkoCustomizerUI\Data\DataService;
  */
 class Customizer {
 
-    public $customizer_sections = [];
-    public $core_sections = [];
+	public $customizer_sections = [];
+	public $core_sections = [];
 
-    public function register() {
-        add_action( 'customize_register', [ $this, 'registerCustomizerFields' ], 11 );
-    }
+	public function register() {
+		add_action( 'customize_register', [ $this, 'registerCustomizerFields' ], 11 );
+	}
 
-    function registerCustomizerFields( $wp_customize ) {
-        $this->loadData();
+	function registerCustomizerFields( $wp_customize ) {
+		$this->loadData();
 
-        if ( ! empty( $this->customizer_sections ) ) {
-            CustomizerGenerator::Generate( $wp_customize, $this->customizer_sections );
-        }
+		if ( ! empty( $this->customizer_sections ) ) {
+			CustomizerGenerator::Generate( $wp_customize, $this->customizer_sections );
+		}
 
-        if ( ! empty( $this->core_sections ) ) {
-            CustomizerGenerator::UpdateCoreSections( $wp_customize, $this->core_sections );
-        }
-    }
+		if ( ! empty( $this->core_sections ) ) {
+			CustomizerGenerator::UpdateCoreSections( $wp_customize, $this->core_sections );
+		}
+	}
 
-    private function loadData() {
-        $this->customizer_sections = DataService::getSections();
-        $this->core_sections       = DataService::getCoreSections();
-    }
+	private function loadData() {
+		$this->customizer_sections = DataService::getSections();
+		$this->core_sections       = DataService::getCoreSections();
+	}
 }
