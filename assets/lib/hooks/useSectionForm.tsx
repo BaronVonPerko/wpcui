@@ -56,7 +56,7 @@ export default function useSectionForm(data: DatabaseObject, section: Section) {
       title: sectionTitle,
       priority: 99,
       visible: true,
-      controls: [],
+      controls: section ? section.controls : []
     };
 
     if (section) {
