@@ -32,17 +32,18 @@ export function updateSection(
   oldSectionId,
   updatedSection
 ): ApplicationState {
-  let updatedSections = [...state.sections];
+  let sections = [...state.sections];
 
-  updatedSections.forEach((section, index) => {
+  // find the section in the store to be updated
+  sections.forEach((section, index) => {
     if (section.id === oldSectionId) {
-      updatedSections[index] = updatedSection;
+      sections[index] = updatedSection;
     }
   });
 
   const updateSectionState: ApplicationState = {
     ...state,
-    sections: updatedSections,
+    sections: sections,
     selectedSection: null,
   };
 

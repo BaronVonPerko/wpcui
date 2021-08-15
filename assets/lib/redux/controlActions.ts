@@ -43,6 +43,7 @@ export function updateControl(
   oldId: string,
   newControl: Control
 ): ApplicationState {
+
   // Find the selected section index to add the control to
   const selectedSectionIndex = getSelectedSectionIndex(state);
 

@@ -6,7 +6,7 @@ import CardHeader from "./CardHeader";
 import { Card, CardContents } from "../styled";
 import { GetControlTypeById } from "../models/selectOptions";
 import { modal } from "./Modal";
-import NewControlForm from "../forms/NewControlForm";
+import ControlForm from "../forms/ControlForm";
 
 interface IProps {
   data: CustomizerControl;
@@ -39,7 +39,7 @@ export default class Control extends Component<IProps, null> {
   }
 
   edit() {
-    modal(<NewControlForm control={this.props.data} />)
+    modal(<ControlForm control={this.props.data} />)
   }
 
   render() {
