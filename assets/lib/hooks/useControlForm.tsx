@@ -80,7 +80,7 @@ export default function useControlForm(data: DatabaseObject, control: Control) {
     if (control) {
       store.dispatch({
         type: actions.UPDATE_CONTROL,
-        updatedControl: newControl,
+        control: newControl,
         oldId: oldControlId,
       });
     } else {
