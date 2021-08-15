@@ -151,3 +151,18 @@ export const CardListWrapper = styled.div`
   width: 300px;
   margin-right: ${WordPressTheme.spacing};
 `;
+
+export const CodeSample = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  
+  textarea {
+    flex: 1;
+  } 
+  
+  .wpcui-copy-icon {
+    cursor: pointer;
+    margin-left: 8px;
+  }
+`

@@ -7,6 +7,7 @@ import { Card, CardContents } from "../styled";
 import { GetControlTypeById } from "../models/selectOptions";
 import { modal } from "./Modal";
 import ControlForm from "../forms/ControlForm";
+import { ModalWrapper, ModalContent, CodeSample } from "../styled";
 
 interface IProps {
   data: CustomizerControl;
@@ -29,17 +30,25 @@ export default class Control extends Component<IProps, null> {
     if (res) {
       store.dispatch({
         type: actions.DELETE_CONTROL,
-        controlId: this.props.data.id,
+        controlId: this.props.data.id
       });
     }
   }
 
   showCode() {
-    // TODO: show the example code in a modal
+    modal(
+      <ModalWrapper>
+        <ModalContent>
+          <CodeSample>
+			      <textarea>get_theme_mod( 'my_control_id', 'Default' )</textarea>
+            <span title="Copy code" className="wpcui-copy-icon dashicons dashicons-admin-page"></span>
+          </CodeSample>
+        </ModalContent>
+      </ModalWrapper>);
   }
 
   edit() {
-    modal(<ControlForm control={this.props.data} />)
+    modal(<ControlForm control={this.props.data} />);
   }
 
   render() {
@@ -49,7 +58,7 @@ export default class Control extends Component<IProps, null> {
           title="Control"
           onDelete={{ title: "Delete Control", function: this.delete }}
           onCode={{ title: "Show Code", function: this.showCode }}
-          onEdit={{title: "Edit", function: this.edit}}
+          onEdit={{ title: "Edit", function: this.edit }}
         />
         <CardContents>
           <p className="wpcui-control-title">{this.props.data.label}</p>
