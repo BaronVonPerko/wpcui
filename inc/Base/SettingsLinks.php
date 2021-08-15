@@ -10,9 +10,7 @@ class SettingsLinks extends BaseController
 {
     public function register()
     {
-        $file = plugin_basename(__FILE__);
         add_filter("plugin_action_links_wpcui/wpcui.php", [$this, 'setup']);
-//        add_filter("plugin_action_links", [$this, 'setup']);
     }
 
     function setup($plugin_actions)
