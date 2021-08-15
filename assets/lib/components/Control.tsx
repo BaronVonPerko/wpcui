@@ -35,13 +35,21 @@ export default class Control extends Component<IProps, null> {
     }
   }
 
+  copyCode() {
+    // @ts-ignore
+    document.getElementById('wpcui_sample_code').select();
+    document.execCommand('copy');
+    alert('Code copied to your clipboard!');
+  }
+
   showCode() {
+    const sample = `get_theme_mod( '${this.props.data.id}', '${this.props.data.default ? this.props.data.default : "Default Value"}' )`;
     modal(
       <ModalWrapper>
         <ModalContent>
           <CodeSample>
-			      <textarea>get_theme_mod( 'my_control_id', 'Default' )</textarea>
-            <span title="Copy code" className="wpcui-copy-icon dashicons dashicons-admin-page"></span>
+			      <textarea id="wpcui_sample_code" readOnly value={sample}></textarea>
+            <span onClick={() => this.copyCode()} title="Copy code" className="wpcui-copy-icon dashicons dashicons-admin-page"></span>
           </CodeSample>
         </ModalContent>
       </ModalWrapper>);
