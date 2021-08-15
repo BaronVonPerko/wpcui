@@ -166,3 +166,9 @@ export const CodeSample = styled.div`
     margin-left: 8px;
   }
 `
+
+export const ButtonBar = styled.div`
+  margin: 16px 0 0;
+  display: flex; 
+  flex-direction: row-reverse;
+`

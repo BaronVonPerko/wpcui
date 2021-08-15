@@ -5,9 +5,10 @@ import store, { actions } from "../redux/wpcuiReducer";
 import CardHeader from "./CardHeader";
 import { Card, CardContents } from "../styled";
 import { GetControlTypeById } from "../models/selectOptions";
-import { modal } from "./Modal";
+import { hideModal, modal } from "./Modal";
 import ControlForm from "../forms/ControlForm";
-import { ModalWrapper, ModalContent, CodeSample } from "../styled";
+import { ModalWrapper, ModalContent, CodeSample, ButtonBar } from "../styled";
+import Button from "../elements/Button";
 
 interface IProps {
   data: CustomizerControl;
@@ -51,6 +52,10 @@ export default class Control extends Component<IProps, null> {
 			      <textarea id="wpcui_sample_code" readOnly value={sample}></textarea>
             <span onClick={() => this.copyCode()} title="Copy code" className="wpcui-copy-icon dashicons dashicons-admin-page"></span>
           </CodeSample>
+
+          <ButtonBar>
+            <Button innerText="Close" click={hideModal} />
+          </ButtonBar>
         </ModalContent>
       </ModalWrapper>);
   }
