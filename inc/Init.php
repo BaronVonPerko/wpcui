@@ -17,7 +17,6 @@ final class Init
             Pages\Customizer::class,
             Base\SettingsLinks::class,
             Base\Enqueue::class,
-	        Forms\AdminPageForms::class,
 	        API\CustomizerLookupController::class
         ];
     }
