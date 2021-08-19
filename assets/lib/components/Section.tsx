@@ -87,7 +87,7 @@ class Section extends Component<IProps, IState> {
 
   render() {
     return (
-      <Card selected={this.getOpen()}>
+      <Card disabled={this.getDisabled()} selected={this.getOpen()}>
         <CardHeader
           title="Section"
           onDelete={{ title: "Delete Section", function: this.deleteSection }}

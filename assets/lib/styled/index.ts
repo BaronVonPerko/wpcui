@@ -22,6 +22,8 @@ export const Card = styled.div`
   transition: all ${WordPressTheme.animationSpeed} ease-in-out;
   margin-bottom: ${WordPressTheme.spacing};
   animation: fade-in ${WordPressTheme.animationSpeed} ease-in-out;
+  opacity: ${(props) => props.disabled ? '0.3' : '1.0'};
+  transform: ${(props) => props.disabled ? 'translateX(-8px)' : ''};
 
   &:hover {
     box-shadow: ${WordPressTheme.shadows.far};
