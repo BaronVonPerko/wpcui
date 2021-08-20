@@ -23,5 +23,6 @@ function prepareData(data): DatabaseObject {
     db_version: data.db_version,
     panels: data.panels,
     sections: data.sections,
+    settings: data.settings,
   };
 }

@@ -2,6 +2,11 @@ export interface DatabaseObject {
   db_version: number;
   panels: any[]; // todo : map out panel interface
   sections: Section[];
+  settings: Settings;
+}
+
+export interface Settings {
+  controlPrefix: string;
 }
 
 export interface Section {
@@ -55,4 +60,5 @@ export interface ApplicationState {
   selectedSection?: Section;
   notification?: Notification;
   modalContent?: any;
+  settings: Settings;
 }

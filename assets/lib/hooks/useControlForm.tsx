@@ -57,7 +57,7 @@ export default function useControlForm(data: DatabaseObject, control: Control) {
       setError("Missing Required Fields", "Control Label and ID are required.");
       return;
     }
-debugger;
+
     if (oldControlId !== controlId && controlIdExists(controlId, data)) {
       setError(
         "Control Id Exists",

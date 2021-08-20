@@ -1,10 +1,5 @@
 import { createStore } from "redux";
-import {
-  createSection,
-  deleteSection,
-  toggleSectionVisibility,
-  updateSection,
-} from "./sectionActions";
+import { createSection, deleteSection, toggleSectionVisibility, updateSection } from "./sectionActions";
 import { createControl, deleteControl, updateControl } from "./controlActions";
 import { ApplicationState } from "../models/models";
 
@@ -15,6 +10,7 @@ const initialState: ApplicationState = {
   selectedSection: null,
   notification: null,
   modalContent: null,
+  settings: { controlPrefix: "" }
 };
 
 export enum actions {
@@ -52,7 +48,7 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
     case actions.SELECT_SECTION:
       return {
         ...state,
-        selectedSection: action.section,
+        selectedSection: action.section
       };
 
     case actions.CLOSE_SECTION:
@@ -86,8 +82,8 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
         ...state,
         notification: {
           type: action.type ?? "success",
-          message: action.message,
-        },
+          message: action.message
+        }
       };
 
     case actions.CLEAR_NOTIFICATION:

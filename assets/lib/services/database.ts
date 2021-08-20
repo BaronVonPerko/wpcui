@@ -17,7 +17,7 @@ export function upgrade(data): void {
  * @param data
  */
 function upgradeToVersion2(data): void {
-  let newData: DatabaseObject = { db_version: 2, panels: [], sections: [] };
+  let newData: DatabaseObject = { db_version: 2, panels: [], sections: [], settings: { controlPrefix: "" } };
 
   const sections = Object.values(data.sections);
   sections.forEach((section: Section) => {
