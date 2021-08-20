@@ -1,12 +1,8 @@
 import { createStore } from "redux";
-import {
-  createSection,
-  deleteSection,
-  toggleSectionVisibility,
-  updateSection,
-} from "./sectionActions";
+import { createSection, deleteSection, toggleSectionVisibility, updateSection } from "./sectionActions";
 import { createControl, deleteControl, updateControl } from "./controlActions";
 import { ApplicationState } from "../models/models";
+import { saveControlPrefix } from "./settingsActions";
 
 const initialState: ApplicationState = {
   db_version: -1,
@@ -15,6 +11,7 @@ const initialState: ApplicationState = {
   selectedSection: null,
   notification: null,
   modalContent: null,
+  settings: { controlPrefix: "" }
 };
 
 export enum actions {
@@ -32,6 +29,7 @@ export enum actions {
   CLEAR_NOTIFICATION,
   SHOW_MODAL,
   HIDE_MODAL,
+  SAVE_CONTROL_PREFIX,
 }
 
 function wpcuiReducer(state = initialState, action): ApplicationState {
@@ -52,7 +50,7 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
     case actions.SELECT_SECTION:
       return {
         ...state,
-        selectedSection: action.section,
+        selectedSection: action.section
       };
 
     case actions.CLOSE_SECTION:
@@ -78,6 +76,13 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
       return updateControl(state, action.oldId, action.control);
 
     /**
+     * SETTINGS PAGE ACTIONS
+     */
+
+    case actions.SAVE_CONTROL_PREFIX:
+      return saveControlPrefix(state, action.controlPrefix);
+
+    /**
      * NOTIFICATION AND MODAL ACTIONS
      * */
 
@@ -86,8 +91,8 @@ function wpcuiReducer(state = initialState, action): ApplicationState {
         ...state,
         notification: {
           type: action.type ?? "success",
-          message: action.message,
-        },
+          message: action.message
+        }
       };
 
     case actions.CLEAR_NOTIFICATION:

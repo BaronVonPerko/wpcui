@@ -12,6 +12,7 @@ import Button from "../elements/Button";
 
 interface IProps {
   data: CustomizerControl;
+  prefix: string;
 }
 
 export default class Control extends Component<IProps, null> {
@@ -44,7 +45,8 @@ export default class Control extends Component<IProps, null> {
   }
 
   showCode() {
-    const sample = `get_theme_mod( '${this.props.data.id}', '${this.props.data.default ? this.props.data.default : "Default Value"}' )`;
+    const id = this.props.prefix ? `${this.props.prefix}_${this.props.data.id}` : this.props.data.id;
+    const sample = `get_theme_mod( '${id}', '${this.props.data.default ? this.props.data.default : "Default Value"}' )`;
     modal(
       <ModalWrapper>
         <ModalContent>

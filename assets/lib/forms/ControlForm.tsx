@@ -1,9 +1,6 @@
-import { Component } from "react";
 import Button from "../elements/Button";
-import store, { actions } from "../redux/wpcuiReducer";
 import FormTextInput from "../elements/FormTextInput";
 import FormCancel from "../elements/FormCancel";
-import { controlIdExists, stringToSnakeCase } from "../common";
 import FormCheckbox from "../elements/FormCheckbox";
 import WarningBar from "../elements/WarningBar";
 import { hideModal } from "../components/Modal";
@@ -91,7 +88,7 @@ const ControlForm = (props: IProps) => {
             placeholder="New Control ID"
             onChange={controlIdChange}
             value={controlId}
-            disabled={autoGenerateId != null}
+            disabled={autoGenerateId === "checked"}
           />
           <FormTextInput
             label="Default Value"
