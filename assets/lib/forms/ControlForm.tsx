@@ -88,7 +88,7 @@ const ControlForm = (props: IProps) => {
             placeholder="New Control ID"
             onChange={controlIdChange}
             value={controlId}
-            disabled={autoGenerateId != null}
+            disabled={autoGenerateId === "checked"}
           />
           <FormTextInput
             label="Default Value"

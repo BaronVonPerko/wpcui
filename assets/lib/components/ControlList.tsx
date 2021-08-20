@@ -4,12 +4,13 @@ import Button from "../elements/Button";
 import ControlForm from "../forms/ControlForm";
 import { connect } from "react-redux";
 import { modal } from "./Modal";
-import React = require("react");
 import { CardListWrapper } from "../styled";
-import { Section } from "../models/models";
+import { Section, Settings } from "../models/models";
+import React = require("react");
 
 interface IProps {
   selectedSection: Section;
+  settings: Settings;
 }
 
 class ControlList extends Component<IProps, null> {
@@ -25,7 +26,7 @@ class ControlList extends Component<IProps, null> {
     const controls = this.props.selectedSection.controls;
     if (controls && controls.length) {
       return controls.map((control) => (
-        <Control key={control.id} data={control} />
+        <Control key={control.id} data={control} prefix={this.props.settings.controlPrefix} />
       ));
     } else {
       return <p>There are no controls for this section yet.</p>;
@@ -51,5 +52,6 @@ class ControlList extends Component<IProps, null> {
 
 const mapStateToProps = (state): IProps => ({
   selectedSection: state.selectedSection,
+  settings: state.settings
 });
 export default connect(mapStateToProps)(ControlList);
