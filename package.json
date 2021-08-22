@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "parcel assets/wpcui.js",
+    "prod": "parcel build assets/wpcui.js",
     "pretty": "npx prettier --write ./assets/"
   },
   "repository": {
