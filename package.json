@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "parcel assets/wpcui.js",
     "prod": "parcel build assets/wpcui.js",
-    "pretty": "npx prettier --write ./assets/"
+    "pretty": "npx prettier --write ./assets/",
+    "bundle": "zip -r wpcui.zip . -x \"node_modules/*\" \".git/*\" \".idea/*\""
   },
   "repository": {
     "type": "git",
