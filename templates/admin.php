@@ -9,8 +9,6 @@ use PerkoCustomizerUI\Forms\AdminPageForms;
  */
 ?>
 <div class="wrap">
-	<?php settings_errors(); ?>
-
     <h1>Customizer UI</h1>
 
     <div id="wpcui-app"></div>
