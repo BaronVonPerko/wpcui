@@ -82,7 +82,6 @@ export default function useControlForm(data: DatabaseObject, control: Control) {
       choices: controlChoices,
       autoGenerateId: autoGenerateId == "checked"
     };
-    console.log(newControl);
 
     if (control) {
       store.dispatch({
