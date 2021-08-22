@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Control as CustomizerControl } from "../models/models";
+import { Control as CustomizerControl, Settings } from "../models/models";
 import React = require("react");
 import store, { actions } from "../redux/wpcuiReducer";
 import CardHeader from "./CardHeader";
@@ -9,9 +9,11 @@ import { hideModal, modal } from "./Modal";
 import ControlForm from "../forms/ControlForm";
 import { ModalWrapper, ModalContent, CodeSample, ButtonBar } from "../styled";
 import Button from "../elements/Button";
+import { getFullControlId } from "../common";
 
 interface IProps {
-  data: CustomizerControl;
+  control: CustomizerControl;
+  settings: Settings;
   prefix: string;
 }
 
@@ -26,13 +28,13 @@ export default class Control extends Component<IProps, null> {
 
   delete() {
     let res = confirm(
-      `Are you sure that you want to delete the control with ID of ${this.props.data.id}`
+      `Are you sure that you want to delete the control with ID of ${this.props.control.id}`
     );
 
     if (res) {
       store.dispatch({
         type: actions.DELETE_CONTROL,
-        controlId: this.props.data.id
+        controlId: this.props.control.id
       });
     }
   }
@@ -45,8 +47,8 @@ export default class Control extends Component<IProps, null> {
   }
 
   showCode() {
-    const id = this.props.prefix ? `${this.props.prefix}_${this.props.data.id}` : this.props.data.id;
-    const sample = `get_theme_mod( '${id}', '${this.props.data.default ? this.props.data.default : "Default Value"}' )`;
+    const id = this.props.prefix ? `${this.props.prefix}_${this.props.control.id}` : this.props.control.id;
+    const sample = `get_theme_mod( '${id}', '${this.props.control.default ? this.props.control.default : "Default Value"}' )`;
     modal(
       <ModalWrapper>
         <ModalContent>
@@ -63,7 +65,7 @@ export default class Control extends Component<IProps, null> {
   }
 
   edit() {
-    modal(<ControlForm control={this.props.data} />);
+    modal(<ControlForm control={this.props.control} />);
   }
 
   render() {
@@ -76,9 +78,10 @@ export default class Control extends Component<IProps, null> {
           onEdit={{ title: "Edit", function: this.edit }}
         />
         <CardContents>
-          <p className="wpcui-control-title">{this.props.data.label}</p>
-          <p>Type: {GetControlTypeById(this.props.data.type).text}</p>
-          <p>Default Value: {this.props.data.default}</p>
+          <p>Label: <strong>{this.props.control.label}</strong></p>
+          <p>Id: <strong>{getFullControlId(this.props.control, this.props.settings)}</strong></p>
+          <p>Type: <strong>{GetControlTypeById(this.props.control.type).text}</strong></p>
+          <p>Default Value: <strong>{this.props.control.default}</strong></p>
         </CardContents>
       </Card>
     );

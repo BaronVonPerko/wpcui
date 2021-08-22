@@ -5,10 +5,7 @@ import { hideModal } from "../components/Modal";
 import { Control, ControlType, DatabaseObject } from "../models/models";
 
 export default function useControlForm(data: DatabaseObject, control: Control) {
-  const initialControlId = data.settings.controlPrefix
-    ? `${data.settings.controlPrefix}_${control?.id || ""}`
-    : stringToSnakeCase(control?.id);
-  const [controlId, setControlId] = useState(initialControlId || "");
+  const [controlId, setControlId] = useState(control?.id || "");
   const [controlLabel, setControlLabel] = useState(control?.label || "");
   const [controlDefault, setControlDefault] = useState(control?.default || "");
   const [controlType, setControlType] = useState(control?.type || ControlType.TEXT);
@@ -22,11 +19,7 @@ export default function useControlForm(data: DatabaseObject, control: Control) {
     setControlLabel(e.target.value);
 
     if (autoGenerateId) {
-      const id = data.settings.controlPrefix
-        ? `${data.settings.controlPrefix}_${stringToSnakeCase(e.target.value)}`
-        : stringToSnakeCase(e.target.value);
-
-      setControlId(id);
+      setControlId(stringToSnakeCase(e.target.value));
     }
   };
 

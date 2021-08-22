@@ -26,7 +26,8 @@ class ControlList extends Component<IProps, null> {
     const controls = this.props.selectedSection.controls;
     if (controls && controls.length) {
       return controls.map((control) => (
-        <Control key={control.id} data={control} prefix={this.props.settings.controlPrefix} />
+        <Control key={control.id} control={control} settings={this.props.settings}
+                 prefix={this.props.settings.controlPrefix} />
       ));
     } else {
       return <p>There are no controls for this section yet.</p>;

@@ -107,7 +107,7 @@ class Section extends Component<IProps, IState> {
             />
           </CardTitleSection>
           <p>
-            ID: <em>{this.props.data.id}</em>
+            ID: <strong>{this.props.data.id}</strong>
           </p>
           <CardStats>
             <h5>{this.props.data.controls.length}</h5>

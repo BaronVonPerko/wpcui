@@ -1,4 +1,4 @@
-import { DatabaseObject } from "./models/models";
+import { Control, DatabaseObject, Settings } from "./models/models";
 
 export function stringToSnakeCase(input: string): string {
   const strArr = input.split(" ");
@@ -46,4 +46,14 @@ export function sectionIdExists(
   });
 
   return exists;
+}
+
+
+/**
+ * Get the full control ID, including the prefix (if any).
+ * @param control
+ * @param data
+ */
+export function getFullControlId(control: Control, settings: Settings) {
+  return settings.controlPrefix ? `${settings.controlPrefix}_${control.id}` : control.id;
 }
