@@ -29,4 +29,8 @@ following link:
 
 This zip file can be directly uploaded to your WordPress website for use.
 
+## Preview v2.0!
 
+v2.0 Preview is now available!  
+
+[Download 2.0.0 Today!](https://wpcui-build-prod.s3.amazonaws.com/wpcui-2.0.0-preview.zip)
