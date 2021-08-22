@@ -77,8 +77,8 @@ class DataService {
 	 * @return string
 	 */
 	public static function getControlIdPrefix() {
-		$settings = self::getSettings();
+		$settings = self::getSettings()['settings'];
 
-		return array_key_exists( 'control_prefix', $settings ) ? $settings['control_prefix'] : '';
+		return array_key_exists( 'controlPrefix', $settings ) ? $settings['controlPrefix'] : '';
 	}
 }
