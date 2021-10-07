@@ -1,2 +1,7 @@
 .idea/
 /vendor/
+dist
+node_modules
+.cache
+composer.phar
+*.zip

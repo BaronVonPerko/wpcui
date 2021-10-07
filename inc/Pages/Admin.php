@@ -15,9 +15,6 @@ class Admin extends BaseController {
 
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'addAdminPage' ] );
-
-		$settings_service = new AdminSettingsService();
-		add_action( 'admin_init', [ $settings_service, 'setSettings' ] );
 	}
 
 	function adminIndex() {
@@ -25,13 +22,13 @@ class Admin extends BaseController {
 	}
 
 	function addAdminPage() {
-		add_menu_page(
+		add_management_page(
 			'WPCUI Plugin',
 			'Customizer UI',
 			'manage_options',
 			'wpcui',
 			[ $this, 'adminIndex' ],
-			'dashicons-admin-customizer', 110
+			110
 		);
 	}
 }

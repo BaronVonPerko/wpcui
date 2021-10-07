@@ -2,9 +2,6 @@
 
 namespace PerkoCustomizerUI\Data;
 
-use PerkoCustomizerUI\Classes\CustomizerControl;
-use PerkoCustomizerUI\Classes\CustomizerSection;
-
 /**
  * Class DataService
  * @package PerkoCustomizerUI\Services
@@ -13,168 +10,24 @@ use PerkoCustomizerUI\Classes\CustomizerSection;
  * data in the database.
  */
 class DataService {
-	public static function getSettings() {
-		return get_option( 'wpcui_settings' );
-	}
-
-	public static function getSections() {
-	    if(array_key_exists('sections', self::getSettings())) {
-            return self::getSettings()['sections'];
-        } else {
-	        return [];
-        }
-	}
-
-	public static function getDatabaseVersion() {
-	    if(array_key_exists('db_version', self::getSettings())) {
-            return self::getSettings()['db_version'];
-        } else {
-            return null;
-        }
-	}
 
 	public static function setSettings( $settings ) {
 		update_option( 'wpcui_settings', $settings );
 	}
 
-	/**
-	 * Create a duplicate of a section.  All controls
-	 * must also be duplicated with unique IDs.
-	 *
-	 * @param $section CustomizerSection
-	 *
-	 * @return null
-	 */
-	public static function duplicateSection( $section ) {
-		$newSectionTitle = '';
+	public static function getSections() {
+		if ( array_key_exists( 'sections', self::getSettings() ) ) {
+			$sectionsArr = self::getSettings()['sections'];
 
-		$num = 1;
-		while ( empty( $newSectionTitle ) ) {
-			$testTitle = $section->title . " $num";
-			$testId    = self::convertStringToId( $testTitle );
-
-			if ( empty( self::getSectionById( $testId ) ) ) {
-				$newSectionTitle = $testTitle;
-			}
-
-			$num ++;
+			return DataConverters::ConvertSections( $sectionsArr );
+		} else {
+			return [];
 		}
-
-		return new CustomizerSection(
-			$newSectionTitle,
-			$section->priority,
-			self::duplicateControls( $section->controls )
-		);
 	}
 
-	/**
-	 * Insert a new section
-	 *
-	 * @param $settings
-	 * @param $section
-	 */
-	public static function insertNewSection( &$settings, $section ) {
-		$settings['sections'][ $section->id ] = $section;
+	public static function getSettings() {
+		return get_option( 'wpcui_settings' );
 	}
-
-	/**
-	 * Duplicate an array of controls, changing each ID to a unique one
-	 *
-	 * @param $controls
-	 *
-	 * @return array
-	 */
-	public static function duplicateControls( $controls ) {
-		$duplicatedControls = [];
-
-		foreach ( $controls as $control ) {
-			$duplicatedControl = self::duplicateControl( $control );
-
-			$duplicatedControls[ $duplicatedControl->id ] = $duplicatedControl;
-		}
-
-		return $duplicatedControls;
-	}
-
-	/**
-	 * Duplicate a single control, changing the ID to be unique
-	 *
-	 * @param $control
-	 *
-	 * @return mixed
-	 */
-	public static function duplicateControl( $control ) {
-		$newControlId = '';
-
-		$num = 1;
-
-		while ( empty( $newControlId ) ) {
-			$testId = $control->id . "_$num";
-
-			if ( empty( self::getControlById( $testId ) ) ) {
-				$newControlId = $testId;
-			}
-
-			$num ++;
-		}
-
-		$control->id = $newControlId;
-
-		return $control;
-	}
-
-	/**
-	 * Get the control by id
-	 *
-	 * @param $controlId
-	 *
-	 * @return bool
-	 */
-	public static function getControlById( $controlId ) {
-		$sections = self::getSections();
-		foreach ( $sections as $section ) {
-			foreach ( $section->controls as $control ) {
-				if ( $control->id == $controlId ) {
-					return $control;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Get the section by ID
-	 *
-	 * @param $sectionId
-	 *
-	 * @return mixed
-	 */
-	public static function getSectionById( $sectionId ) {
-		return self::getSections()[ $sectionId ];
-	}
-
-	/**
-	 * Get the control id prefix from the settings.
-	 *
-	 * @return string
-	 */
-	public static function getControlIdPrefix() {
-		$settings = self::getSettings();
-
-		return array_key_exists( 'control_prefix', $settings ) ? $settings['control_prefix'] : '';
-	}
-
-
-	/**
-	 * Get the core sections saved in the database.
-	 *
-	 * @return mixed
-	 */
-	private static function getCoreSectionsData() {
-		return self::getSettings()["core_sections"];
-	}
-
 
 	/**
 	 * Get the core sections and their priorities.
@@ -200,6 +53,13 @@ class DataService {
 	}
 
 	/**
+	 * TODO: v2.1
+	 */
+	private static function getCoreSectionsData() {
+//		return self::getSettings()["core_sections"];
+	}
+
+	/**
 	 * Convert a string to ID format (lowercase and spaces replaced
 	 * with underscores).
 	 *
@@ -212,50 +72,13 @@ class DataService {
 	}
 
 	/**
-	 * Add a new section to the settings object.
+	 * Get the control id prefix from the settings.
 	 *
-	 * @param $settings
-	 * @param $title
+	 * @return string
 	 */
-	public static function createNewSection( &$settings, $title ) {
-		$section = new CustomizerSection( $title, 99 );
+	public static function getControlIdPrefix() {
+		$settings = self::getSettings()['settings'];
 
-		self::insertNewSection( $settings, $section );
-	}
-
-
-	/**
-	 * Update a section's name, and update the ID based
-	 * on the new title.
-	 *
-	 * @param $settings
-	 * @param $id
-	 * @param $newTitle
-	 */
-	public static function updateSectionName( &$settings, $id, $newTitle ) {
-		$section        = $settings['sections'][ $id ];
-		$section->title = $newTitle;
-		$section->id    = self::convertStringToId( $newTitle );
-
-		unset( $settings['sections'][ $id ] );
-
-		self::insertNewSection( $settings, $section );
-	}
-
-
-	/**
-	 * Get all available sections, user created and Core, sorted by priority.
-	 * @return array
-	 */
-	public static function getAllAvailableSections() {
-		$coreSections  = DataService::getCoreSections();
-		$wpcuiSections = DataService::getSections();
-		$sections      = array_merge( $coreSections, $wpcuiSections );
-
-		usort( $sections, function ( $a, $b ) {
-			return $a->priority - $b->priority;
-		} );
-
-		return $sections;
+		return array_key_exists( 'controlPrefix', $settings ) ? $settings['controlPrefix'] : '';
 	}
 }
